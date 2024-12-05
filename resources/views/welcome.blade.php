@@ -10,7 +10,7 @@
 
     <!-- Favicons -->
     <link href="{{ asset('impact/assets/img/favicon.png') }}" rel="icon" />
-    <link href="{{ asset("impact/assets/img/apple-touch-icon.png")}}" rel="apple-touch-icon" />
+    <link href="{{ asset('impact/assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon" />
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
@@ -20,14 +20,14 @@
         rel="stylesheet" />
 
     <!-- Vendor CSS Files -->
-    <link href="{{ asset("impact/assets/vendor/bootstrap/css/bootstrap.min.css")}}" rel="stylesheet" />
-    <link href="{{ asset("impact/assets/vendor/bootstrap-icons/bootstrap-icons.css")}}" rel="stylesheet" />
-    <link href="{{ asset("impact/assets/vendor/aos/aos.css")}}" rel="stylesheet" />
-    <link href="{{ asset("impact/assets/vendor/glightbox/css/glightbox.min.css")}}" rel="stylesheet" />
-    <link href="{{ asset("impact/assets/vendor/swiper/swiper-bundle.min.css")}}" rel="stylesheet" />
+    <link href="{{ asset('impact/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('impact/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet" />
+    <link href="{{ asset('impact/assets/vendor/aos/aos.css') }}" rel="stylesheet" />
+    <link href="{{ asset('impact/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('impact/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet" />
 
     <!-- Main CSS File -->
-    <link href="{{ asset("impact/assets/css/main.css")}}" rel="stylesheet" />
+    <link href="{{ asset('impact/assets/css/main.css') }}" rel="stylesheet" />
 
     <!-- =======================================================
   * Template Name: Impact
@@ -73,6 +73,17 @@
                         <li><a href="#services">Layanan</a></li>
                         <li><a href="#why">Mengapa Kami?</a></li>
                         <li><a href="#contact">Kontak </a></li>
+                        @auth
+                            <li class="bg-danger p-2 rounded"><a class="btn btn-get-started"
+                                    href="{{ route('home') }}">Dashboard</a></li>
+                        @else
+                            <li class="bg-danger p-2 rounded"><a class="btn btn-get-started"
+                                    href="https://web.whatsapp.com/send?phone=62895360171810&text=Assalamualaikum  " target="_blank">Berlangganan </a></li>
+                            {{-- <li class="bg-danger p-2 rounded"><a class="btn btn-get-started"
+                                    href="https://wa.me/6282232801273?text=Assalamualaikum" target="_blank">Berlangganan </a></li> --}}
+                            <li class="ms-3 bg-danger p-2 rounded"><a class="btn btn-get-started"
+                                    href="{{ route('login') }}">Login </a></li>
+                        @endauth
                     </ul>
                     <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
                 </nav>
@@ -511,17 +522,17 @@
     <div id="preloader"></div>
 
     <!-- Vendor JS Files -->
-    <script src="{{ asset("impact/assets/vendor/bootstrap/js/bootstrap.bundle.min.js")}}"></script>
-    <script src="{{ asset("impact/assets/vendor/php-email-form/validate.js")}}"></script>
-    <script src="{{ asset("impact/assets/vendor/aos/aos.js")}}"></script>
-    <script src="{{ asset("impact/assets/vendor/glightbox/js/glightbox.min.js")}}"></script>
-    <script src="{{ asset("impact/assets/vendor/swiper/swiper-bundle.min.js")}}"></script>
-    <script src="{{ asset("impact/assets/vendor/purecounter/purecounter_vanilla.js")}}"></script>
-    <script src="{{ asset("impact/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js")}}"></script>
-    <script src="{{ asset("impact/assets/vendor/isotope-layout/isotope.pkgd.min.js")}}"></script>
+    <script src="{{ asset('impact/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('impact/assets/vendor/php-email-form/validate.js') }}"></script>
+    <script src="{{ asset('impact/assets/vendor/aos/aos.js') }}"></script>
+    <script src="{{ asset('impact/assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+    <script src="{{ asset('impact/assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('impact/assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+    <script src="{{ asset('impact/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
+    <script src="{{ asset('impact/assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
 
     <!-- Main JS File -->
-    <script src="{{ asset("impact/assets/js/main.js")}}"></script>
+    <script src="{{ asset('impact/assets/js/main.js') }}"></script>
 </body>
 
 </html>

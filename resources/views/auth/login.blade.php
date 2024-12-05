@@ -1,10 +1,10 @@
 @extends('admin.layouts.app', ['class' => 'login-page', 'page' => 'Login Page', 'contentClass' => 'login-page'])
 
 @section('content')
-    <div class="col-md-10 text-center ml-auto mr-auto">
+    {{-- <div class="col-md-10 text-center ml-auto mr-auto">
         <h3 class="mb-5">Log in to see how you can speed up your web development with out of the box CRUD for #User
             Management and more.</h3>
-    </div>
+    </div> --}}
     <div class="col-lg-4 col-md-6 ml-auto mr-auto">
         <form class="form" method="post" action="{{ route('login') }}">
             @csrf
@@ -12,7 +12,7 @@
             <div class="card card-login card-white">
                 <div class="card-header">
                     <img src="{{ asset('white') }}/img/card-primary.png" alt="">
-                    <h1 class="card-title">{{ 'Log in' }}</h1>
+                    <h1 class="card-title ">{{ 'Log in' }}</h1>
                 </div>
                 <div class="card-body">
                     <p class="text-dark mb-2">Sign in with <strong>admin@white.com</strong> and the password
@@ -47,16 +47,16 @@
                 </div>
                 <div class="card-footer">
                     <button type="submit" href=""
-                        class="btn btn-primary btn-lg btn-block mb-3">{{ 'Get Started' }}</button>
+                        class="btn btn-danger btn-lg btn-block mb-3">{{ 'Get Started' }}</button>
                     <div class="pull-left">
-                        <h6>
+                        {{-- <h6>
                             <a href="{{ route('register') }}" class="link footer-link">{{ 'Create Account' }}</a>
-                        </h6>
+                        </h6> --}}
                     </div>
                     <div class="pull-right">
                         <h6>
                             <a href="{{ route('password.request') }}"
-                                class="link footer-link">{{ 'Forgot password?' }}</a>
+                                class="link ">{{ 'Forgot password?' }}</a>
                         </h6>
                     </div>
                 </div>

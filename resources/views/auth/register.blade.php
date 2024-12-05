@@ -40,7 +40,7 @@
         <div class="col-md-7 mr-auto">
             <div class="card card-register card-white">
                 <div class="card-header">
-                    <img class="card-img" src="{{ asset('white') }}/img/card-primary.png" alt="Card image" style="width: 420px; height: 280px">
+                    <img class="card-img" src="{{ asset('white') }}/img/card-primary.png" alt="Card image" style="width: 500px; height: 280px">
                     <h4 class="card-title">{{ 'Register' }}</h4>
                 </div>
                 <form class="form" method="post" action="{{ route('register') }}">
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary btn-round btn-lg">{{ 'Get Started' }}</button>
+                        <button type="submit" class="btn btn-danger btn-round btn-lg">{{ 'Get Started' }}</button>
                     </div>
                 </form>
             </div>

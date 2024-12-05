@@ -17783,17 +17783,19 @@ Copyright (c) 2015 Daniel Eden
     padding-bottom: 0.7rem;
 }
 
-.login-page .card-login.card-white .card-header .card-title {
-  color: #ffffff;
-}
+/* .login-page .card-login.card-white .card-header .card-title {
+  color: #000000;
+} */
 
 .login-page .card-login .card-header .card-title {
   position: relative;
   font-size: 5em;
   font-weight: 900;
-  color: #222a42;
+  /* color: #222a42; */
+  color: #ffffff;
   text-transform: lowercase;
   margin-left: -5px;
+  margin: auto;
   z-index: 1;
 }
 
