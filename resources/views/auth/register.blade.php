@@ -40,12 +40,11 @@
         <div class="col-md-7 mr-auto">
             <div class="card card-register card-white">
                 <div class="card-header">
-                    <img class="card-img" src="{{ asset('white') }}/img/card-primary.png" alt="Card image">
+                    <img class="card-img" src="{{ asset('white') }}/img/card-primary.png" alt="Card image" style="width: 420px; height: 280px">
                     <h4 class="card-title">{{ 'Register' }}</h4>
                 </div>
                 <form class="form" method="post" action="{{ route('register') }}">
                     @csrf
-
                     <div class="card-body">
                         <div class="input-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                             <div class="input-group-prepend">
