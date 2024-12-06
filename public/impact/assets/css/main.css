@@ -26,7 +26,8 @@
     --default-color: #222222; /* Default color used for the majority of the text content across the entire website */
     --heading-color: #17192a;
     /* --heading-color: #2a1717; */
-    --accent-color: #1463d9; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+    /* --accent-color: #1463d9; Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+    --accent-color: #1a284a ; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
     /* --accent-color: #d92414; Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
     --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
     --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
@@ -69,12 +70,13 @@
 
 .accent-background {
     /* --background-color: #f12e1c; */
-    --background-color: #193eb5;
+    /* --background-color: #193eb5; */
+    --background-color: #1a284a;
     --default-color: #ffffff;
     --heading-color: #ffffff;
     --accent-color: #ffffff;
     /* --surface-color: #f55244; Warna ini adalah turunan lebih terang dari #f12e1c */
-    --surface-color: #1c7cf1; /* Warna ini adalah turunan lebih terang dari #f12e1c */
+    --surface-color: #09192c; /* Warna ini adalah turunan lebih terang dari #f12e1c */
     --contrast-color: #ffffff;
 }
 
@@ -264,7 +266,7 @@ h6 {
 .header {
     /* --background-color: #b32417; */
     /* --background-color: #008374; */
-    --background-color: #003f83;
+    --background-color: #101b37;
     --heading-color: #ffffff;
     color: var(--default-color);
     transition: all 0.5s;
@@ -1036,7 +1038,7 @@ section,
     overflow: hidden;
     /* background: var(--background-color); */
     /* background: #db2121; */
-    background: #072c91;
+    background: #101b37;
 
     box-shadow: 0 0 29px 0 rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;
@@ -1512,7 +1514,7 @@ section,
 }
 
 .why-item-red {
-    background-color: #1c7cf1; /* Warna merah sesuai */
+    background-color: #22325b ; /* Warna merah sesuai */
     padding: 60px 40px;
     box-shadow: none; /* Hilangkan bayangan */
     height: auto;
@@ -1570,7 +1572,7 @@ section,
 
 .why-item-white .icon i {
     font-size: 36px;
-    color: #1c7cf1; /* Warna merah untuk ikon */
+    color: #101b37; /* Warna merah untuk ikon */
 }
 
 .why-item-white h3 {
@@ -1591,7 +1593,7 @@ section,
 }
 
 .why-item-white:hover .icon i {
-    color: #1766c7; /* Ikon berubah lebih gelap saat hover */
+    color: #030a1c; /* Ikon berubah lebih gelap saat hover */
 }
 
 /*--------------------------------------------------------------
