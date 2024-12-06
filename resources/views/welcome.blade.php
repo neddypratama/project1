@@ -81,7 +81,8 @@
                                     target="_blank">Berlangganan </a></li>
                             {{-- <li class="bg-danger  rounded"><a class="btn btn-get-started"
                                     href="https://wa.me/6282232801273?text=Assalamualaikum" target="_blank">Berlangganan </a></li> --}}
-                            <li class=""><a class="bg-primary px-2 py-1 rounded w-auto" href="{{ route('login') }}">Login
+                            <li class=""><a class="bg-primary px-2 py-1 rounded w-auto"
+                                    href="{{ route('login') }}">Login
                                 </a></li>
                         @endauth
                     </ul>
@@ -130,97 +131,83 @@
             </div>
 
             <div class="icon-boxes position-relative" data-aos="fade-up" data-aos-delay="200">
-                <div class="container position-relative">
-                    <div id="carouselExampleCaptions" class="carousel slide mt-5 rounded" data-bs-ride="carousel">
-                        {{-- <div class="carousel-indicators">
-                          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                        </div> --}}
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                {{-- <img src="{{asset("img/bg-banner.jpg")}}" class="d-block w-100" alt="...">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h4 class="title"><a href="" class="stretched-link">Energi dan Migas</a></h4>
-                            </div> --}}
-                                <div class="icon-box">
-                                    <div class="icon"><i class="bi bi-easel"></i></div>
-                                    <h4 class="title"><a href="" class="stretched-link">Energi dan Migas</a>
-                                    </h4>
+                <div class=" position-relative">
+                    <div class="container text-center mt-5">
+                        <div class="row mx-auto my-auto justify-content-center">
+                            <div id="recipeCarousel" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner" role="listbox">
+                                    <div class="carousel-item active ">
+                                        <div class="col-md-4 pe-2">
+                                            <div class="icon-box ">
+                                                <div class="icon"><i class="bi bi-easel"></i></div>
+                                                <h4 class="title"><a href="" class="stretched-link">Energi
+                                                        dan Migas</a>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item ">
+                                        <div class="col-md-4 pe-2">
+                                            <div class="icon-box">
+                                                <div class="icon"><i class="bi bi-gem"></i></div>
+                                                <h4 class="title"><a href=""
+                                                        class="stretched-link">Manufaktur</a></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="col-md-4 pe-2">
+                                            <div class="icon-box">
+                                                <div class="icon"><i class="bi bi-geo-alt"></i></div>
+                                                <h4 class="title"><a href=""
+                                                        class="stretched-link">Konstruksi</a></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="col-md-4 pe-2">
+                                            <div class="icon-box">
+                                                <div class="icon"><i class="bi bi-command"></i></div>
+                                                <h4 class="title"><a href=""
+                                                        class="stretched-link">Transportasi dan
+                                                        Logistik</a></h4>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="carousel-item">
-                                {{-- <img src="..." class="d-block w-100" alt="...">
-                            <div class="carousel-caption d-none d-md-block">
-                              <h5>Second slide label</h5>
-                              <p>Some representative placeholder content for the second slide.</p>
-                            </div> --}}
-                                <div class="icon-box">
-                                    <div class="icon"><i class="bi bi-gem"></i></div>
-                                    <h4 class="title"><a href="" class="stretched-link">Manufaktur</a></h4>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                {{-- <img src="..." class="d-block w-100" alt="..."> --}}
-                                <div class="icon-box">
-                                    <div class="icon"><i class="bi bi-geo-alt"></i></div>
-                                    <h4 class="title"><a href="" class="stretched-link">Konstruksi</a></h4>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                {{-- <img src="..." class="d-block w-100" alt="..."> --}}
-                                <div class="icon-box">
-                                    <div class="icon"><i class="bi bi-command"></i></div>
-                                    <h4 class="title"><a href="" class="stretched-link">Transportasi dan
-                                            Logistik</a></h4>
-                                </div>
+                                <a class="carousel-control-prev bg-transparent w-aut" href="#recipeCarousel"
+                                    role="button" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                </a>
+                                <a class="carousel-control-next bg-transparent w-aut" href="#recipeCarousel"
+                                    role="button" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                </a>
                             </div>
                         </div>
-                        <button class="carousel-control-prev" type="button"
-                            data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button"
-                            data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
                     </div>
-                    {{-- <div class="row gy-4 mt-5">
-                        <div class="col-xl-3 col-md-6">
-                            <div class="icon-box">
-                                <div class="icon"><i class="bi bi-easel"></i></div>
-                                <h4 class="title"><a href="" class="stretched-link">Energi dan Migas</a></h4>
-                            </div>
-                        </div>
-                        <!--End Icon Box -->
 
-                        <div class="col-xl-3 col-md-6">
-                            <div class="icon-box">
-                                <div class="icon"><i class="bi bi-gem"></i></div>
-                                <h4 class="title"><a href="" class="stretched-link">Manufaktur</a></h4>
-                            </div>
-                        </div>
-                        <!--End Icon Box -->
 
-                        <div class="col-xl-3 col-md-6">
-                            <div class="icon-box">
-                                <div class="icon"><i class="bi bi-geo-alt"></i></div>
-                                <h4 class="title"><a href="" class="stretched-link">Konstruksi</a></h4>
-                            </div>
-                        </div>
-                        <!--End Icon Box -->
 
-                        <div class="col-xl-3 col-md-6">
-                            <div class="icon-box">
-                                <div class="icon"><i class="bi bi-command"></i></div>
-                                <h4 class="title"><a href="" class="stretched-link">Transportasi dan
-                                        Logistik</a></h4>
-                            </div>
-                        </div>
-                        <!--End Icon Box -->
-                    </div> --}}
+                    <script>
+                        let items = document.querySelectorAll('.carousel .carousel-item')
+
+                        items.forEach((el) => {
+                            const minPerSlide = 4
+                            let next = el.nextElementSibling
+                            for (var i = 1; i < minPerSlide; i++) {
+                                if (!next) {
+                                    // wrap carousel by using first child
+                                    next = items[0]
+                                }
+                                let cloneChild = next.cloneNode(true)
+                                el.appendChild(cloneChild.children[0])
+                                next = next.nextElementSibling
+                            }
+                        })
+                    </script>
+
+
                 </div>
             </div>
         </section>
