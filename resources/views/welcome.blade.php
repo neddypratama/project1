@@ -9,7 +9,7 @@
     <meta name="keywords" content="" />
 
     <!-- Favicons -->
-    <link href="{{ asset('impact/assets/img/favicon.png') }}" rel="icon" />
+    <link href="{{ asset('/img/logo.png') }}" rel="icon" />
     <link href="{{ asset('impact/assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon" />
 
     <!-- Fonts -->
@@ -39,7 +39,7 @@
 </head>
 
 <body class="index-page">
-    <header id="header" class="header fixed-top">
+    <header id="header" class="header fixed-top ">
         <!-- <div class="topbar d-flex align-items-center">
       <div class="container d-flex justify-content-center justify-content-md-between">
         <div class="contact-info d-flex align-items-center">
@@ -59,13 +59,13 @@
             <div class="container position-relative d-flex align-items-center justify-content-between">
                 <a href="index.html" class="logo d-flex align-items-center">
                     <!-- Uncomment the line below if you also wish to use an image logo -->
-                    <!-- <img src="assets/img/logo.png" alt=""> -->
+                    <img src="{{ asset('img/logo.png') }}" alt="">
                     <h1 class="sitename">SafeGuard</h1>
                     <span class="color-white">.</span>
                 </a>
 
                 <nav id="navmenu" class="navmenu">
-                    <ul>
+                    <ul class="gy-2">
                         <li>
                             <a href="#hero" class="active">Home<br /></a>
                         </li>
@@ -74,15 +74,15 @@
                         <li><a href="#why">Mengapa Kami?</a></li>
                         <li><a href="#contact">Kontak </a></li>
                         @auth
-                            <li class="bg-danger p-2 rounded"><a class="btn btn-get-started"
-                                    href="{{ route('home') }}">Dashboard</a></li>
+                            <li><a href="{{ route('home') }}">Dashboard</a></li>
                         @else
-                            <li class="bg-danger p-2 rounded"><a class="btn btn-get-started"
-                                    href="https://web.whatsapp.com/send?phone=62895360171810&text=Assalamualaikum  " target="_blank">Berlangganan </a></li>
-                            {{-- <li class="bg-danger p-2 rounded"><a class="btn btn-get-started"
+                            <li class=" "><a class="bg-primary px-2 py-1 rounded"
+                                    href="https://web.whatsapp.com/send?phone=62895360171810&text=Assalamualaikum  "
+                                    target="_blank">Berlangganan </a></li>
+                            {{-- <li class="bg-danger  rounded"><a class="btn btn-get-started"
                                     href="https://wa.me/6282232801273?text=Assalamualaikum" target="_blank">Berlangganan </a></li> --}}
-                            <li class="ms-3 bg-danger p-2 rounded"><a class="btn btn-get-started"
-                                    href="{{ route('login') }}">Login </a></li>
+                            <li class=""><a class="bg-primary px-2 py-1 rounded w-auto" href="{{ route('login') }}">Login
+                                </a></li>
                         @endauth
                     </ul>
                     <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -93,15 +93,29 @@
 
     <main class="main">
         <!-- Hero Section -->
-        <section id="hero" class="hero section accent-background">
+        <section id="hero" class="hero section accent-background" {{-- style="background-image: url({{ asset("img/bg-banner.jpg")}}); background-attachment: fixed; background-size: cover" --}}>
             <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
                 <div class="row gy-5 justify-content-between">
-                    <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
-                        <h2><span>Welcome to </span><span class="accent">SafeGuard</span></h2>
-                        <p>
-                            Digital Health, Safety, Security and Environment</p>
+                    <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center ">
+                        {{-- <h2><span>Welcome to </span><span class="accent">SafeGuard</span></h2> --}}
+                        <h2><span>PENGECEKAN DAN PELAPORAN K3 EFEKTIF, CEPAT, & TANPA RIBET</span></h2>
+                        {{-- <p> Digital Health, Safety, Security and Environment</p> --}}
+                        <ul>
+                            <li>
+                                <span>PENGECEKAN APAR</span>
+                                <i class="bi bi-check-circle-fill"></i>
+                            </li>
+                            <li>
+                                <span>PENGECEKAN P3K</span>
+                                <i class="bi bi-check-circle-fill"></i>
+                            </li>
+                            <li>
+                                <span>PELAPORAN SAFETY PATROL</span>
+                                <i class="bi bi-check-circle-fill"></i>
+                            </li>
+                        </ul>
                         <div class="d-flex">
-                            <a href="#about" class="btn-get-started">Tentang kami</a>
+                            <a href="#about" class="btn-get-started">DAFTAR SEKARANG</a>
                             <!-- <a
          href="https://www.youtube.com/watch?v=Y7f98aduVJ8"
          class="glightbox btn-watch-video d-flex align-items-center"
@@ -110,14 +124,70 @@
                         </div>
                     </div>
                     <div class="col-lg-5 order-1 order-lg-2">
-                        <img src="assets/img/hero-img.svg" class="img-fluid" alt="" />
+                        {{-- <img src="{{ asset('img/hero.png') }}" style="width: 500px ;translateX: 100px" class="img-fluid" alt="" /> --}}
                     </div>
                 </div>
             </div>
 
             <div class="icon-boxes position-relative" data-aos="fade-up" data-aos-delay="200">
                 <div class="container position-relative">
-                    <div class="row gy-4 mt-5">
+                    <div id="carouselExampleCaptions" class="carousel slide mt-5 rounded" data-bs-ride="carousel">
+                        {{-- <div class="carousel-indicators">
+                          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div> --}}
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                {{-- <img src="{{asset("img/bg-banner.jpg")}}" class="d-block w-100" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h4 class="title"><a href="" class="stretched-link">Energi dan Migas</a></h4>
+                            </div> --}}
+                                <div class="icon-box">
+                                    <div class="icon"><i class="bi bi-easel"></i></div>
+                                    <h4 class="title"><a href="" class="stretched-link">Energi dan Migas</a>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                {{-- <img src="..." class="d-block w-100" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                              <h5>Second slide label</h5>
+                              <p>Some representative placeholder content for the second slide.</p>
+                            </div> --}}
+                                <div class="icon-box">
+                                    <div class="icon"><i class="bi bi-gem"></i></div>
+                                    <h4 class="title"><a href="" class="stretched-link">Manufaktur</a></h4>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                {{-- <img src="..." class="d-block w-100" alt="..."> --}}
+                                <div class="icon-box">
+                                    <div class="icon"><i class="bi bi-geo-alt"></i></div>
+                                    <h4 class="title"><a href="" class="stretched-link">Konstruksi</a></h4>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                {{-- <img src="..." class="d-block w-100" alt="..."> --}}
+                                <div class="icon-box">
+                                    <div class="icon"><i class="bi bi-command"></i></div>
+                                    <h4 class="title"><a href="" class="stretched-link">Transportasi dan
+                                            Logistik</a></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button"
+                            data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button"
+                            data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                    {{-- <div class="row gy-4 mt-5">
                         <div class="col-xl-3 col-md-6">
                             <div class="icon-box">
                                 <div class="icon"><i class="bi bi-easel"></i></div>
@@ -150,7 +220,7 @@
                             </div>
                         </div>
                         <!--End Icon Box -->
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </section>
@@ -344,7 +414,7 @@
                     <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
                         <div class="why-item-white position-relative">
                             <div class="icon">
-                                <i class="bi bi-easel"></i>
+                                <i class="bi bi-clock"></i>
                             </div>
                             <h3>Dukungan 24/7</h3>
                             <p>
