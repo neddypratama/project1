@@ -137,7 +137,7 @@
                             <div id="recipeCarousel" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner" role="listbox">
                                     <div class="carousel-item active ">
-                                        <div class="col-md-4 pe-2">
+                                        <div class=" col-md-4 pe-2">
                                             <div class="icon-box ">
                                                 <div class="icon"><i class="bi bi-easel"></i></div>
                                                 <h4 class="title"><a href="" class="stretched-link">Energi
@@ -147,7 +147,7 @@
                                         </div>
                                     </div>
                                     <div class="carousel-item ">
-                                        <div class="col-md-4 pe-2">
+                                        <div class=" col-md-4 pe-2">
                                             <div class="icon-box">
                                                 <div class="icon"><i class="bi bi-gem"></i></div>
                                                 <h4 class="title"><a href=""
@@ -156,7 +156,7 @@
                                         </div>
                                     </div>
                                     <div class="carousel-item">
-                                        <div class="col-md-4 pe-2">
+                                        <div class=" col-md-4 pe-2">
                                             <div class="icon-box">
                                                 <div class="icon"><i class="bi bi-geo-alt"></i></div>
                                                 <h4 class="title"><a href=""
@@ -165,12 +165,11 @@
                                         </div>
                                     </div>
                                     <div class="carousel-item">
-                                        <div class="col-md-4 pe-2">
+                                        <div class=" col-md-4 pe-2">
                                             <div class="icon-box">
                                                 <div class="icon"><i class="bi bi-command"></i></div>
                                                 <h4 class="title"><a href=""
-                                                        class="stretched-link">Transportasi dan
-                                                        Logistik</a></h4>
+                                                        class="stretched-link">Transportasi dan Logistik</a></h4>
                                             </div>
                                         </div>
                                     </div>

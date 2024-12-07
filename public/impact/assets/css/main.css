@@ -3110,12 +3110,24 @@ section,
     font-size: 14px;
 }
 
+
+
 @media (max-width: 767px) {
     .carousel-inner .carousel-item > div {
         display: none;
     }
     .carousel-inner .carousel-item > div:first-child {
         display: block;
+        width: 100%;
+    }
+    .carousel-inner .carousel-item-end.active,
+    .carousel-inner .carousel-item-next {
+        transform: translateX(100%);
+    }
+
+    .carousel-inner .carousel-item-start.active, 
+    .carousel-inner .carousel-item-prev {
+        transform: translateX(-100%);
     }
 }
 
@@ -3130,12 +3142,12 @@ section,
 
     .carousel-inner .carousel-item-end.active,
     .carousel-inner .carousel-item-next {
-        transform: translateX(33.333%);
+        transform: translateX(33.333333%);
     }
-
+    
     .carousel-inner .carousel-item-start.active, 
     .carousel-inner .carousel-item-prev {
-        transform: translateX(-33.333%);
+        transform: translateX(-33.333333%);
     }
 }
 
