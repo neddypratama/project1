@@ -937,7 +937,7 @@ section,
 .hero {
     width: 100%;
     position: relative;
-    padding: 140px 0 0 0;
+    padding: 100px 0 0 0;
     background-image: url("img/bg-banner.jpg");
 }
 

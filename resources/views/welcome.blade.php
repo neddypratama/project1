@@ -96,11 +96,9 @@
         <!-- Hero Section -->
         <section id="hero" class="hero section accent-background" {{-- style="background-image: url({{ asset("img/bg-banner.jpg")}}); background-attachment: fixed; background-size: cover" --}}>
             <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
-                <div class="row gy-5 justify-content-between">
+                {{-- <div class="row gy-5 justify-content-between">
                     <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center ">
-                        {{-- <h2><span>Welcome to </span><span class="accent">SafeGuard</span></h2> --}}
                         <h2><span>PENGECEKAN DAN PELAPORAN K3 EFEKTIF, CEPAT, & TANPA RIBET</span></h2>
-                        {{-- <p> Digital Health, Safety, Security and Environment</p> --}}
                         <ul>
                             <li>
                                 <span>PENGECEKAN APAR</span>
@@ -117,17 +115,14 @@
                         </ul>
                         <div class="d-flex">
                             <a href="#about" class="btn-get-started">DAFTAR SEKARANG</a>
-                            <!-- <a
-         href="https://www.youtube.com/watch?v=Y7f98aduVJ8"
-         class="glightbox btn-watch-video d-flex align-items-center"
-         ><i class="bi bi-play-circle"></i><span>Watch Video</span></a
-        > -->
                         </div>
                     </div>
                     <div class="col-lg-5 order-1 order-lg-2">
-                        {{-- <img src="{{ asset('img/hero.png') }}" style="width: 500px ;translateX: 100px" class="img-fluid" alt="" /> --}}
                     </div>
-                </div>
+                    <div class="col-lg-12 order-2 order-lg-1 d-flex flex-column justify-content-center ">
+                    </div>
+                </div> --}}
+                <img src="{{ asset('img/SAFEGUARD.png') }}"  class="img-fluid -mt-1" alt="" />
             </div>
 
             <div class="icon-boxes position-relative" data-aos="fade-up" data-aos-delay="200">
@@ -137,7 +132,7 @@
                             <div id="recipeCarousel" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner" role="listbox">
                                     <div class="carousel-item active ">
-                                        <div class=" col-md-4 pe-2">
+                                        <div class=" col-md-4 px-1">
                                             <div class="icon-box ">
                                                 <div class="icon"><i class="bi bi-easel"></i></div>
                                                 <h4 class="title"><a href="" class="stretched-link">Energi
@@ -147,7 +142,7 @@
                                         </div>
                                     </div>
                                     <div class="carousel-item ">
-                                        <div class=" col-md-4 pe-2">
+                                        <div class=" col-md-4 px-1">
                                             <div class="icon-box">
                                                 <div class="icon"><i class="bi bi-gem"></i></div>
                                                 <h4 class="title"><a href=""
@@ -156,7 +151,7 @@
                                         </div>
                                     </div>
                                     <div class="carousel-item">
-                                        <div class=" col-md-4 pe-2">
+                                        <div class=" col-md-4 px-1">
                                             <div class="icon-box">
                                                 <div class="icon"><i class="bi bi-geo-alt"></i></div>
                                                 <h4 class="title"><a href=""
@@ -165,7 +160,7 @@
                                         </div>
                                     </div>
                                     <div class="carousel-item">
-                                        <div class=" col-md-4 pe-2">
+                                        <div class=" col-md-4 px-1">
                                             <div class="icon-box">
                                                 <div class="icon"><i class="bi bi-command"></i></div>
                                                 <h4 class="title"><a href=""
