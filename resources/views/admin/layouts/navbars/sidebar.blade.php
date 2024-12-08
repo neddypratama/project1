@@ -51,7 +51,7 @@
                     <span class="nav-link-text">{{ 'APAR' }}</span>
                     <b class="caret mt-1"></b>
                 </a>
-                <div class="collapse {{ in_array($pageSlug, ['lapor_apar', 'input_apar', 'lihat_apar', 'revisi_apar']) ? 'show' : '' }}"
+                <div class="collapse {{ in_array($pageSlug, ['lapor_apar', 'input_apar', 'lihat_apar', 'revisi_apar', 'menu_approve']) ? 'show' : '' }}"
                     id="apar_sidebar">
                     <ul class="nav pl-4">
                         <li @if ($pageSlug == 'lapor_apar') class="active " @endif>

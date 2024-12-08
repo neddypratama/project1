@@ -62,21 +62,21 @@ class SubUraianSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        // DB::table('sub_uraians')->insert([
-        //     'sub_uraian_id' => 7,
-        //     'sub_uraian_nama' => 'Baik/Rusak',
-        //     'sub_uraian_tipe' => 'select',
-        //     'uraian_id' => '7',
-        //     'created_at' => now(),
-        //     'updated_at' => now()
-        // ]);
-        // DB::table('sub_uraians')->insert([
-        //     'sub_uraian_id' => 8,
-        //     'sub_uraian_nama' => 'Ada/Tidak ada',
-        //     'sub_uraian_tipe' => 'select',
-        //     'uraian_id' => '8',
-        //     'created_at' => now(),
-        //     'updated_at' => now()
-        // ]);
+        DB::table('sub_uraians')->insert([
+            'sub_uraian_id' => 7,
+            'sub_uraian_nama' => 'Baik/Rusak',
+            'sub_uraian_tipe' => 'select',
+            'uraian_id' => '7',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        DB::table('sub_uraians')->insert([
+            'sub_uraian_id' => 8,
+            'sub_uraian_nama' => 'Ada/Tidak ada',
+            'sub_uraian_tipe' => 'select',
+            'uraian_id' => '8',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
     }
 }

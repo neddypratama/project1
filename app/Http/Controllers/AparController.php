@@ -166,37 +166,37 @@ class AparController extends Controller
 
         // $suburaian = SubUraian::all()->select('sub_uraian_id' , 'sub_uraian_tipe')->toArray();
 
-        $validated = [];
+        // $validated = [];
 
-        if (!$request['texthasil']) {
-            // dd("dsadasd");
-            $validated = $request->validate([
-                'dokumentasi' => 'required|image|file|max:2048',
-                // 'texthasil.*' => 'required|min:3',
-                'selecthasil.*' => 'required',
-            ],[
-                'dokumentasi.required' => 'File dokumentasi wajib diunggah.',
-                'dokumentasi.image' => 'File dokumentasi harus berupa gambar.',
-                'dokumentasi.max' => 'Ukuran file dokumentasi tidak boleh lebih dari 2MB.',
-                // 'texthasil.*.required' => 'Field teks wajib diisi.',
-                'selecthasil.*.required' => 'Field pilihan wajib diisi.',
-            ]);
-        };
+        // if (!$request['texthasil']) {
+        //     // dd("dsadasd");
+        //     $validated = $request->validate([
+        //         'dokumentasi' => 'required|image|file|max:2048',
+        //         // 'texthasil.*' => 'required|min:3',
+        //         'selecthasil.*' => 'required',
+        //     ],[
+        //         'dokumentasi.required' => 'File dokumentasi wajib diunggah.',
+        //         'dokumentasi.image' => 'File dokumentasi harus berupa gambar.',
+        //         'dokumentasi.max' => 'Ukuran file dokumentasi tidak boleh lebih dari 2MB.',
+        //         // 'texthasil.*.required' => 'Field teks wajib diisi.',
+        //         'selecthasil.*.required' => 'Field pilihan wajib diisi.',
+        //     ]);
+        // };
 
-        if (!$request['selecthasil']) {
-            // dd("dsadasd");
-            $validated = $request->validate([
-                'dokumentasi' => 'required|image|file|max:2048',
-                'texthasil.*' => 'required|min:3',
-                // 'selecthasil.*' => 'required',
-            ],[
-                'dokumentasi.required' => 'File dokumentasi wajib diunggah.',
-                'dokumentasi.image' => 'File dokumentasi harus berupa gambar.',
-                'dokumentasi.max' => 'Ukuran file dokumentasi tidak boleh lebih dari 2MB.',
-                'texthasil.*.required' => 'Field teks wajib diisi.',
-                // 'selecthasil.*.required' => 'Field pilihan wajib diisi.',
-            ]);
-        };
+        // if (!$request['selecthasil']) {
+        //     // dd("dsadasd");
+        //     $validated = $request->validate([
+        //         'dokumentasi' => 'required|image|file|max:2048',
+        //         'texthasil.*' => 'required|min:3',
+        //         // 'selecthasil.*' => 'required',
+        //     ],[
+        //         'dokumentasi.required' => 'File dokumentasi wajib diunggah.',
+        //         'dokumentasi.image' => 'File dokumentasi harus berupa gambar.',
+        //         'dokumentasi.max' => 'Ukuran file dokumentasi tidak boleh lebih dari 2MB.',
+        //         'texthasil.*.required' => 'Field teks wajib diisi.',
+        //         // 'selecthasil.*.required' => 'Field pilihan wajib diisi.',
+        //     ]);
+        // };
 
         $validated = $request->validate([
             'dokumentasi' => 'required|image|max:2048',
@@ -209,6 +209,8 @@ class AparController extends Controller
             'texthasil.*.required' => 'Field teks wajib diisi.',
             'selecthasil.*.required' => 'Field pilihan wajib diisi.',
         ]);
+
+        dd($validated);
         
         if ($request->file('dokumentasi')) {
             Storage::disk('public')->putFile('apar', $request->file('dokumentasi'));
@@ -308,7 +310,7 @@ class AparController extends Controller
         foreach ($uraian as $item) {
             $subid = SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_id;
             
-
+            
             $data[] = [
                 'uraian' => $item->uraian_nama,
                 'sub_id' => $subid,
@@ -316,7 +318,7 @@ class AparController extends Controller
                 // 'hasil' => $slug,
             ];
         }
-        // dd($data , $slug);
+        // dd($data);
         
         // Edit data tertentu
         foreach ($sub_uraian as $sub) {

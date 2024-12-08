@@ -1,4 +1,4 @@
-@extends('admin.layouts.app', ['page' => __('User Management'), 'pageSlug' => 'users'])
+@extends('admin.layouts.app', ['page' => __('INPUT INSPEKSI'), 'pageSlug' => 'input_apar'])
 
 {{-- @stack('style')
 <style>
@@ -20,7 +20,7 @@
 </style> --}}
 
 @section('content')
-    <h4 class="card-title mb-3 fw-light">INPUT INSPEKSI</h4>
+    <h4 class="card-title mb-3 fw-light">Input Inspeksi</h4>
     <div class="row">
         <div class="col-lg-3">
             <div class="card sticky-top top-3">
@@ -81,7 +81,6 @@
                                         <input type="text" value="{{old('texthasil.' . $input['sub_id'])}}" name="texthasil[{{ $input['sub_id'] }}]" class="form-control">
                                         {{-- <input type="hidden" name="{{ $input['sub_id'] }}/{{ $input['tipe'] }}" value="{{ $input['tipe'] }}"> --}}
                                     </div>
-
                                     @error('texthasil.' . $index)
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
