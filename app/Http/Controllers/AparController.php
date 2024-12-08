@@ -372,42 +372,37 @@ class AparController extends Controller
 
     public function tampil(Request $request, $id)
     {
-        $apar = Apar::where('')->get();
-        dd($apar);
-        $uraian = uraian::all();
+        $apar = Apar::find($id);
+        $uraian = uraian::where('apar_id', $apar->first()->apar_id)->get();
         $sub_uraian = SubUraian::all();
-        $input = InputApar::all();
         
-        $tanggal =[];
-        foreach ($apar as $a) {
-            $tanggal[] = 
-                 $a->tanggal;
+        $tanggal = $apar->tanggal;
+        $bulan = Carbon::parse($tanggal)->translatedFormat('F');
+        
+        $data = [];
+        
+        foreach ($uraian as $item) {
+            $data[] = [
+                'uraian' => $item->uraian_nama,
+                'sub_id' => SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_id,
+                'sub_uraian' => explode('/', SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_nama),
+                // 'hasil' => '',
+            ];
         }
-        $result = [];
-
-        // Loop melalui array dan olah data
-        foreach ($tanggal as $date) {
-            // Konversi tanggal menjadi objek Carbon
-            $carbonDate = Carbon::parse($date);
-
-            // Ambil nama bulan dalam bahasa Inggris atau Indonesia
-            $bulan = $carbonDate->translatedFormat('F');
-
-            // Cari indeks bulan yang sama di hasil
-            $foundIndex = array_search(strtolower($bulan), array_column($result, 'bulan'));
-
-            // Jika bulan sudah ada di hasil, tambahkan jumlahnya
-            if ($foundIndex !== false) {
-                $result[$foundIndex]['jumlah']++;
-            } else {
-                // Jika bulan belum ada di hasil, tambahkan data baru
-                $result[] = [
-                    'bulan' => strtolower($bulan),
-                    'jumlah' => 1,
-                ];
+        
+        // Edit data tertentu
+        foreach ($sub_uraian as $sub) {
+            foreach ($data as &$row) {
+                if ($row['sub_id'] == $sub->sub_uraian_id) {
+                    $row['hasil'] = explode('/', InputApar::where('sub_uraian_id', $sub->sub_uraian_id)->first()->hasil_apar);
+                }
             }
         }
-        $bulan = $result;
-        return view('admin.apar.show', compact('apar', 'uraian', 'sub_uraian', 'bulan' ,'tanggal'));
+        // dd($data);
+
+        // Kirim data ke view
+        return view('admin.apar.show', compact('apar', 'uraian', 'sub_uraian', 'bulan' , 'data' ,'tanggal'));
     }
 }
+
+
