@@ -17,6 +17,42 @@ class AparController extends Controller
     public function index(Request $request)
     {
         $apar = Apar::all();
+        $tanggal =[];
+        foreach ($apar as $a) {
+            $tanggal[] = 
+                 $a->tanggal;
+        }
+        $result = [];
+        foreach ($tanggal as $date) {
+            // Konversi tanggal menjadi objek Carbon
+            $carbonDate = Carbon::parse($date);
+        
+            // Ambil tahun dari tanggal
+            $tahun = $carbonDate->year;
+        
+            // Cari indeks tahun yang sama di hasil
+            $foundIndex = array_search($tahun, array_column($result, 'tahun'));
+        
+            // Jika tahun sudah ada di hasil, tambahkan jumlahnya
+            if ($foundIndex !== false) {
+                $result[$foundIndex]['jumlah']++;
+            } else {
+                // Jika tahun belum ada di hasil, tambahkan data baru
+                $result[] = [
+                    'tahun'  => $tahun,
+                    'jumlah' => 1,
+                ];
+
+                
+            }
+        }
+
+        return view('admin.apar.index', compact('apar', 'result'));
+    }
+
+    public function cetak(Request $request)
+    {
+        $apar = Apar::all();
         $uraian = uraian::where('apar_id', $apar->first()->apar_id)->get();
         $sub_uraian = SubUraian::all();
         
@@ -75,8 +111,6 @@ class AparController extends Controller
                 }
             }
         }
-        
-        // dd($data);
 
         return view('admin.apar.index', compact('apar', 'uraian', 'sub_uraian', 'bulan' , 'data' ,'tanggal'));
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExportController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile/{id}', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::put('profile/password/{id}', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+    Route::get('download-pdf/{tahun}', [ExportController::class, 'downloadPDF'])->name('download.pdf');
+    Route::get('download-excel/{tahun}', [ExportController::class, 'downloadExcel'])->name('download.excel');
+    Route::get('print/{tahun}', [ExportController::class, 'print'])->name('print.view');
 });
 
 Route::get('/test-email', function () {
