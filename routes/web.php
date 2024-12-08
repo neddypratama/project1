@@ -38,6 +38,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::resource('apar', 'App\Http\Controllers\AparController', ['except' => ['show']]);
     Route::get('apar/riwayat', ['as' => 'apar.riwayat', 'uses' => 'App\Http\Controllers\AparController@riwayat']);
     Route::get('apar/tampil/{id}', ['as' => 'apar.tampil', 'uses' => 'App\Http\Controllers\AparController@tampil']);
+    Route::get('apar/approve', ['as' => 'apar.approve', 'uses' => 'App\Http\Controllers\AparController@approve']);
+    Route::get('apar/acc/{id}', ['as' => 'apar.acc', 'uses' => 'App\Http\Controllers\AparController@acc']);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile/{id}', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::put('profile/password/{id}', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);

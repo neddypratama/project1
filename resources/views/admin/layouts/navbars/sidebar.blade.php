@@ -45,8 +45,8 @@
                 </div>
             <li>
                 <a data-toggle="collapse" href="#apar_sidebar"
-                    aria-expanded="{{ in_array($pageSlug, ['lapor_apar', 'input_apar', 'lihat_apar', 'revisi_apar']) ? 'true' : 'false' }}"
-                    class="{{ in_array($pageSlug, ['lapor_apar', 'input_apar', 'lihat_apar', 'revisi_apar']) ? '' : 'collapsed' }}">
+                    aria-expanded="{{ in_array($pageSlug, ['lapor_apar', 'input_apar', 'lihat_apar', 'revisi_apar' , 'menu_approve']) ? 'true' : 'false' }}"
+                    class="{{ in_array($pageSlug, ['lapor_apar', 'input_apar', 'lihat_apar', 'revisi_apar' , 'menu_approve']) ? '' : 'collapsed' }}">
                     <i class="tim-icons icon-badge"></i>
                     <span class="nav-link-text">{{ 'APAR' }}</span>
                     <b class="caret mt-1"></b>
@@ -70,6 +70,12 @@
                             <a href="{{ route('apar.riwayat') }}">
                                 <i class="tim-icons icon-bullet-list-67"></i>
                                 <p>{{ 'Riwayat Apar' }}</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'menu_approve') class="active " @endif>
+                            <a href="{{ route('apar.approve') }}">
+                                <i class="tim-icons icon-bullet-list-67"></i>
+                                <p>{{ 'Approve Apar' }}</p>
                             </a>
                         </li>
                         {{-- <li @if ($pageSlug == 'revisi_apar') class="active " @endif>
