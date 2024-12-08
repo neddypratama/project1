@@ -29,6 +29,11 @@
                 </div> --}}
                 <ul class="nav flex-column  p-3">
                     <span class="fw-bolder">List Krteria</span>
+                    <li class="nav-item pt-2">
+                        <a class="nav-link text-body" data-scroll href="#dokumentasi">
+                            <span class="text-sm">{{ 'Dokumentasi' }}</span>
+                        </a>
+                    </li>
                     @foreach ($data as $uraian)
                         <li class="nav-item pt-2">
                             <a class="nav-link text-body" data-scroll href="#{{ $uraian['uraian'] }}">
@@ -40,9 +45,27 @@
             </div>
         </div>
         <div class="col-lg-9 mt-lg-0 mt-4">
-            <form action="{{ route('apar.store') }}" method="post">
+            <form action="{{ route('apar.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
-                @foreach ($data as $input)
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Dokumentasi</h5>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="">
+                            <label for="formFile" class="form-label">Upload dokumentasi</label>
+                            <input class="form-control" type="file" id="formFile" name="dokumentasi"
+                                onchange="previewImage()">
+                        </div>
+                        <div class="mt-3">
+                            <img id="previewImagee" style="width: 300px" />
+                        </div>
+                        @error('dokumentasi') 
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+                @foreach ($data as $index => $input)
                     <div class="card" id="{{ $input['uraian'] }}">
                         <div class="card-header">
                             <h5>{{ $input['uraian'] }}</h5>
@@ -55,18 +78,28 @@
                                     {{-- <option value="1">{{ $sub['sub_uraian'] }}</option> --}}
                                     <div class="form-group">
                                         <label>{{ $sub['sub_uraian'] }}</label>
-                                        <input type="text" name="name" class="form-control">
+                                        <input type="text" value="{{old('texthasil.' . $input['sub_id'])}}" name="texthasil[{{ $input['sub_id'] }}]" class="form-control">
+                                        {{-- <input type="hidden" name="{{ $input['sub_id'] }}/{{ $input['tipe'] }}" value="{{ $input['tipe'] }}"> --}}
                                     </div>
+
+                                    @error('texthasil.' . $index)
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 @endforeach
                             @elseif ($input['tipe'] == 'select')
-                                <select class="form-select" aria-label="Default select example">
-                                    {{-- <option selected></option> --}}
-                                    {{-- <option value=" " selected>...</option> --}}
+                                <select class="form-select" value="{{old('selecthasil.' . $index)}}" name="selecthasil[{{ $input['sub_id'] }}]"
+                                    aria-label="Default select example">
+                                    <option value=" " selected>--Pilih--</option>
                                     @foreach ($input['sub_uraian'] as $sub)
-                                        <option value="1">{{ $sub['sub_uraian'] }}</option>
+                                        <option value="{{ $sub['sub_uraian'] }}" {{old('selecthasil.' . $input['sub_id']) == $sub['sub_uraian'] ? 'selected' : ''}}>{{ $sub['sub_uraian'] }}</option>
                                     @endforeach
                                 </select>
+                                @error('selecthasil.' . $index)
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                                {{-- <input type="hidden" name="{{ $input['sub_id'] }}/{{ $input['tipe'] }}" value="{{ $input['tipe'] }}"> --}}
                             @endif
+
                             {{-- <div class="form-group">
                                     <label>{{ $sub }}</label>
                                     <input type="text" name="name" class="form-control" placeholder="Name"
@@ -167,6 +200,28 @@
 
 @stack('js')
 <script>
+    // document.getElementById("formFile").addEventListener("change", function(event) {
+    //     const file = event.target.files[0];
+    //     const previewImage = document.getElementById("previewImage");
+
+
+    // });
+    function previewImage() {
+        const file = document.querySelector("#formFile");
+        const preview = document.querySelector("#previewImagee");
+        preview.style.display = "block"; // Tampilkan gambar setelah dipilih
+
+        const reader = new FileReader();
+
+        reader.readAsDataURL(file.files[0]);
+        reader.onload = function(eFREvent) {
+            preview.src = eFREvent.target.result;
+            // preview.src = "#";
+            // preview.style.display = "none"; // Sembunyikan gambar jika tidak ada file
+
+        }
+    }
+
     function updatePaginationLimit(limit) {
         const url = new URL(window.location.href);
         url.searchParams.set('limit', limit); // Tambahkan atau update parameter 'limit'

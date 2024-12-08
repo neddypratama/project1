@@ -22,14 +22,5 @@ class AparSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        DB::table('apars')->insert([
-            'apar_id' => 2,
-            'tanggal' => '2024-12-14',
-            'status' => 'Revisi',
-            'dokumentasi' => '',
-            'user_id' => '1',
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
     }
 }

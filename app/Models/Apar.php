@@ -16,6 +16,7 @@ class Apar extends Model
         'tanggal',
         'status',
         'user_id',
+        'dokumentasi',
         'created_at',
         'updated_at',
     ];
