@@ -24,17 +24,18 @@
         }
     </style> --}}
 </head>
+
 <body class="white-content {{ $class ?? '' }}">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="card mt-5">
                     <div class="card-header text-center">
-                        <h5 style="text-align: center">Laporan Apar Tahun {{$tahun}}</h5>
+                        <h5 style="text-align: center">Laporan Apar Tahun {{ $tahun }}</h5>
                     </div>
                     <div class="card-body">
                         <div class="mt-5">
-                            <table id="laporanTable" class="table table-bordered" style="border: 3px !important;" >
+                            <table id="laporanTable" class="table table-bordered" style="border: 3px !important;">
                                 <thead class="text-center">
                                     <tr>
                                         <th rowspan="2" colspan="2" style="border: 2px">Uraian</th>
@@ -49,54 +50,65 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($data as $row)
-                                        @foreach ($row['sub_uraian'] as $key => $sub)
-                                            <tr>
-                                                @if ($key === 0)
-                                                    <td rowspan="{{ count($row['sub_uraian']) }}" >
-                                                        {{ $row['uraian'] }}
-                                                    </td>
+                                    @foreach ($uraian as $row)
+                                        <tr>
+                                            <td
+                                                rowspan="{{ $sub_uraian->where('uraian_id', $row->uraian_id)->count() }}">
+                                                {{ $row->uraian_nama }}
+                                            </td>
+                                            @php $firstSub = true; @endphp
+                                            @foreach ($sub_uraian->where('uraian_id', $row->uraian_id) as $sub)
+                                                @if (!$firstSub)
+                                                    <tr>
                                                 @endif
-                                                <td>{{ $sub }}</td>
-                                                <td>
-                                                    @if ($row['hasil'][$key] == 1)
-                                                        Iya
-                                                    @else
-                                                        @if ($row['hasil'][$key] == 0)
-                                                            Tidak
-                                                        @else
-                                                            {{ $row['hasil'][$key] ?? '' }}
+                                                <td>{{ $sub->sub_uraian_nama }}</td>
+                                                    @foreach ($input as $i)
+                                                            @if ($sub->sub_uraian_id == $i->sub_uraian_id )
+                                                                @if ($i->hasil_apar == 1)
+                                                                    <td>Iyaa</td>
+                                                                @else
+                                                                    @if ($i->hasil_apar == 0)
+                                                                        <td>Tidak</td>
+                                                                    @else
+                                                                        <td>{{ $i->hasil_apar }}</td>
+                                                                    @endif
+                                                                @endif
+                                                            @break
                                                         @endif
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                                    @endforeach
+                                                     </tr>
+                                                     @php $firstSub = false; @endphp
+                                            @endforeach
+                                        </tr>
                                     @endforeach
                                     <tr>
                                         <td colspan="2">Dokumentasi</td>
                                         @foreach ($apar as $item)
-                                            <td><img src="{{$item->dokumentasi}}" alt=""></td>
+                                            <td>
+                                                <img src="{{ asset($item->dokumentasi) }}" alt="Dokumentasi"
+                                                    style="width: 100px; height: auto; border: 1px solid #ccc;">
+                                            </td>
                                         @endforeach
                                     </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- JS Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
-    
-    <script>
-        // Cetak otomatis saat halaman dimuat
-        window.onload = function() {
-            window.print();
-        };
-    </script>
+<!-- JS Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+
+<script>
+    // Cetak otomatis saat halaman dimuat
+    window.onload = function() {
+        window.print();
+    };
+</script>
 </body>
 
 </html>
