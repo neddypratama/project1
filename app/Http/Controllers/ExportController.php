@@ -20,14 +20,13 @@ class ExportController extends Controller
         // dd($apar);
         $uraian = uraian::all();
         $sub_uraian = SubUraian::all();
+        $input = InputApar::all();
         
         $tanggal =[];
         foreach ($apar as $a) {
             $tanggal[] = 
                  $a->tanggal;
         }
-
-
         $result = [];
 
         // Loop melalui array dan olah data
@@ -52,39 +51,13 @@ class ExportController extends Controller
                 ];
             }
         }
-
-        // dd($result , $tanggal);
-
         $bulan = $result;
-
-        $data = [];
-
-        foreach ($uraian as $item) {
-            $data[] = [
-                'uraian' => $item->uraian_nama,
-                'sub_id' => SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_id,
-                'sub_uraian' => explode('/', SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_nama),
-                // 'hasil' => '',
-            ];
-        }
-        
-        // Edit data tertentu
-        foreach ($sub_uraian as $sub) {
-            foreach ($data as &$row) {
-                if ($row['sub_id'] == $sub->sub_uraian_id) {
-                    $row['hasil'] = explode('/', InputApar::where('sub_uraian_id', $sub->sub_uraian_id)->first()->hasil_apar);
-                }
-            }
-        }
-
-        dd($data);
-
         return [
-            'data' => $data,
             'bulan' => $bulan,
             'tanggal' => $tanggal,
             'apar' => $apar,
             'uraian' => $uraian,
+            'input' => $input,
             'sub_uraian' => $sub_uraian,
         ];
     }
