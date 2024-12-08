@@ -25,7 +25,7 @@ class SubUraianSeeder extends Seeder
         DB::table('sub_uraians')->insert([
             'sub_uraian_id' => 2,
             'sub_uraian_nama' => 'Tabung telah terpakai/Tabung belum terpakai',
-            'sub_uraian_tipe' => 'checkbox',
+            'sub_uraian_tipe' => 'select',
             'uraian_id' => '2',
             'created_at' => now(),
             'updated_at' => now()
@@ -33,7 +33,7 @@ class SubUraianSeeder extends Seeder
         DB::table('sub_uraians')->insert([
             'sub_uraian_id' => 3,
             'sub_uraian_nama' => 'Putus/Baik',
-            'sub_uraian_tipe' => 'checkbox',
+            'sub_uraian_tipe' => 'select',
             'uraian_id' => '3',
             'created_at' => now(),
             'updated_at' => now()
@@ -41,7 +41,7 @@ class SubUraianSeeder extends Seeder
         DB::table('sub_uraians')->insert([
             'sub_uraian_id' => 4,
             'sub_uraian_nama' => 'Menunjukkan warna merah/menunjukkan warna hijau',
-            'sub_uraian_tipe' => 'checkbox',
+            'sub_uraian_tipe' => 'select',
             'uraian_id' => '4',
             'created_at' => now(),
             'updated_at' => now()
@@ -49,7 +49,7 @@ class SubUraianSeeder extends Seeder
         DB::table('sub_uraians')->insert([
             'sub_uraian_id' => 5,
             'sub_uraian_nama' => 'Tabung kotor/Tabung bersih',
-            'sub_uraian_tipe' => 'checkbox',
+            'sub_uraian_tipe' => 'select',
             'uraian_id' => '5',
             'created_at' => now(),
             'updated_at' => now()
@@ -57,7 +57,7 @@ class SubUraianSeeder extends Seeder
         DB::table('sub_uraians')->insert([
             'sub_uraian_id' => 6,
             'sub_uraian_nama' => 'Baik/Rusak',
-            'sub_uraian_tipe' => 'checkbox',
+            'sub_uraian_tipe' => 'select',
             'uraian_id' => '6',
             'created_at' => now(),
             'updated_at' => now()
@@ -65,7 +65,7 @@ class SubUraianSeeder extends Seeder
         DB::table('sub_uraians')->insert([
             'sub_uraian_id' => 7,
             'sub_uraian_nama' => 'Baik/Rusak',
-            'sub_uraian_tipe' => 'checkbox',
+            'sub_uraian_tipe' => 'select',
             'uraian_id' => '7',
             'created_at' => now(),
             'updated_at' => now()
@@ -73,7 +73,7 @@ class SubUraianSeeder extends Seeder
         DB::table('sub_uraians')->insert([
             'sub_uraian_id' => 8,
             'sub_uraian_nama' => 'Ada/Tidak ada',
-            'sub_uraian_tipe' => 'text',
+            'sub_uraian_tipe' => 'select',
             'uraian_id' => '8',
             'created_at' => now(),
             'updated_at' => now()
