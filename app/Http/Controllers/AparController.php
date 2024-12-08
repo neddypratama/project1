@@ -112,6 +112,8 @@ class AparController extends Controller
                 }
             }
         }
+
+        dd($data);
         return view('admin.apar.index', compact('apar', 'uraian', 'sub_uraian', 'bulan' , 'data' ,'tanggal'));
     }
 

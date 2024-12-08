@@ -105,9 +105,9 @@
 
 <script>
     // Cetak otomatis saat halaman dimuat
-    window.onload = function() {
-        window.print();
-    };
+    // window.onload = function() {
+    //     window.print();
+    // };
 </script>
 </body>
 
