@@ -47,6 +47,6 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     public function user():HasMany{
-        return $this->hasMany(uraian::class, 'user_id', 'user_id');
+        return $this->hasMany(Apar::class, 'user_id', 'user_id');
     }
 }

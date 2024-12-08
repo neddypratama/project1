@@ -19,6 +19,11 @@ class DatabaseSeeder extends Seeder
         $this->call([UraianSeeder::class]);
         $this->call([SubUraianSeeder::class]);
         $this->call([InputAparSeeder::class]);
-
+        $this->call([P3KSeeder::class]);
+        $this->call([KotakP3KSeeder::class]);
+        $this->call([IsiP3KSeeder::class]);
+        $this->call([KondisiP3KSeeder::class]);
+        $this->call([InputIsiP3KSeeder::class]);
+        $this->call([InputKondisiP3KSeeder::class]);
     }
 }
