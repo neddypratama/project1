@@ -21,42 +21,119 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
-            <div class="card ">
+        <div class="col-lg-3">
+            <div class="card sticky-top top-3">
+                <ul class="nav flex-column  p-3">
+                    <li class="nav-item">
+                        <a class="nav-link text-body" data-scroll href="#profile">
+                            <span class="text-sm">Profile</span>
+                        </a>
+                    </li>
+                    <li class="nav-item pt-2">
+                        <a class="nav-link text-body" data-scroll href="#basic-info">
+                            <span class="text-sm">Basic Info</span>
+                        </a>
+                    </li>
+                    <li class="nav-item pt-2">
+                        <a class="nav-link text-body" data-scroll href="#password">
+                            <span class="text-sm">Change Password</span>
+                        </a>
+                    </li>
+                    <li class="nav-item pt-2">
+                        <a class="nav-link text-body" data-scroll href="#delete">
+                            <span class="text-sm">Delete Account</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-9 mt-lg-0 mt-4">
+            <div class="card" id="basic-info">
                 <div class="card-header">
-                    <div class="row">
-                        <div class="col-8">
-                            <h4 class="card-title">Users</h4>
-                        </div>
-                        <div class="col-4 text-right">
-                            {{-- <a href="#" class="btn btn-sm btn-primary">Add user</a> --}}
-                        </div>
-                    </div>
+                    <h5>Basic Info</h5>
                 </div>
-                <div class="card-body">
-                    @include('admin.alerts.success')
-                    @include('admin.alerts.alert')
-                    <div class="container-fluid">
-                    </div>
-                </div>
-                <div class="card-footer ">
-                    {{-- <nav class="d-flex justify-content-between align-items-center" aria-label="...">
+                <form id="update-form" method="post" action="https://harsyadteknologi.com/profile/1"
+                    autocomplete="off">
+                    <div class="card-body pt-0">
+                        <input type="hidden" name="_token" value="HAsJcUipNxKQke78aomsvhpAfTHo2kfbjqlHd2EX"
+                            autocomplete="off"> <input type="hidden" name="_method" value="put">
+
                         <div class="form-group">
-                            <select id="paginationLimit" class="form-control" onchange="updatePaginationLimit(this.value)"
-                                style="font-size: 12px">
-                                <option value="10" {{ request('limit') == 10 ? 'selected' : '' }}>10</option>
-                                <option value="25" {{ request('limit') == 25 ? 'selected' : '' }}>25</option>
-                                <option value="50" {{ request('limit') == 50 ? 'selected' : '' }}>50</option>
-                                <option value="all" {{ request('limit') == 'all' ? 'selected' : '' }}>All</option>
-                            </select>
+                            <label>Name</label>
+                            <input type="text" name="name" class="form-control" placeholder="Name"
+                                value="Admin">
                         </div>
 
-                        {{-- Tampilkan pagination hanya jika tidak memilih 'all' --}}
-                    {{-- @if ($data instanceof \Illuminate\Pagination\LengthAwarePaginator)
-                            {{ $data->links('vendor.pagination.bootstrap-5') }}
-                        @endif
-                    </nav> --}}
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" name="email" class="form-control" placeholder="Email Address"
+                                value="admin@white.com">
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button id="save-button" type="submit" class="btn btn-fill btn-secondary">Save</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card mt-4" id="password">
+                <div class="card-header">
+                    <h5>Change Password</h5>
                 </div>
+                <form method="post" action="https://harsyadteknologi.com/profile-password/1" autocomplete="off">
+                    <div class="card-body">
+                        <input type="hidden" name="_token" value="HAsJcUipNxKQke78aomsvhpAfTHo2kfbjqlHd2EX"
+                            autocomplete="off"> <input type="hidden" name="_method" value="put">
+
+                        <div class="form-group">
+                            <label>Current Password</label>
+                            <input type="password" name="old_password" class="form-control"
+                                placeholder="Current Password" value="" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input type="password" name="password" class="form-control" placeholder="New Password"
+                                value="" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm Password</label>
+                            <input type="password" name="password_confirmation" class="form-control"
+                                placeholder="Confirm Password" value="" required>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-fill btn-secondary">Change Password</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card mt-4" id="delete">
+                <div class="card-header">
+                    <h5>Delete Account</h5>
+                    <p class="text-sm mb-0">Once you delete your account, there is no going back. Please be certain.
+                    </p>
+                </div>
+                <form action="https://harsyadteknologi.com/profile/1" method="POST" id="delete-form">
+                    <input type="hidden" name="_token" value="HAsJcUipNxKQke78aomsvhpAfTHo2kfbjqlHd2EX"
+                        autocomplete="off"> <input type="hidden" name="_method" value="DELETE">
+                    <div class="card-body d-sm-flex pt-0">
+                        <div class="d-flex align-items-center mb-sm-0 mb-4">
+                            <div>
+                                <div class="form-check form-switch mb-0">
+                                    <input class="form-check-input" type="checkbox" id="check_delete"
+                                        name="check_delete" required>
+                                </div>
+                            </div>
+                            <div class="ms-2">
+                                <span class="text-dark font-weight-bold d-block text-sm">Confirm</span>
+                                <span class="text-xs d-block">I want to delete my account.</span>
+                            </div>
+                        </div>
+                        <button class="btn bg-gradient-danger mb-0 ms-auto" type="submit" name="button">Delete
+                            Account</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
