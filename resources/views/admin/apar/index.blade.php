@@ -107,7 +107,7 @@
                                         <td>Tabung Terpakai</td>
                                     </tr>
                                 </tbody> --}}
-                                <thead>
+                                <thead class="table-light">
                                     <tr>
                                         <th rowspan="2" colspan="2">Uraian</th>
                                         @foreach ($bulan as $b)
@@ -135,7 +135,6 @@
                                                 <td>{{ $sub }}</td>
                                                 <td>asdasdasdasdas</td>
                                                 <td>saaffdgsgs</td>
-                                                <td>ggkgkg</td>
                                             </tr>
                                         @endforeach
                                     @endforeach
