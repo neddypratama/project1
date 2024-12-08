@@ -25,7 +25,7 @@ class AparController extends Controller
             $subUraianNamas = explode('/', $item['sub_uraian_nama']); // Pecah berdasarkan '/'
             foreach ($subUraianNamas as $nama) {
                 $insertData[] = [// Tetap gunakan ID yang sama
-                    $item->uraian_id => $nama,               // Gunakan nama yang sudah dipecah
+                    $item->sub_uraian_id => $nama,               // Gunakan nama yang sudah dipecah
                 ];
             }
         }
