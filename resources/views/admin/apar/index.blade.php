@@ -1,22 +1,6 @@
 @extends('admin.layouts.app', ['page' => __('User Management'), 'pageSlug' => 'users'])
 
 {{-- @stack('style')
-<style>
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        text-align: center;
-    }
-
-    th,
-    td {
-        border: 1px solid black;
-        padding: 8px;
-    }
-
-    th {
-        background-color: #f4f4f4;
-    }
 </style> --}}
 
 @section('content')
@@ -50,76 +34,18 @@
                     </div>
                     <div class="">
                         <div class="table-responsive">
-                            {{-- <table class="table table-bordered text-center">
-                                <thead class="bg-danger text-white">
-                                    <tr>
-                                        <th rowspan="2" style="vertical-align: middle;">Uraian</th>
-                                        <th colspan="4">{{ $bulan }}</th>
-                                    </tr>
-                                    <tr>
-                                        @foreach ($apar as $a)
-                                            <th>{{ $a->tanggal }}</th>
-                                        @endforeach
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($uraian as $u)
-                                        <tr>
-                                            <td rowspan="2">{{ $u->uraian_nama}}</td>
-                                            <td></td>
-                                        </tr>
-                                    @endforeach
-
-
-                                    <!-- Tambahkan data lainnya sesuai kebutuhan -->
-                                </tbody>
-                            </table> --}}
-
                             <table class="table table-bordered text-center">
-                                {{-- <thead class="table-light">
-                                    <tr>
-                                        <th rowspan="2" colspan="2">Uraian</th>
-                                        <th colspan="2">Januari</th>
-                                    </tr>
-                                    <tr>
-                                        <th>10/10/2024</th>
-                                        <th>17/10/2024</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1. Posisi</td>
-                                        <td>No Tabung</td>
-                                    </tr>
-                                    <tr>
-                                        <td rowspan="4">2. Kondisi Tabung</td>
-                                        {{-- <td>aaaa</td>
-                                        <td>aaaa</td>
-                                        <td>aaaa</td> 
-                                    </tr>
-                                    <tr>
-                                        <td>Tabung Terpakai</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tabung Terpakai</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tabung Terpakai</td>
-                                    </tr>
-                                </tbody> --}}
                                 <thead class="table-light">
                                     <tr>
-                                        <th rowspan="2" colspan="2">Uraian</th>
+                                        <th rowspan="2" colspan="2" style="border: 1px solid #000;">Uraian</th>
                                         @foreach ($bulan as $b)
-                                            <th colspan="{{$b['jumlah']}}">{{ $b['bulan'] }}</th>
+                                            <th colspan="{{ $b['jumlah'] }}" style="border: 1px solid #000;">
+                                                {{ $b['bulan'] }}</th>
                                         @endforeach
-                                        {{-- <th colspan="2">bfaaff</th>
-                                        <th colspan="1">bfaaff</th> --}}
                                     </tr>
                                     <tr>
-                                        {{-- <th>asfgaygfui</th> --}}
                                         @foreach ($tanggal as $header)
-                                            <th>{{ $header }}</th>
+                                            <th style="border: 1px solid #000;">{{ $header }}</th>
                                         @endforeach
                                     </tr>
                                 </thead>
@@ -128,18 +54,27 @@
                                         @foreach ($row['sub_uraian'] as $key => $sub)
                                             <tr>
                                                 @if ($key === 0)
-                                                    <td rowspan="{{ count($row['sub_uraian']) }}">
+                                                    <td rowspan="{{ count($row['sub_uraian']) }}"
+                                                        style="border: 1px solid #000;">
                                                         {{ $row['uraian'] }}
                                                     </td>
                                                 @endif
-                                                <td>{{ $sub }}</td>
-                                                <td>asdasdasdasdas</td>
-                                                <td>saaffdgsgs</td>
+                                                <td style="border: 1px solid #000;">{{ $sub }}</td>
+                                                <td style="border: 1px solid #000;">
+                                                    @if ( $row['hasil'][$key] == 1)
+                                                        <i class="fa-solid fa-check"></i>
+                                                    @else
+                                                        @if ($row['hasil'][$key] == 0)
+                                                            <i class="fa-solid fa-xmark"></i>
+                                                        @else
+                                                            {{ $row['hasil'][$key] ?? '' }}
+                                                        @endif
+                                                    @endif
+                                                </td>
                                             </tr>
                                         @endforeach
                                     @endforeach
                                 </tbody>
-
                             </table>
                         </div>
                     </div>

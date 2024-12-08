@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Apar;
+use App\Models\InputApar;
 use App\Models\SubUraian;
 use App\Models\uraian;
 use Carbon\Carbon;
@@ -19,8 +20,7 @@ class AparController extends Controller
         $tanggal =[];
         foreach ($apar as $a) {
             $tanggal[] = 
-                 $a->tanggal
-            ;
+                 $a->tanggal;
         }
 
 
@@ -52,17 +52,29 @@ class AparController extends Controller
         // dd($result , $tanggal);
 
         $bulan = $result;
-        
-        $sub_uraian_nama = [];
 
         $data = [];
 
         foreach ($uraian as $item) {
             $data[] = [
                 'uraian' => $item->uraian_nama,
-                'sub_uraian' => explode('/', SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_nama)
+                'sub_id' => SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_id,
+                'sub_uraian' => explode('/', SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_nama),
+                'hasil' => '',
             ];
         }
+        
+        // Edit data tertentu
+        foreach ($sub_uraian as $sub) {
+            foreach ($data as &$row) {
+                if ($row['sub_id'] == $sub->sub_uraian_id) {
+                    $row['hasil'] = explode('/', InputApar::where('sub_uraian_id', $sub->sub_uraian_id)->first()->hasil_apar);
+                }
+            }
+        }
+        
+        // dd($data);
+
         return view('admin.apar.index', compact('apar', 'uraian', 'sub_uraian', 'bulan' , 'data' ,'tanggal'));
     }
 }
