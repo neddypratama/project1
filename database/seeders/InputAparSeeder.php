@@ -67,23 +67,23 @@ class InputAparSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        // DB::table('input_apars')->insert([
-        //     'input_apar_id' => 7,
-        //     'sub_uraian_id' => 7,
-        //     'hasil_apar' => '1/0',
-        //     'revisi' => '',
-        //     'apar_id' => '1',
-        //     'created_at' => now(),
-        //     'updated_at' => now()
-        // ]);
-        // DB::table('input_apars')->insert([
-        //     'input_apar_id' => 8,
-        //     'sub_uraian_id' => 8,
-        //     'hasil_apar' => '0/1',
-        //     'revisi' => '',
-        //     'apar_id' => '1',
-        //     'created_at' => now(),
-        //     'updated_at' => now()
-        // ]);
+        DB::table('input_apars')->insert([
+            'input_apar_id' => 7,
+            'sub_uraian_id' => 7,
+            'hasil_apar' => '1/0',
+            'revisi' => '',
+            'apar_id' => '1',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        DB::table('input_apars')->insert([
+            'input_apar_id' => 8,
+            'sub_uraian_id' => 8,
+            'hasil_apar' => '0/1',
+            'revisi' => '',
+            'apar_id' => '1',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
     }
 }

@@ -166,37 +166,37 @@ class AparController extends Controller
 
         // $suburaian = SubUraian::all()->select('sub_uraian_id' , 'sub_uraian_tipe')->toArray();
 
-        $validated = [];
+        // $validated = [];
 
-        if (!$request['texthasil']) {
-            // dd("dsadasd");
-            $validated = $request->validate([
-                'dokumentasi' => 'required|image|file|max:2048',
-                // 'texthasil.*' => 'required|min:3',
-                'selecthasil.*' => 'required',
-            ],[
-                'dokumentasi.required' => 'File dokumentasi wajib diunggah.',
-                'dokumentasi.image' => 'File dokumentasi harus berupa gambar.',
-                'dokumentasi.max' => 'Ukuran file dokumentasi tidak boleh lebih dari 2MB.',
-                // 'texthasil.*.required' => 'Field teks wajib diisi.',
-                'selecthasil.*.required' => 'Field pilihan wajib diisi.',
-            ]);
-        };
+        // if (!$request['texthasil']) {
+        //     // dd("dsadasd");
+        //     $validated = $request->validate([
+        //         'dokumentasi' => 'required|image|file|max:2048',
+        //         // 'texthasil.*' => 'required|min:3',
+        //         'selecthasil.*' => 'required',
+        //     ],[
+        //         'dokumentasi.required' => 'File dokumentasi wajib diunggah.',
+        //         'dokumentasi.image' => 'File dokumentasi harus berupa gambar.',
+        //         'dokumentasi.max' => 'Ukuran file dokumentasi tidak boleh lebih dari 2MB.',
+        //         // 'texthasil.*.required' => 'Field teks wajib diisi.',
+        //         'selecthasil.*.required' => 'Field pilihan wajib diisi.',
+        //     ]);
+        // };
 
-        if (!$request['selecthasil']) {
-            // dd("dsadasd");
-            $validated = $request->validate([
-                'dokumentasi' => 'required|image|file|max:2048',
-                'texthasil.*' => 'required|min:3',
-                // 'selecthasil.*' => 'required',
-            ],[
-                'dokumentasi.required' => 'File dokumentasi wajib diunggah.',
-                'dokumentasi.image' => 'File dokumentasi harus berupa gambar.',
-                'dokumentasi.max' => 'Ukuran file dokumentasi tidak boleh lebih dari 2MB.',
-                'texthasil.*.required' => 'Field teks wajib diisi.',
-                // 'selecthasil.*.required' => 'Field pilihan wajib diisi.',
-            ]);
-        };
+        // if (!$request['selecthasil']) {
+        //     // dd("dsadasd");
+        //     $validated = $request->validate([
+        //         'dokumentasi' => 'required|image|file|max:2048',
+        //         'texthasil.*' => 'required|min:3',
+        //         // 'selecthasil.*' => 'required',
+        //     ],[
+        //         'dokumentasi.required' => 'File dokumentasi wajib diunggah.',
+        //         'dokumentasi.image' => 'File dokumentasi harus berupa gambar.',
+        //         'dokumentasi.max' => 'Ukuran file dokumentasi tidak boleh lebih dari 2MB.',
+        //         'texthasil.*.required' => 'Field teks wajib diisi.',
+        //         // 'selecthasil.*.required' => 'Field pilihan wajib diisi.',
+        //     ]);
+        // };
 
         $validated = $request->validate([
             'dokumentasi' => 'required|image|max:2048',
@@ -294,6 +294,7 @@ class AparController extends Controller
         return view('admin.apar.approve', compact('data', 'input', 'user', 'sortBy', 'order'));
     }
 
+
     public function acc(Request $request, $id)
     {
         $apar = Apar::find($id);
@@ -307,7 +308,6 @@ class AparController extends Controller
         $data = [];
         foreach ($uraian as $item) {
             $subid = SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_id;
-            
 
             $data[] = [
                 'uraian' => $item->uraian_nama,

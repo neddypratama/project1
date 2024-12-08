@@ -55,46 +55,18 @@ class UraianSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        // DB::table('uraians')->insert([
-        //     'uraian_id' => 3,
-        //     'uraian_nama' => 'Keadaan Segel',
-        //     'apar_id' => '1',
-        //     'created_at' => now(),
-        //     'updated_at' => now()
-        // ]);
-        // DB::table('uraians')->insert([
-        //     'uraian_id' => 4,
-        //     'uraian_nama' => 'Manomater',
-        //     'apar_id' => '1',
-        //     'created_at' => now(),
-        //     'updated_at' => now()
-        // ]);
-        // DB::table('uraians')->insert([
-        //     'uraian_id' => 5,
-        //     'uraian_nama' => 'kebersihan Tabung PMK',
-        //     'apar_id' => '1',
-        //     'created_at' => now(),
-        //     'updated_at' => now()
-        // ]);
-        // DB::table('uraians')->insert([
-        //     'uraian_id' => 6,
-        //     'uraian_nama' => 'Selang Tabung APAR',
-        //     'apar_id' => '1',
-        //     'created_at' => now(),
-        //     'updated_at' => now()
-        // ]);
-        // DB::table('uraians')->insert([
-        //     'uraian_id' => 7,
-        //     'uraian_nama' => 'Handle Tabung APAR',
-        //     'apar_id' => '1',
-        //     'created_at' => now(),
-        //     'updated_at' => now()
-        // ]);DB::table('uraians')->insert([
-        //     'uraian_id' => 8,
-        //     'uraian_nama' => 'Pen Tabung APAR',
-        //     'apar_id' => '1',
-        //     'created_at' => now(),
-        //     'updated_at' => now()
-        // ]);
+        DB::table('uraians')->insert([
+            'uraian_id' => 7,
+            'uraian_nama' => 'Handle Tabung APAR',
+            'apar_id' => '1',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);DB::table('uraians')->insert([
+            'uraian_id' => 8,
+            'uraian_nama' => 'Pen Tabung APAR',
+            'apar_id' => '1',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
     }
 }
