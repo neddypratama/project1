@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('input_apar_id');
             $table->unsignedBigInteger('sub_uraian_id')->index();
             $table->string('hasil_apar');
-            $table->text('revisi');
+            $table->text('revisi')->nullable();
             $table->unsignedBigInteger('apar_id')->index();
             $table->timestamps();
 
