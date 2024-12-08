@@ -40,7 +40,7 @@ class SubUraianSeeder extends Seeder
         ]);
         DB::table('sub_uraians')->insert([
             'sub_uraian_id' => 4,
-            'sub_uraian_nama' => 'Menunjukkan warna merah/menunjukkan warna hijau',
+            'sub_uraian_nama' => 'Menunjukkan warna merah/Menunjukkan warna hijau',
             'sub_uraian_tipe' => 'select',
             'uraian_id' => '4',
             'created_at' => now(),

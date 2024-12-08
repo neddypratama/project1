@@ -25,7 +25,7 @@ class InputAparSeeder extends Seeder
         DB::table('input_apars')->insert([
             'input_apar_id' => 2,
             'sub_uraian_id' => 2,
-            'hasil_apar' => '1/0',
+            'hasil_apar' => '0/1',
             'revisi' => '',
             'apar_id' => '1',
             'created_at' => now(),
