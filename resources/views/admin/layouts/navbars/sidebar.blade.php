@@ -45,33 +45,39 @@
                 </div>
             <li>
                 <a data-toggle="collapse" href="#apar_sidebar"
-                    aria-expanded="{{ in_array($pageSlug, ['profile', 'users', 'roles']) ? 'true' : 'false' }}"
-                    class="{{ in_array($pageSlug, ['profile', 'users', 'roles']) ? '' : 'collapsed' }}">
+                    aria-expanded="{{ in_array($pageSlug, ['lapor_apar', 'input_apar', 'lihat_apar', 'revisi_apar']) ? 'true' : 'false' }}"
+                    class="{{ in_array($pageSlug, ['lapor_apar', 'input_apar', 'lihat_apar', 'revisi_apar']) ? '' : 'collapsed' }}">
                     <i class="tim-icons icon-badge"></i>
                     <span class="nav-link-text">{{ 'APAR' }}</span>
                     <b class="caret mt-1"></b>
                 </a>
-                <div class="collapse {{ in_array($pageSlug, ['tampil_apar', 'users', 'roles']) ? 'show' : '' }}"
+                <div class="collapse {{ in_array($pageSlug, ['lapor_apar', 'input_apar', 'lihat_apar', 'revisi_apar']) ? 'show' : '' }}"
                     id="apar_sidebar">
                     <ul class="nav pl-4">
-                        <li @if ($pageSlug == 'tampil_apar') class="active " @endif>
+                        <li @if ($pageSlug == 'lapor_apar') class="active " @endif>
                             <a href="{{ route('apar.index') }}">
                                 <i class="tim-icons icon-atom"></i>
-                                <p>{{ 'Tampil Apar' }}</p>
+                                <p>{{ 'Laporan Apar' }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'users') class="active " @endif>
+                        <li @if ($pageSlug == 'input_apar') class="active " @endif>
                             <a href="{{ route('apar.create') }}">
                                 <i class="tim-icons icon-atom"></i>
-                                <p>{{ 'Input Inspeksi' }}</p>
+                                <p>{{ 'Input Apar' }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'roles') class="active " @endif>
+                        <li @if ($pageSlug == 'lihat_apar') class="active " @endif>
+                            <a href="{{ route('apar.riwayat') }}">
+                                <i class="tim-icons icon-bullet-list-67"></i>
+                                <p>{{ 'Riwayat Apar' }}</p>
+                            </a>
+                        </li>
+                        {{-- <li @if ($pageSlug == 'revisi_apar') class="active " @endif>
                             <a href="{{ route('apar.tampil') }}">
                                 <i class="tim-icons icon-bullet-list-67"></i>
-                                <p>{{ 'Tampil Inspeksi' }}</p>
+                                <p>{{ 'Revisi Apar' }}</p>
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
             </li>

@@ -1,4 +1,4 @@
-@extends('admin.layouts.app', ['page' => __('Laporan Apar'), 'pageSlug' => 'lapor_apar'])
+@extends('admin.layouts.app', ['page' => __('Tampil Apar'), 'pageSlug' => 'tampil_apar'])
 
 {{-- @stack('style')
 </style> --}}
@@ -10,33 +10,27 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">Laporan Apar</h4>
+                            <h4 class="card-title">Apar {{$apar->apar_id}}</h4>
                         </div>
                         <div class="col-4 text-right">
+                            {{-- <a href="#" class="btn btn-sm btn-primary">Add user</a> --}}
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     @include('admin.alerts.success')
                     @include('admin.alerts.alert')
-                    <div class="container px-5">
-                        <div>
-                            <button>Expor</button>
-                        </div>
+                    <div class="">
                         <div class="table-responsive">
                             <table class="table table-bordered text-center">
                                 <thead class="table-light">
                                     <tr>
                                         <th rowspan="2" colspan="2" style="border: 1px solid #000;">Uraian</th>
-                                        @foreach ($bulan as $b)
-                                            <th colspan="{{ $b['jumlah'] }}" style="border: 1px solid #000;">
-                                                {{ $b['bulan'] }}</th>
-                                        @endforeach
+                                        <th colspan="2" style="border: 1px solid #000;">
+                                            {{ $bulan }}</th>
                                     </tr>
                                     <tr>
-                                        @foreach ($tanggal as $header)
-                                            <th style="border: 1px solid #000;">{{ $header }}</th>
-                                        @endforeach
+                                        <th style="border: 1px solid #000;">{{ $tanggal }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -51,11 +45,11 @@
                                                 @endif
                                                 <td style="border: 1px solid #000;">{{ $sub }}</td>
                                                 <td style="border: 1px solid #000;">
-                                                    @if ( $row['hasil'][$key] == 1)
+                                                    @if ($row['hasil'][$key] == 1)
                                                         <i style="color: rgb(8, 243, 8)" class="fa-solid fa-check"></i>
                                                     @else
                                                         @if ($row['hasil'][$key] == 0)
-                                                            <i style="color: red"  class="fa-solid fa-xmark"></i>
+                                                            <i style="color: red" class="fa-solid fa-xmark"></i>
                                                         @else
                                                             {{ $row['hasil'][$key] ?? '' }}
                                                         @endif
@@ -70,6 +64,7 @@
                     </div>
                 </div>
                 <div class="card-footer ">
+                    <a href="{{ route('apar.riwayat') }}" class="btn btn-primary">Kembali</a>
                 </div>
             </div>
         </div>

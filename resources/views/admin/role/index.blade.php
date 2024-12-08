@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="">
-                        <table class="table tablesorter " id="">
+                        <table class="table table-responsive-xl " id="">
                             <thead class="text-primary">
                                 <tr>
                                     <th scope="col">

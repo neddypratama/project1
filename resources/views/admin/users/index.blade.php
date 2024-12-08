@@ -29,8 +29,8 @@
                         </form>
                     </div>
                     <div class="">
-                        <table class="table tablesorter" id="">
-                            <thead class="text-primary">
+                        <table class="table table-responsive-xl" style="width: 100%" id="">
+                            <thead class="text-primary ">
                                 <tr>
                                     <th scope="col">
                                         <span style="cursor: pointer;"
