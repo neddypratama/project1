@@ -77,4 +77,9 @@ class AparController extends Controller
 
         return view('admin.apar.index', compact('apar', 'uraian', 'sub_uraian', 'bulan' , 'data' ,'tanggal'));
     }
+
+    public function create()
+    {
+        return view('admin.apar.create');
+    }
 }

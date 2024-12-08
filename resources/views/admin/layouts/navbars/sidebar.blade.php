@@ -69,7 +69,7 @@
                         <li @if ($pageSlug == 'roles') class="active " @endif>
                             <a href="{{ route('apar.tampil') }}">
                                 <i class="tim-icons icon-bullet-list-67"></i>
-                                <p>{{ 'Role Management' }}</p>
+                                <p>{{ 'Tampil Inspeksi' }}</p>
                             </a>
                         </li>
                     </ul>

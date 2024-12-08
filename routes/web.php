@@ -26,15 +26,16 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware(['auth', 'verified'] );
 
-Route::group(['middleware' => ['auth', 'verified']], function () {
-		Route::get('icons', ['as' => 'pages.icons', 'uses' => 'App\Http\Controllers\PageController@icons']);
-		Route::get('tables', ['as' => 'pages.tables', 'uses' => 'App\Http\Controllers\PageController@tables']);
-});
+// Route::group(['middleware' => ['auth', 'verified']], function () {
+// 		Route::get('icons', ['as' => 'pages.icons', 'uses' => 'App\Http\Controllers\PageController@icons']);
+// 		Route::get('tables', ['as' => 'pages.tables', 'uses' => 'App\Http\Controllers\PageController@tables']);
+// });
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
     Route::resource('role', 'App\Http\Controllers\RoleController', ['except' => ['show']]);
     Route::resource('apar', 'App\Http\Controllers\AparController', ['except' => ['show']]);
+    Route::get('apar/tampil', ['as' => 'apar.tampil', 'uses' => 'App\Http\Controllers\AparController@tampil']);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile/{id}', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::put('profile/password/{id}', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
