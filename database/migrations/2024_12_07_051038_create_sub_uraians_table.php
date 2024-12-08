@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('sub_uraians', function (Blueprint $table) {
             $table->id('sub_uraian_id');
             $table->string('sub_uraian_nama');
-            $table->enum('sub_uraian_tipe', ['text', 'checkbox', 'radio']);
+            $table->enum('sub_uraian_tipe', ['text', 'select']);
             $table->unsignedBigInteger('uraian_id')->index();
             $table->timestamps();
 

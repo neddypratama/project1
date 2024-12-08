@@ -8,6 +8,8 @@ use App\Models\SubUraian;
 use App\Models\uraian;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Stringable;
 
 class AparController extends Controller
 {
@@ -80,6 +82,43 @@ class AparController extends Controller
 
     public function create()
     {
-        return view('admin.apar.create');
+        // $apar = Apar::all();
+        $uraian = uraian::all();
+        $sub_uraian = SubUraian::all();
+
+        $data = [];
+        foreach ($uraian as $item) {
+            $slug = [];
+            $s = explode('/', SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_nama);
+            foreach ($s as $key => $value) {
+                $slug[] = [
+                    'slug' => Str::slug($value),
+                    'sub_uraian' => $value
+                ];
+                // Str::slug($value);
+            }
+            $data[] = [
+                'uraian' => $item->uraian_nama,
+                'sub_id' => SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_id,
+                'tipe' => SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_tipe,
+                'sub_uraian' => $slug,
+                'slug' => $slug,
+                // 'hasil' => '',
+            ];
+            // Str::slug($value)
+        }
+
+
+        // foreach ($sub_uraian as $sub) {
+        //     foreach ($data as $row) {
+        //         if ($row['sub_id'] == $sub->sub_uraian_id) {
+        //             $row['hasil'] = explode('/', InputApar::where('sub_uraian_id', $sub->sub_uraian_id)->first()->hasil_apar);
+        //         }
+        //     }
+        // }
+
+        // dd($data);
+
+        return view('admin.apar.create' , compact('uraian', 'sub_uraian', 'data'));
     }
 }
