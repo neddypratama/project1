@@ -296,6 +296,7 @@ class AparController extends Controller
         return view('admin.apar.approve', compact('data', 'input', 'user', 'sortBy', 'order'));
     }
 
+
     public function acc(Request $request, $id)
     {
         $apar = Apar::find($id);
@@ -309,7 +310,6 @@ class AparController extends Controller
         $data = [];
         foreach ($uraian as $item) {
             $subid = SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_id;
-            
             
             $data[] = [
                 'uraian' => $item->uraian_nama,

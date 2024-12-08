@@ -68,5 +68,21 @@ class UraianSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
+<<<<<<< HEAD
+=======
+        DB::table('uraians')->insert([
+            'uraian_id' => 7,
+            'uraian_nama' => 'Handle Tabung APAR',
+            'apar_id' => '1',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);DB::table('uraians')->insert([
+            'uraian_id' => 8,
+            'uraian_nama' => 'Pen Tabung APAR',
+            'apar_id' => '1',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+>>>>>>> be601a82e64c68382bab2db86e6570182f95eff8
     }
 }

@@ -81,19 +81,19 @@
                                         <input type="text" value="{{old('texthasil.' . $input['sub_id'])}}" name="texthasil[{{ $input['sub_id'] }}]" class="form-control">
                                         {{-- <input type="hidden" name="{{ $input['sub_id'] }}/{{ $input['tipe'] }}" value="{{ $input['tipe'] }}"> --}}
                                     </div>
-                                    @error('texthasil.' . $index)
+                                    @error('texthasil.' . $input['sub_id'])
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 @endforeach
                             @elseif ($input['tipe'] == 'select')
-                                <select class="form-select" value="{{old('selecthasil.' . $index)}}" name="selecthasil[{{ $input['sub_id'] }}]"
+                                <select class="form-select" value="{{old('selecthasil.' . $input['sub_id'])}}" name="selecthasil[{{ $input['sub_id'] }}]"
                                     aria-label="Default select example">
                                     <option value=" " selected>--Pilih--</option>
                                     @foreach ($input['sub_uraian'] as $sub)
                                         <option value="{{ $sub['sub_uraian'] }}" {{old('selecthasil.' . $input['sub_id']) == $sub['sub_uraian'] ? 'selected' : ''}}>{{ $sub['sub_uraian'] }}</option>
                                     @endforeach
                                 </select>
-                                @error('selecthasil.' . $index)
+                                @error('selecthasil.' . $input['sub_id'])
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                                 {{-- <input type="hidden" name="{{ $input['sub_id'] }}/{{ $input['tipe'] }}" value="{{ $input['tipe'] }}"> --}}
