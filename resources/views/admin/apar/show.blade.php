@@ -10,7 +10,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">Apar {{ $apar->apar_id }}</h4>
+                            <h4 class="card-title">Apar {{$apar->apar_id}}</h4>
                         </div>
                         <div class="col-4 text-right">
                             {{-- <a href="#" class="btn btn-sm btn-primary">Add user</a> --}}
@@ -21,71 +21,134 @@
                     @include('admin.alerts.success')
                     @include('admin.alerts.alert')
                     <div class="">
-                        <table id="laporanTable" class="table table-bordered" style="border: 3px !important;">
-                            <thead class="text-center">
-                                <tr>
-                                    <th rowspan="2" colspan="2" style="border: 2px">Uraian</th>
-                                    @foreach ($bulan as $b)
-                                        <th colspan="{{ $b['jumlah'] }}">{{ $b['bulan'] }}</th>
-                                    @endforeach
-                                </tr>
-                                <tr>
-                                    @foreach ($tanggal as $header)
-                                        <th>{{ $header }}</th>
-                                    @endforeach
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($uraian as $row)
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center">
+                                <thead class="table-light">
                                     <tr>
-                                        <td rowspan="{{ $sub_uraian->where('uraian_id', $row->uraian_id)->count() }}">
-                                            {{ $row->uraian_nama }}
-                                        </td>
-                                        @php $firstSub = true; @endphp
-                                        @foreach ($sub_uraian->where('uraian_id', $row->uraian_id) as $sub)
-                                            @if (!$firstSub)
+                                        <th rowspan="2" colspan="2" style="border: 1px solid #000;">Uraian</th>
+                                        <th colspan="2" style="border: 1px solid #000;">
+                                            {{ $bulan }}</th>
+                                    </tr>
                                     <tr>
-                                @endif
-                                <td>{{ $sub->sub_uraian_nama }}</td>
-                                @foreach ($input as $i)
-                                    @if ($sub->sub_uraian_id == $i->sub_uraian_id)
-                                        @if ($i->hasil_apar == 1)
-                                            <td>Iyaa</td>
-                                        @else
-                                            @if ($i->hasil_apar == 0)
-                                                <td>Tidak</td>
-                                            @else
-                                                <td>{{ $i->hasil_apar }}</td>
-                                            @endif
-                                        @endif
-                                    @break
-                                @endif
-                            @endforeach
-                            </tr>
-                            @php $firstSub = false; @endphp
-                            @endforeach
-                            </tr>
-                            @endforeach
-                            <tr>
-                                <td colspan="2">Dokumentasi</td>
-                                @foreach ($apar as $item)
-                                    <td>
-                                        <img src="{{ asset($item->dokumentasi) }}" alt="Dokumentasi"
-                                            style="width: 100px; height: auto; border: 1px solid #ccc;">
-                                    </td>
-                                @endforeach
-                            </tr>
-                        </tbody>
-                    </table>
+                                        <th style="border: 1px solid #000;">{{ $tanggal }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data as $row)
+                                        @foreach ($row['sub_uraian'] as $key => $sub)
+                                            <tr>
+                                                @if ($key === 0)
+                                                    <td rowspan="{{ count($row['sub_uraian']) }}"
+                                                        style="border: 1px solid #000;">
+                                                        {{ $row['uraian'] }}
+                                                    </td>
+                                                @endif
+                                                <td style="border: 1px solid #000;">{{ $sub }}</td>
+                                                <td style="border: 1px solid #000;">
+                                                    @if ($row['hasil'][$key] == 1)
+                                                        <i style="color: rgb(8, 243, 8)" class="fa-solid fa-check"></i>
+                                                    @else
+                                                        @if ($row['hasil'][$key] == 0)
+                                                            <i style="color: red" class="fa-solid fa-xmark"></i>
+                                                        @else
+                                                            {{ $row['hasil'][$key] ?? '' }}
+                                                        @endif
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="card-footer ">
-                <a href="{{ route('apar.riwayat') }}" class="btn btn-primary">Kembali</a>
+                <div class="card-footer ">
+                    <a href="{{ route('apar.riwayat') }}" class="btn btn-primary">Kembali</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
+    {{-- <!-- Modal Edit User -->
+    <div class="modal fade" id="editUser" tabindex="-1" aria-labelledby="editUserTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserTitle">Edit User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form role="form" method="POST" action="" id="editUserForm" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+
+                        <!-- Name User -->
+                        <div class="form-group{{ $errors->has('edit_name') ? ' has-danger' : '' }}">
+                            <label for="edit-name" class="col-form-label">Name User: </label>
+                            <input type="text" name="edit_name" id="edit-name"
+                                class="form-control{{ $errors->has('edit_name') ? ' is-invalid' : '' }}" placeholder="Name"
+                                value="{{ old('edit_name') }}" readonly>
+                            @if ($errors->has('edit_name'))
+                                <span class="invalid-feedback" role="alert">
+                                    {{ $errors->first('edit_name') }}
+                                </span>
+                            @endif
+                        </div>
+
+                        <!-- Role User -->
+                        <div class="form-group{{ $errors->has('edit_role_id') ? ' has-danger' : '' }}">
+                            <label for="edit-role-id" class="col-form-label">Name Role: </label>
+                            <select name="edit_role_id"
+                                class="form-control {{ $errors->has('edit_role_id') ? ' is-invalid' : '' }}"
+                                id="edit-role-id" style="height: 50px">
+                                <option value="">- Role -</option>
+                                @foreach ($role as $p)
+                                    <option value="{{ $p->role_id }}"
+                                        {{ old('edit_role_id') == $p->role_id ? 'selected' : '' }}>
+                                        {{ $p->role_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('edit_role_id'))
+                                <span class="invalid-feedback" role="alert">
+                                    {{ $errors->first('edit_role_id') }}
+                                </span>
+                            @endif
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="text-white btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="text-white btn btn-primary">Update Role</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Delete User -->
+    <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Delete User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure to delete data User?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <form id="deleteUserForm" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-primary">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> --}}
 @endsection
 
 @stack('js')

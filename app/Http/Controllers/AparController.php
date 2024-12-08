@@ -394,7 +394,7 @@ class AparController extends Controller
         foreach ($sub_uraian as $sub) {
             foreach ($data as &$row) {
                 if ($row['sub_id'] == $sub->sub_uraian_id) {
-                    $row['hasil'] = explode('/', InputApar::where('sub_uraian_id', $sub->sub_uraian_id)->first()->hasil_apar);
+                    $row['hasil'] = explode('/', InputApar::where('sub_uraian_id', $sub->sub_uraian_id)->where('apar_id', $id)->first()->hasil_apar);
                 }
             }
         }
