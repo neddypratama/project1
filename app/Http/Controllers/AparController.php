@@ -60,7 +60,7 @@ class AparController extends Controller
                 'uraian' => $item->uraian_nama,
                 'sub_id' => SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_id,
                 'sub_uraian' => explode('/', SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_nama),
-                'hasil' => '',
+                // 'hasil' => '',
             ];
         }
         

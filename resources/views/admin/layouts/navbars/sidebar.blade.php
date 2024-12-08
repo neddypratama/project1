@@ -43,15 +43,41 @@
                         </li>
                     </ul>
                 </div>
+            <li>
+                <a data-toggle="collapse" href="#apar_sidebar"
+                    aria-expanded="{{ in_array($pageSlug, ['profile', 'users', 'roles']) ? 'true' : 'false' }}"
+                    class="{{ in_array($pageSlug, ['profile', 'users', 'roles']) ? '' : 'collapsed' }}">
+                    <i class="tim-icons icon-badge"></i>
+                    <span class="nav-link-text">{{ 'APAR' }}</span>
+                    <b class="caret mt-1"></b>
+                </a>
+                <div class="collapse {{ in_array($pageSlug, ['tampil_apar', 'users', 'roles']) ? 'show' : '' }}"
+                    id="apar_sidebar">
+                    <ul class="nav pl-4">
+                        <li @if ($pageSlug == 'tampil_apar') class="active " @endif>
+                            <a href="{{ route('apar.index') }}">
+                                <i class="tim-icons icon-atom"></i>
+                                <p>{{ 'Tampil Apar' }}</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'users') class="active " @endif>
+                            <a href="{{ route('apar.create') }}">
+                                <i class="tim-icons icon-atom"></i>
+                                <p>{{ 'Input Inspeksi' }}</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'roles') class="active " @endif>
+                            <a href="{{ route('apar.tampil') }}">
+                                <i class="tim-icons icon-bullet-list-67"></i>
+                                <p>{{ 'Role Management' }}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
             </li>
 
-            <li @if ($pageSlug == 'tampil_apar') class="active " @endif>
-                <a href="{{ route('apar.index')}}">
-                    <i class="tim-icons icon-atom"></i>
-                    <p>{{ 'Apar' }}</p>
-                </a>
-            </li>
-            
+
             {{-- <li @if ($pageSlug == 'tables') class="active " @endif>
                 <a href="{{ route('pages.tables') }}">
                     <i class="tim-icons icon-puzzle-10"></i>

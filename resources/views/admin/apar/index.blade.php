@@ -62,10 +62,10 @@
                                                 <td style="border: 1px solid #000;">{{ $sub }}</td>
                                                 <td style="border: 1px solid #000;">
                                                     @if ( $row['hasil'][$key] == 1)
-                                                        <i class="fa-solid fa-check"></i>
+                                                        <i style="color: rgb(8, 243, 8)" class="fa-solid fa-check"></i>
                                                     @else
                                                         @if ($row['hasil'][$key] == 0)
-                                                            <i class="fa-solid fa-xmark"></i>
+                                                            <i style="color: red"  class="fa-solid fa-xmark"></i>
                                                         @else
                                                             {{ $row['hasil'][$key] ?? '' }}
                                                         @endif
