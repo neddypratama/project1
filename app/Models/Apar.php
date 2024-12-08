@@ -12,11 +12,19 @@ class Apar extends Model
     protected $table = 'apars';
     protected $primaryKey = 'apar_id';
     protected $fillable = [
-        'bulan',
-        'tahun',
-        'apar_hasil',
-        'sub_uraian_id',
+        'apar_id',
+        'tanggal',
+        'status',
+        'user_id',
         'created_at',
         'updated_at',
     ];
+
+    public function apar1():HasMany{
+        return $this->hasMany(uraian::class, 'apar_id', 'apar_id');
+    }
+
+    public function apar2():HasMany{
+        return $this->hasMany(InputApar::class, 'apar_id', 'apar_id');
+    }
 }

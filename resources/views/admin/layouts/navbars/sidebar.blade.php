@@ -45,13 +45,14 @@
                 </div>
             </li>
 
-            {{-- <li @if ($pageSlug == 'icons') class="active " @endif>
-                <a href="{{ route('pages.icons') }}">
+            <li @if ($pageSlug == 'tampil_apar') class="active " @endif>
+                <a href="{{ route('apar.index')}}">
                     <i class="tim-icons icon-atom"></i>
-                    <p>{{ 'Icons' }}</p>
+                    <p>{{ 'Apar' }}</p>
                 </a>
             </li>
-            <li @if ($pageSlug == 'tables') class="active " @endif>
+            
+            {{-- <li @if ($pageSlug == 'tables') class="active " @endif>
                 <a href="{{ route('pages.tables') }}">
                     <i class="tim-icons icon-puzzle-10"></i>
                     <p>{{ 'Table List' }}</p>

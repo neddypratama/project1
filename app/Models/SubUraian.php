@@ -20,6 +20,6 @@ class SubUraian extends Model
     ];
 
     public function sub_uraian():HasMany{
-        return $this->hasMany(Apar::class, 'sub_uraian_id', 'sub_uraian_id');
+        return $this->hasMany(InputApar::class, 'sub_uraian_id', 'sub_uraian_id');
     }
 }

@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('apars', function (Blueprint $table) {
-            $table->id('apar_id');
-            $table->string('bulan');
-            $table->year('tahun');
-            $table->string('apar_hasil');
+        Schema::create('input_apars', function (Blueprint $table) {
+            $table->id('input_apar_id');
             $table->unsignedBigInteger('sub_uraian_id')->index();
+            $table->string('hasil_apar');
+            $table->text('revisi');
+            $table->unsignedBigInteger('apar_id')->index();
             $table->timestamps();
 
+            $table->foreign('apar_id')->references('apar_id')->on('apars');
             $table->foreign('sub_uraian_id')->references('sub_uraian_id')->on('sub_uraians');
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('apars');
+        Schema::dropIfExists('input_apars');
     }
 };

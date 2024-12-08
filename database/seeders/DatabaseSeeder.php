@@ -15,10 +15,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([RoleSeeder::class]);
         $this->call([UsersTableSeeder::class]);
+        $this->call([AparSeeder::class]); 
         $this->call([UraianSeeder::class]);
         $this->call([SubUraianSeeder::class]);
-        $this->call([AparSeeder::class]);
-        $this->call([P3KSeeder::class]);
+        $this->call([InputAparSeeder::class]);
 
     }
 }

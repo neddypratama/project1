@@ -5,17 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class P3K extends Model
+class InputApar extends Model
 {
     use HasFactory;
-    protected $table = 'p3ks';
-    protected $primaryKey = 'p3k_id';
+    protected $table = 'input_apars';
+    protected $primaryKey = 'input_apar_id';
     protected $fillable = [
-        'bulan',
-        'tahun',
-        'p3k_hasil',
-        'uraian_id',
+        'sub_uraian_id',
+        'hasil_apar',
+        'revisi',
+        'apar_id',
         'created_at',
         'updated_at',
     ];
+
+    
 }

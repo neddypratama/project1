@@ -13,17 +13,12 @@ class uraian extends Model
     protected $primaryKey = 'uraian_id';
     protected $fillable = [
         'uraian_nama',
-        'uraian_tipe',
-        'user_id',
+        'apar_id',
         'created_at',
         'updated_at',
     ];
 
-    public function uraian1():HasMany{
+    public function uraian():HasMany{
         return $this->hasMany(SubUraian::class, 'uraian_id', 'uraian_id');
-    }
-
-    public function uraian2():HasMany{
-        return $this->hasMany(P3K::class, 'uraian_id', 'uraian_id');
     }
 }
