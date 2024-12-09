@@ -58,6 +58,7 @@ class AparController extends Controller
         $sub_uraian = SubUraian::all();
         $input = InputApar::where('apar_id', $id)->get();
         $id = $apar->apar_id;
+        $dokumentasi = $apar->dokumentasi;
 
         $data = [];
         foreach ($uraian as $item) {
@@ -75,6 +76,7 @@ class AparController extends Controller
                 'tipe' => SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_tipe,
                 'sub_uraian' => $slug,
                 'slug' => $slug,
+                // 'dokumentasi' => $apar->dokumentasi,
                 'revisi' => '',
             ];
         }
@@ -85,15 +87,84 @@ class AparController extends Controller
                 if ($row['sub_id'] == $sub->sub_uraian_id) {
                     $revisi = $input->where('sub_uraian_id', $sub->sub_uraian_id)->first()->revisi ?? '';
                     $row['revisi'] = $revisi; // Memperbarui revisi
+                    if ($row['tipe'] == 'select'){
+
+                        $sss = explode('/' , $sub->sub_uraian_nama);
+                        $hasil = explode('/', InputApar::where('sub_uraian_id', $sub->sub_uraian_id)->where('apar_id', $id)->first()->hasil_apar);
+                        // dump($sss);
+                        $index = array_search("1", $hasil); // Mencari nilai "1" di array status
+                        $row['hasil'] = $sss[$index];
+                    }
+                    if ($row['tipe'] == 'text'){
+                        $row['hasil'] = InputApar::where('sub_uraian_id', $sub->sub_uraian_id)->where('apar_id', $id)->first()->hasil_apar;
+                    }
                 }
             }
         }
-        // Jangan lupa unset referensi setelah foreach
         unset($row);
 
-        // dd($data);
+        return view('admin.apar.edit' , compact('uraian', 'sub_uraian', 'data', 'input', 'id' , 'dokumentasi'));
+    }
 
-        return view('admin.apar.edit' , compact('uraian', 'sub_uraian', 'data', 'input', 'id'));
+    public function update(Request $request, $id)  {
+
+        $apar = Apar::find($id);
+        $validated = $request->validate([
+            'dokumentasi' => 'image|max:2048',
+            'texthasil.*' => 'required|min:3',
+            'selecthasil.*' => 'required',
+        ],[
+            'dokumentasi.image' => 'File dokumentasi harus berupa gambar.',
+            'dokumentasi.max' => 'Ukuran file dokumentasi tidak boleh lebih dari 2MB.',
+            'texthasil.*.required' => 'Field teks wajib diisi.',
+            'selecthasil.*.required' => 'Field pilihan wajib diisi.',
+        ]);
+
+
+ 
+        // dd($validated);
+        
+        if ($request->file('dokumentasi')) {
+            Storage::disk('public')->putFile('apar', $request->file('dokumentasi'));
+            // dd("asdasd ");
+            Storage::disk('public')->delete($apar->dokumentasi);
+            $validated['dokumentasi'] = $request->file('dokumentasi')->store('apar');
+            $apar->update([
+               'dokumentasi' => $validated['dokumentasi'],
+            ]);
+        } 
+        
+
+
+        foreach ($validated['texthasil'] as $key => $value) {
+            InputApar::where('apar_id', $id)->where('sub_uraian_id', $key)->update([
+                // 'apar_id' => $id->apar_id,
+                // 'sub_uraian_id' => $key,
+                'hasil_apar' => $value,
+            ]);
+        }
+
+        foreach ($validated['selecthasil'] as $key1 => $valuee) {
+            $i = [];
+            $s = explode('/', SubUraian::where('uraian_id', $key1)->first()->sub_uraian_nama);
+            foreach ($s as $index => $isi) {
+                if ($isi == $valuee) {
+                    $i[] = 1;
+                } else {
+                    $i[] = 0;
+                }
+            }
+            $tes = implode("/", $i);
+            // dump($tes);
+            InputApar::where('apar_id', $id)->where('sub_uraian_id', $key1)->update([
+                // 'apar_id' => $id->apar_id,
+                // 'sub_uraian_id' => $key1,
+                'hasil_apar' => $tes,
+            ]);
+        }
+        // dd($validated);
+
+        return redirect()->route('apar.edit' , $id)->withStatus('Apar berhasil ditambahkan.');
     }
 
     public function simpan(Request $request,  $id)
@@ -247,7 +318,6 @@ class AparController extends Controller
             // dd("asdasd ");
             $validated['dokumentasi'] = $request->file('dokumentasi')->store('apar');
         }
-
         $id = Apar::create([
            'tanggal' => now(),
            'status' => 'Belum Dicek',

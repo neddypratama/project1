@@ -38,19 +38,51 @@
                             <table id="laporanTable" class="table table-bordered" style="border: 3px !important;">
                                 <thead class="text-center">
                                     <tr>
-                                        <th rowspan="2" colspan="2" style="border: 2px">Uraian</th>
+                                        <th style="border: 1px solid #000;" rowspan="2" colspan="2"
+                                            style="border: 2px">Uraian</th>
                                         @foreach ($bulan as $b)
-                                            <th colspan="{{ $b['jumlah'] }}">{{ $b['bulan'] }}</th>
+                                            <th style="border: 1px solid #000;" colspan="{{ $b['jumlah'] }}">
+                                                {{ $b['bulan'] }}</th>
                                         @endforeach
                                     </tr>
                                     <tr>
                                         @foreach ($tanggal as $header)
-                                            <th>{{ $header }}</th>
+                                            <th style="border: 1px solid #000;">{{ $header }}</th>
                                         @endforeach
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($uraian as $row)
+                                    @foreach ($data as $row)
+                                        @foreach ($row['sub_uraian'] as $key => $sub)
+                                            <tr>
+                                                @if ($key === 0)
+                                                    <td rowspan="{{ count($row['sub_uraian']) }}"
+                                                        style="border: 1px solid #000;">
+                                                        {{ $row['uraian'] }}
+                                                    </td>
+                                                @endif
+                                                <td style="border: 1px solid #000;">{{ $sub }}</td>
+                                                @foreach ($row['hasil'] as $k => $item)
+                                                    <td style="border: 1px solid #000;">
+                                                        {{-- {{ $item[$key] }} --}}
+                                                        @if ($item[$key] == 1)
+                                                        ✅
+                                                                {{-- <i style="color: rgb(8, 243, 8)" class="fa-solid fa-check"></i> --}}
+                                                            @else
+                                                                @if ($item[$key] == 0)
+                                                                    {{-- <i style="color: red" class="fa-solid fa-xmark"></i> --}}
+                                                                    ❌
+                                                                @else
+                                                                    {{ $item[$key] ?? '' }}
+                                                                @endif
+                                                            @endif
+                                                    </td>
+                                                @endforeach
+
+                                            </tr>
+                                        @endforeach
+                                    @endforeach
+                                    {{-- @foreach ($uraian as $row)
                                         <tr>
                                             <td
                                                 rowspan="{{ $sub_uraian->where('uraian_id', $row->uraian_id)->count() }}">
@@ -59,56 +91,57 @@
                                             @php $firstSub = true; @endphp
                                             @foreach ($sub_uraian->where('uraian_id', $row->uraian_id) as $sub)
                                                 @if (!$firstSub)
-                                                    <tr>
+                                        <tr>
+                                    @endif
+                                    <td>{{ $sub->sub_uraian_nama }}</td>
+                                    @foreach ($input as $i)
+                                        @if ($sub->sub_uraian_id == $i->sub_uraian_id)
+                                            @if ($i->hasil_apar == 1)
+                                                <td>Iyaa</td>
+                                            @else
+                                                @if ($i->hasil_apar == 0)
+                                                    <td>Tidak</td>
+                                                @else
+                                                    <td>{{ $i->hasil_apar }}</td>
                                                 @endif
-                                                <td>{{ $sub->sub_uraian_nama }}</td>
-                                                    @foreach ($input as $i)
-                                                            @if ($sub->sub_uraian_id == $i->sub_uraian_id )
-                                                                @if ($i->hasil_apar == 1)
-                                                                    <td>Iyaa</td>
-                                                                @else
-                                                                    @if ($i->hasil_apar == 0)
-                                                                        <td>Tidak</td>
-                                                                    @else
-                                                                        <td>{{ $i->hasil_apar }}</td>
-                                                                    @endif
-                                                                @endif
-                                                            @break
-                                                        @endif
-                                                    @endforeach
-                                                     </tr>
-                                                     @php $firstSub = false; @endphp
-                                            @endforeach
-                                        </tr>
-                                    @endforeach
+                                            @endif
+                                        @break
+                                    @endif
+                                @endforeach
+                                </tr>
+                                @php $firstSub = false; @endphp
+                                @endforeach
+                                </tr>
+                                @endforeach --}}
                                     <tr>
-                                        <td colspan="2">Dokumentasi</td>
+                                        <td  style="border: 1px solid #000;" colspan="2">Dokumentasi</td>
                                         @foreach ($apar as $item)
-                                            <td>
-                                                <img src="{{ asset($item->dokumentasi) }}" alt="Dokumentasi"
+                                            <td  style="border: 1px solid #000;">
+                                                <img src="{{ asset('storage/' . $item->dokumentasi) }}"
+                                                    alt="Dokumentasi"
                                                     style="width: 100px; height: auto; border: 1px solid #ccc;">
                                             </td>
                                         @endforeach
                                     </tr>
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- JS Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <!-- JS Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 
-<script>
-    // Cetak otomatis saat halaman dimuat
-    // window.onload = function() {
-    //     window.print();
-    // };
-</script>
+    <script>
+        // Cetak otomatis saat halaman dimuat
+        window.onload = function() {
+            window.print();
+        };
+    </script>
 </body>
 
 </html>

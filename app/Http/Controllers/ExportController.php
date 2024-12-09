@@ -24,8 +24,8 @@ class ExportController extends Controller
         $uraian = uraian::all();
         $sub_uraian = SubUraian::all();
         
-        $tanggal = $apar->tanggal;
-        $bulan = Carbon::parse($tanggal)->translatedFormat('F');
+        $tanggal =  Apar::whereYear('tanggal', $tahun)->pluck('tanggal')->toArray(); // $apar->tanggal; 
+        // $bulan = Carbon::parse($tanggal)->translatedFormat('F');
 
         $result = [];
 
@@ -67,14 +67,32 @@ class ExportController extends Controller
         }
         
         // Edit data tertentu
-        foreach ($sub_uraian as $sub) {
-            foreach ($data as &$row) {
-                if ($row['sub_id'] == $sub->sub_uraian_id) {
-                    // $row['hasil'] = explode('/', InputApar::where('sub_uraian_id', $sub->sub_uraian_id)->where('apar_id', $id)->first()->hasil_apar);
-                }
+
+        $hasil = [];
+
+        foreach ($sub_uraian as $key => $sub) {
+            $q = InputApar::select('hasil_apar')->where('sub_uraian_id', $sub->sub_uraian_id)->get()->toArray();
+            $d = explode("/", $sub->sub_uraian_nama);
+
+            // $hasil[$sub->sub_uraian_id]['sub_uraian'] = [$d];
+            foreach ($q as $keyy => $e) {
+                $p = explode('/', $e['hasil_apar']);
+                $k = $keyy;
+                $hasil[$sub->sub_uraian_id][$keyy] = $p ;
+                // dump($d , $p );
             }
+            // foreach ($data as $row) {
+            //     if ($row['sub_id'] == $sub->sub_uraian_id) {
+            //         // $row['hasil'] = explode('/', InputApar::where('sub_uraian_id', $sub->sub_uraian_id)->get()->toArray());
+            //         $row['hasil'] = $q;
+            //     }
+            // }
         }
-        // dd($data);
+        foreach ($data as $key => $row) {
+            $data[$key]['hasil'] = $hasil[$row['sub_id']];
+        }
+        // dd($data , $bulan, $tanggal, $apar, $uraian, $sub_uraian , $hasil);
+        // dd(InputApar::where('sub_uraian_id', $sub->sub_uraian_id)->get()->toArray());
 
         // Kirim data ke view
         // return view('admin.apar.acc', compact('apar', 'uraian', 'sub_uraian', 'bulan' , 'data' ,'tanggal'));
@@ -84,6 +102,8 @@ class ExportController extends Controller
             'apar' => $apar,
             'uraian' => $uraian,
             'sub_uraian' => $sub_uraian,
+            'data' => $data,
+            'hasil' => $hasil,
         ];
     }
     // public function prepareData(string $tahun)
@@ -160,7 +180,7 @@ class ExportController extends Controller
     {
         $data = $this->prepareData($tahun);
 
-        // dd($data);
+        // dd(count($data['data'][4]['sub_uraian']));
 
         if (!$data) {
             return response()->json(['error' => 'Data tidak ditemukan']);
