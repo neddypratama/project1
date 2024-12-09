@@ -1,147 +1,109 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'White Dashboard') }}</title>
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('white') }}/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="{{ asset('white') }}/img/favicon.png">
-
-    <!-- CSS & Bootstrap -->
-    <link href="{{ asset('white') }}/css/white-dashboard.css?v=1.0.0" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    {{-- <style type="text/css">
-        table tr td,
-        table tr th
-        {
-            font-size: 9pt;
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Apar Tahun {{ $tahun }}</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 15mm 10mm 15mm 10mm;
         }
-    </style> --}}
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            line-height: 1.3;
+            color: #333;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .title h2 {
+            margin: 0;
+            color: #444;
+            font-size: 18px;
+        }
+
+        .apar-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .apar-table th,
+        .apar-table td {
+            border: 1px solid #000;
+            padding: 6px;
+            text-align: center;
+        }
+
+        .apar-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        img {
+            max-width: 100px;
+            height: auto;
+            border: 1px solid #ccc;
+        }
+    </style>
 </head>
 
-<body class="white-content {{ $class ?? '' }}">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card mt-5">
-                    <div class="card-header text-center">
-                        <h5 style="text-align: center">Laporan Apar Tahun {{ $tahun }}</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="mt-5">
-                            <table id="laporanTable" class="table table-bordered" style="border: 3px !important;">
-                                <thead class="text-center">
-                                    <tr>
-                                        <th style="border: 1px solid #000;" rowspan="2" colspan="2"
-                                            style="border: 2px">Uraian</th>
-                                        @foreach ($bulan as $b)
-                                            <th style="border: 1px solid #000;" colspan="{{ $b['jumlah'] }}">
-                                                {{ $b['bulan'] }}</th>
-                                        @endforeach
-                                    </tr>
-                                    <tr>
-                                        @foreach ($tanggal as $header)
-                                            <th style="border: 1px solid #000;">{{ $header }}</th>
-                                        @endforeach
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($data as $row)
-                                        @foreach ($row['sub_uraian'] as $key => $sub)
-                                            <tr>
-                                                @if ($key === 0)
-                                                    <td rowspan="{{ count($row['sub_uraian']) }}"
-                                                        style="border: 1px solid #000;">
-                                                        {{ $row['uraian'] }}
-                                                    </td>
-                                                @endif
-                                                <td style="border: 1px solid #000;">{{ $sub }}</td>
-                                                @foreach ($row['hasil'] as $k => $item)
-                                                    <td style="border: 1px solid #000;">
-                                                        {{-- {{ $item[$key] }} --}}
-                                                        @if ($item[$key] == 1)
-                                                        ✅
-                                                                {{-- <i style="color: rgb(8, 243, 8)" class="fa-solid fa-check"></i> --}}
-                                                            @else
-                                                                @if ($item[$key] == 0)
-                                                                    {{-- <i style="color: red" class="fa-solid fa-xmark"></i> --}}
-                                                                    ❌
-                                                                @else
-                                                                    {{ $item[$key] ?? '' }}
-                                                                @endif
-                                                            @endif
-                                                    </td>
-                                                @endforeach
-
-                                            </tr>
-                                        @endforeach
-                                    @endforeach
-                                    {{-- @foreach ($uraian as $row)
-                                        <tr>
-                                            <td
-                                                rowspan="{{ $sub_uraian->where('uraian_id', $row->uraian_id)->count() }}">
-                                                {{ $row->uraian_nama }}
-                                            </td>
-                                            @php $firstSub = true; @endphp
-                                            @foreach ($sub_uraian->where('uraian_id', $row->uraian_id) as $sub)
-                                                @if (!$firstSub)
-                                        <tr>
-                                    @endif
-                                    <td>{{ $sub->sub_uraian_nama }}</td>
-                                    @foreach ($input as $i)
-                                        @if ($sub->sub_uraian_id == $i->sub_uraian_id)
-                                            @if ($i->hasil_apar == 1)
-                                                <td>Iyaa</td>
-                                            @else
-                                                @if ($i->hasil_apar == 0)
-                                                    <td>Tidak</td>
-                                                @else
-                                                    <td>{{ $i->hasil_apar }}</td>
-                                                @endif
-                                            @endif
-                                        @break
-                                    @endif
-                                @endforeach
-                                </tr>
-                                @php $firstSub = false; @endphp
-                                @endforeach
-                                </tr>
-                                @endforeach --}}
-                                    <tr>
-                                        <td  style="border: 1px solid #000;" colspan="2">Dokumentasi</td>
-                                        @foreach ($apar as $item)
-                                            <td  style="border: 1px solid #000;">
-                                                <img src="{{ asset('storage/' . $item->dokumentasi) }}"
-                                                    alt="Dokumentasi"
-                                                    style="width: 100px; height: auto; border: 1px solid #ccc;">
-                                            </td>
-                                        @endforeach
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<body onload="window.print()">
+    <div class="title">
+        <h2>Laporan Apar Tahun {{ $tahun }}</h2>
     </div>
 
-    <!-- JS Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
-
-    <script>
-        // Cetak otomatis saat halaman dimuat
-        window.onload = function() {
-            window.print();
-        };
-    </script>
+    <table class="apar-table">
+        <thead>
+            <tr>
+                <th rowspan="2" colspan="2">Uraian</th>
+                @foreach ($bulan as $b)
+                    <th colspan="{{ $b['jumlah'] }}">{{ $b['bulan'] }}</th>
+                @endforeach
+            </tr>
+            <tr>
+                @foreach ($tanggal as $header)
+                    <th>{{ $header }}</th>
+                @endforeach
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($data as $row)
+                @foreach ($row['sub_uraian'] as $key => $sub)
+                    <tr>
+                        @if ($key === 0)
+                            <td rowspan="{{ count($row['sub_uraian']) }}">{{ $row['uraian'] }}</td>
+                        @endif
+                        <td>{{ $sub }}</td>
+                        @foreach ($row['hasil'] as $k => $item)
+                            <td>
+                                @if ($item[$key] == 1)
+                                    ✅
+                                @elseif ($item[$key] == 0)
+                                    ❌
+                                @else
+                                    {{ $item[$key] ?? '' }}
+                                @endif
+                            </td>
+                        @endforeach
+                    </tr>
+                @endforeach
+            @endforeach
+            <tr>
+                <td colspan="2">Dokumentasi</td>
+                @foreach ($apar as $item)
+                    <td><img src="{{ asset('storage/' . $item->dokumentasi) }}" alt="Dokumentasi"></td>
+                @endforeach
+            </tr>
+        </tbody>
+    </table>
 </body>
 
 </html>
