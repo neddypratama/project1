@@ -32,7 +32,7 @@ class ExportController extends Controller
 
         $result = [];
 
-        // Loop melalui array dan olah data
+        // Loop melalui array tanggal dan olah data
         foreach ($tanggal as $date) {
             // Konversi tanggal menjadi objek Carbon
             $carbonDate = Carbon::parse($date);
@@ -40,21 +40,26 @@ class ExportController extends Controller
             // Ambil nama bulan dalam bahasa Inggris atau Indonesia
             $bulan = $carbonDate->translatedFormat('F');
 
-            // Cari indeks bulan yang sama di hasil
+            // Cari indeks bulan yang sama di $result
             $foundIndex = array_search(strtolower($bulan), array_column($result, 'bulan'));
 
-            // Jika bulan sudah ada di hasil, tambahkan jumlahnya
+            // Jika bulan sudah ada di hasil, tambahkan tanggal ke dalam daftar tanggal
             if ($foundIndex !== false) {
-                $result[$foundIndex]['jumlah']++;
+                $result[$foundIndex]['tanggal'][] = $carbonDate->toDateString();
+                $result[$foundIndex]['jumlah'] += 1;
             } else {
                 // Jika bulan belum ada di hasil, tambahkan data baru
                 $result[] = [
                     'bulan' => strtolower($bulan),
                     'jumlah' => 1,
+                    'tanggal' => [$carbonDate->toDateString()] // Tambahkan tanggal sebagai array
                 ];
             }
         }
+
+
         $bulan = $result;
+        // $bulan['tanggal'] = $tanggal;
         
         $data = [];
         foreach ($uraian as $item) {
@@ -62,12 +67,15 @@ class ExportController extends Controller
             
 
             $data[] = [
+                'tanggal' => $tanggal,
+                'bulan' => $bulan,
                 'uraian' => $item->uraian_nama,
                 'sub_id' => $subid,
                 'sub_uraian' => explode('/', SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_nama),
                 // 'hasil' => $slug,
             ];
         }
+        // dd($data);
         
         // Edit data tertentu
 

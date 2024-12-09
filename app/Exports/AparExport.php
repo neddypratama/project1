@@ -10,85 +10,133 @@ use Maatwebsite\Excel\Events\AfterSheet;
 class AparExport implements FromArray, WithHeadings, WithEvents
 {
     protected $data;
+    // protected $;
 
     public function __construct($data)
     {
-        $this->data = $data; 
-    }
-
-    public function array(): array
-    {
-        $exportData = [];
-        
-        // Membuat data untuk export
-        foreach ($this->data['data'] as $row) {
-            foreach ($row['sub_uraian'] as $key => $sub) {
-                $hasilRow = [];
-                
-                $hasilRow[] = $row['uraian']; 
-                $hasilRow[] = $sub;
-
-                foreach ($row['hasil'] as $item) {
-                    if (isset($item[$key])) {
-                        if ($item[$key] == 1) {
-                            $hasilRow[] = '✅';
-                        } elseif ($item[$key] == 0) {
-                            $hasilRow[] = '❌';
-                        } else {
-                            $hasilRow[] = '';
-                        }
-                    } else {
-                        $hasilRow[] = '';
-                    }
-                }
-
-                $exportData[] = $hasilRow;
-            }
-        }
-
-        return $exportData;
+        $this->data = $data;
     }
 
     public function headings(): array
-    {
-        $headings = ['Uraian', 'Sub Uraian'];
+{
+    $bulanHeader = ['Uraian', 'Sub Uraian'];
+    $tanggalHeader = ['', ''];
 
-        foreach ($this->data['bulan'] as $b) {
-            $headings[] = $b['bulan'];
-        }
+    foreach ($this->data['bulan'] as $b) {
+        // Tambahkan bulan ke header di baris pertama
+        $jumlahTanggal = count($b['tanggal']);
+        $bulanHeader = array_merge($bulanHeader, array_fill(0, $jumlahTanggal, $b['bulan']));
 
-        return $headings;
+        // Tambahkan tanggal-tanggal ke header di baris kedua
+        $tanggalHeader = array_merge($tanggalHeader, $b['tanggal']);
     }
 
-    public function registerEvents(): array
-    {
-        return [
-            AfterSheet::class => function ($event) {
-                $sheet = $event->sheet;
+    return [$bulanHeader, $tanggalHeader];
+}
 
-                $currentRow = 3; 
-                foreach ($this->data['data'] as $row) {
-                    $subUraianCount = count($row['sub_uraian']); 
-                    $mergeRange = "A{$currentRow}:A" . ($currentRow + $subUraianCount - 1);
+public function array(): array
+{
+    $exportData = [];
 
-                    // Perbaikan agar semua sub_uraian benar tergabung dengan grup induknya
-                    $sheet->mergeCells($mergeRange);
-                    $sheet->getStyle($mergeRange)->applyFromArray([
-                        'font' => ['bold' => true],
-                        'alignment' => [
-                            'horizontal' => 'center',
-                            'vertical' => 'center',
-                        ],
-                    ]);
+    foreach ($this->data['data'] as $row) {
+        foreach ($row['sub_uraian'] as $key => $sub) {
+            $hasilRow = [];
 
-                    $currentRow += $subUraianCount; 
+            // Tambahkan uraian
+            $hasilRow[] = $row['uraian'];
+
+            // Tambahkan sub uraian
+            $hasilRow[] = $sub;
+
+            // Tambahkan hasil berdasarkan tanggal
+            foreach ($row['hasil'] as $item) {
+                if (isset($item[$key])) {
+                    if ($item[$key] == 1) {
+                        $hasilRow[] = 'Iya';
+                    } elseif ($item[$key] == 0) {
+                        $hasilRow[] = 'Tidak';
+                    } else {
+                        $hasilRow[] = $item[$key];
+                    }
+                } else {
+                    $hasilRow[] = '';
                 }
-
-                $columnsCount = count($this->data['bulan']) + 2;
-                $sheet->getStyle('A1:' . chr(65 + $columnsCount - 1) . $sheet->getHighestRow())
-                    ->getAlignment()
-                    ->setWrapText(true);
             }
-        ];
+
+            $exportData[] = $hasilRow;
+        }
     }
+
+    return $exportData;
+}
+
+
+
+
+public function registerEvents(): array
+{
+    return [
+        AfterSheet::class => function ($event) {
+            $sheet = $event->sheet;
+
+            // Merge untuk kolom bulan
+            $startColumn = 3; // Kolom pertama setelah Uraian dan Sub Uraian
+            foreach ($this->data['bulan'] as $b) {
+                $columnCount = count($b['tanggal']);
+                $endColumn = $startColumn + $columnCount - 1;
+
+                // Merge nama bulan
+                $sheet->mergeCellsByColumnAndRow($startColumn, 1, $endColumn, 1);
+
+                $startColumn = $endColumn + 1;
+            }
+
+            // Merge heading Uraian dan Sub Uraian
+            $sheet->mergeCells('A1:A2'); // Merge Uraian (vertikal)
+            $sheet->mergeCells('B1:B2'); // Merge Sub Uraian (vertikal)
+
+            // Styling heading
+            $highestColumn = $sheet->getHighestColumn();
+            $sheet->getStyle("A1:{$highestColumn}2")->applyFromArray([
+                'alignment' => [
+                    'horizontal' => 'center',
+                    'vertical' => 'center',
+                ],
+                'font' => ['bold' => true],
+            ]);
+
+            // Merge Uraian dan Sub Uraian untuk setiap data
+            $currentRow = 3; // Data dimulai dari baris ketiga
+            foreach ($this->data['data'] as $row) {
+                $subUraianCount = count($row['sub_uraian']);
+                $mergeRangeUraian = "A{$currentRow}:A" . ($currentRow + $subUraianCount - 1);
+                $sheet->mergeCells($mergeRangeUraian); // Merge untuk Uraian
+
+                $sheet->getStyle($mergeRangeUraian)->applyFromArray([
+                    'alignment' => [
+                        'horizontal' => 'center',
+                        'vertical' => 'center',
+                    ],
+                    'font' => ['bold' => true],
+                ]);
+
+                $currentRow += $subUraianCount;
+            }
+
+            // Wrap text dan border
+            $highestRow = $sheet->getHighestRow();
+            $sheet->getStyle("A1:{$highestColumn}{$highestRow}")->applyFromArray([
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    ],
+                ],
+                'alignment' => ['wrapText' => false],
+            ]);
+        },
+    ];
+}
+
+
+
 }

@@ -223,6 +223,7 @@ class AparController extends Controller
                 $result[] = [
                     'bulan' => strtolower($bulan),
                     'jumlah' => 1,
+                    'tanggal' => $tanggal
                 ];
             }
         }
