@@ -90,7 +90,7 @@
     <div class="container">
         <!-- Kop Surat -->
         <div class="header">
-            <img src="{{ public_path('img/logo.png') }}" alt="Logo Perusahaan">
+            <img src="{{ asset('img/logo.png') }}" alt="Logo Perusahaan">
             <div class="info">
                 <div style="font-size: 12px; font-weight: bold;">Laporan Apar Tahun {{ $tahun }}</div>
                 <div style="font-size: 10px;">Nama Instansi / Perusahaan Anda</div>
@@ -138,7 +138,7 @@
                 <tr>
                     <td colspan="2">Dokumentasi</td>
                     @foreach ($apar as $item)
-                        <td><img src="{{ public_path('storage/' . $item->dokumentasi) }}" alt="Dokumentasi"></td>
+                        <td><img src="{{ asset('storage/' . $item->dokumentasi) }}" alt="Dokumentasi"></td>
                     @endforeach
                 </tr>
             </tbody>

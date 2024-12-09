@@ -25,7 +25,10 @@ class ExportController extends Controller
         $sub_uraian = SubUraian::all();
         
         $tanggal =  Apar::whereYear('tanggal', $tahun)->pluck('tanggal')->toArray(); // $apar->tanggal; 
-        // $bulan = Carbon::parse($tanggal)->translatedFormat('F');
+
+
+        $apar_id =  Apar::whereYear('tanggal', $tahun)->pluck('apar_id')->toArray(); // $apar->tanggal; 
+        // dump($apar_id);
 
         $result = [];
 
@@ -71,14 +74,20 @@ class ExportController extends Controller
         $hasil = [];
 
         foreach ($sub_uraian as $key => $sub) {
-            $q = InputApar::select('hasil_apar')->where('sub_uraian_id', $sub->sub_uraian_id)->get()->toArray();
+            $q = InputApar::select('hasil_apar' , 'apar_id')->where('sub_uraian_id', $sub->sub_uraian_id)->get()->toArray();
+
             $d = explode("/", $sub->sub_uraian_nama);
 
             // $hasil[$sub->sub_uraian_id]['sub_uraian'] = [$d];
             foreach ($q as $keyy => $e) {
-                $p = explode('/', $e['hasil_apar']);
-                $k = $keyy;
-                $hasil[$sub->sub_uraian_id][$keyy] = $p ;
+                foreach ($apar_id as  $a) {
+                    // dump($a , $e);
+                    if ($a == $e['apar_id']) {
+                        $p = explode('/', $e['hasil_apar']);
+                        // $k = $keyy;
+                        $hasil[$sub->sub_uraian_id][$keyy] = $p ;
+                    }
+                }
                 // dump($d , $p );
             }
             // foreach ($data as $row) {
@@ -93,7 +102,7 @@ class ExportController extends Controller
         }
         // dd($data , $bulan, $tanggal, $apar, $uraian, $sub_uraian , $hasil);
         // dd(InputApar::where('sub_uraian_id', $sub->sub_uraian_id)->get()->toArray());
-
+        // dd($data);
         // Kirim data ke view
         // return view('admin.apar.acc', compact('apar', 'uraian', 'sub_uraian', 'bulan' , 'data' ,'tanggal'));
         return [
@@ -164,7 +173,7 @@ class ExportController extends Controller
             return response()->json(['error' => 'Data tidak ditemukan']);
         }
 
-        $pdf = pdf::loadView('admin.apar.cetak', $data, compact('tahun'));
+        $pdf = pdf::loadView('admin.apar.cetak1', $data, compact('tahun'));
 
         return $pdf->download('laporan-apar-' . $tahun . '.pdf');
     }
@@ -173,8 +182,10 @@ class ExportController extends Controller
     public function downloadExcel(Request $request, string $tahun)
     {
         $data = $this->prepareData($tahun);
+
         return Excel::download(new AparExport($data), 'laporan-apar.xlsx');
     }
+
 
     public function print(Request $request, string $tahun)
     {
@@ -186,6 +197,6 @@ class ExportController extends Controller
             return response()->json(['error' => 'Data tidak ditemukan']);
         }
 
-        return view('admin.apar.cetak', $data, compact('tahun'));
+        return view('admin.apar.cetak2', $data, compact('tahun'));
     }
 }

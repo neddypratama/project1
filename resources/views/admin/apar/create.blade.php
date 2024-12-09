@@ -28,7 +28,7 @@
                     <h5>Basic Info</h5>
                 </div> --}}
                 <ul class="nav flex-column  p-3">
-                    <span class="fw-bolder">List Krteria</span>
+                    <span class="fw-bolder">List Kriteria</span>
                     <li class="nav-item pt-2">
                         <a class="nav-link text-body" data-scroll href="#dokumentasi">
                             <span class="text-sm">{{ 'Dokumentasi' }}</span>
