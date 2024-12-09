@@ -54,7 +54,7 @@ class AparController extends Controller
     public function edit(Request $request, $id)
     {
         $apar = Apar::find($id);
-        $uraian = uraian::where('apar_id', $apar->first()->apar_id)->get();
+        $uraian = uraian::all();
         $sub_uraian = SubUraian::all();
         $input = InputApar::where('apar_id', $id)->get();
         $id = $apar->apar_id;
@@ -96,10 +96,32 @@ class AparController extends Controller
         return view('admin.apar.edit' , compact('uraian', 'sub_uraian', 'data', 'input', 'id'));
     }
 
+    public function simpan(Request $request,  $id)
+    {
+        $apar = Apar::find($id);
+        $sub = [];
+        foreach ($request['revisi'] as $key => $value) {
+            InputApar::where('sub_uraian_id', $key)->update([
+                'revisi' => $value,
+                'updated_at' => now(),
+            ]);
+        }
+
+        $apar->update([
+            'status' => 'Revisi',
+        ]);
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('apar.approve')
+            ->withStatus(__('Revisi berhasil diperbarui.'));
+}
+
+
+
     public function cetak(Request $request)
     {
         $apar = Apar::all();
-        $uraian = uraian::where('apar_id', $apar->first()->apar_id)->get();
+        $uraian = uraian::all();
         $sub_uraian = SubUraian::all();
         
         $tanggal =[];
@@ -158,7 +180,7 @@ class AparController extends Controller
             }
         }
 
-        dd($data);
+        // dd($data);
         return view('admin.apar.index', compact('apar', 'uraian', 'sub_uraian', 'bulan' , 'data' ,'tanggal'));
     }
 
@@ -206,43 +228,6 @@ class AparController extends Controller
 
     public function store(Request $request)
     {
-
-        // dd($request['selecthasil']);
-
-        // $suburaian = SubUraian::all()->select('sub_uraian_id' , 'sub_uraian_tipe')->toArray();
-
-        // $validated = [];
-
-        // if (!$request['texthasil']) {
-        //     // dd("dsadasd");
-        //     $validated = $request->validate([
-        //         'dokumentasi' => 'required|image|file|max:2048',
-        //         // 'texthasil.*' => 'required|min:3',
-        //         'selecthasil.*' => 'required',
-        //     ],[
-        //         'dokumentasi.required' => 'File dokumentasi wajib diunggah.',
-        //         'dokumentasi.image' => 'File dokumentasi harus berupa gambar.',
-        //         'dokumentasi.max' => 'Ukuran file dokumentasi tidak boleh lebih dari 2MB.',
-        //         // 'texthasil.*.required' => 'Field teks wajib diisi.',
-        //         'selecthasil.*.required' => 'Field pilihan wajib diisi.',
-        //     ]);
-        // };
-
-        // if (!$request['selecthasil']) {
-        //     // dd("dsadasd");
-        //     $validated = $request->validate([
-        //         'dokumentasi' => 'required|image|file|max:2048',
-        //         'texthasil.*' => 'required|min:3',
-        //         // 'selecthasil.*' => 'required',
-        //     ],[
-        //         'dokumentasi.required' => 'File dokumentasi wajib diunggah.',
-        //         'dokumentasi.image' => 'File dokumentasi harus berupa gambar.',
-        //         'dokumentasi.max' => 'Ukuran file dokumentasi tidak boleh lebih dari 2MB.',
-        //         'texthasil.*.required' => 'Field teks wajib diisi.',
-        //         // 'selecthasil.*.required' => 'Field pilihan wajib diisi.',
-        //     ]);
-        // };
-
         $validated = $request->validate([
             'dokumentasi' => 'required|image|max:2048',
             'texthasil.*' => 'required|min:3',
@@ -255,25 +240,22 @@ class AparController extends Controller
             'selecthasil.*.required' => 'Field pilihan wajib diisi.',
         ]);
 
-        dd($validated);
+        // dd($validated);
         
         if ($request->file('dokumentasi')) {
             Storage::disk('public')->putFile('apar', $request->file('dokumentasi'));
             // dd("asdasd ");
             $validated['dokumentasi'] = $request->file('dokumentasi')->store('apar');
         }
-        
-        
-        
-        // dd($validated);
-        
-        // dump($data);
 
         $id = Apar::create([
            'tanggal' => now(),
-           'status' => 'Revisi',
+           'status' => 'Belum Dicek',
            'user_id' => auth()->user()->user_id,
            'dokumentasi' => $validated['dokumentasi'],
+           'tanda_tangan' => '',
+           'created_at' => now(),
+           'updated_at' => now(),
         ]);
 
         foreach ($validated['texthasil'] as $key => $value) {
@@ -281,6 +263,8 @@ class AparController extends Controller
                 'apar_id' => $id->apar_id,
                 'sub_uraian_id' => $key,
                 'hasil_apar' => $value,
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
 
@@ -300,6 +284,8 @@ class AparController extends Controller
                 'apar_id' => $id->apar_id,
                 'sub_uraian_id' => $key1,
                 'hasil_apar' => $tes,
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
         // dd($validated);
@@ -336,14 +322,25 @@ class AparController extends Controller
 
         $user = User::all();
         $input = InputApar::all();
+        
 
         // Kirim data ke view
         return view('admin.apar.approve', compact('data', 'input', 'user', 'sortBy', 'order'));
     }
 
+    public function approveStatus(Request $request, $id){
+        $apar = Apar::find($id);
+        $apar->update([
+            'status' => 'Setuju',
+            'updated_at' => now(),
+        ]);
+
+        return redirect()->route('apar.approve')->withStatus('Status berhasil diubah.');
+    }
+
     public function revisi(Request $request, $id){
         $apar = Apar::find($id);
-        $uraian = uraian::where('apar_id', $apar->first()->apar_id)->get();
+        $uraian = uraian::all();
         $sub_uraian = SubUraian::all();
         $input = InputApar::where('apar_id', $id)->get();
         
@@ -366,9 +363,12 @@ class AparController extends Controller
             foreach ($data as &$row) {
                 if ($row['sub_id'] == $sub->sub_uraian_id) {
                     $row['hasil'] = explode('/', InputApar::where('sub_uraian_id', $sub->sub_uraian_id)->where('apar_id', $id)->first()->hasil_apar);
+                    $row['revisi'] = explode('/', InputApar::where('sub_uraian_id', $sub->sub_uraian_id)->where('apar_id', $id)->first()->revisi);
                 }
             }
         }
+
+        // dd($data);
         return view('admin.apar.revisi', compact('apar', 'uraian', 'sub_uraian', 'bulan' , 'input', 'data' ,'tanggal'));
     }
 
@@ -377,7 +377,7 @@ class AparController extends Controller
     {
         $apar = Apar::find($id);
 
-        $uraian = uraian::where('apar_id', $apar->first()->apar_id)->get();
+        $uraian = uraian::all();
         $sub_uraian = SubUraian::all();
         
         $tanggal = $apar->tanggal;
@@ -448,7 +448,7 @@ class AparController extends Controller
     public function tampil(Request $request, $id)
     {
         $apar = Apar::find($id);
-        $uraian = uraian::where('apar_id', $apar->first()->apar_id)->get();
+        $uraian = uraian::all();
         $sub_uraian = SubUraian::all();
         
         $tanggal = $apar->tanggal;

@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <div class="card-footer ">
-                    <a href="{{ route('apar.riwayat') }}" class="btn btn-primary">Kembali</a>
+                    <a href="{{ route('apar.approve') }}" class="btn btn-primary">Kembali</a>
                 </div>
             </div>
         </div>
@@ -78,25 +78,43 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form class="form-floating" method="POST" >
+                    <form class="form-floating" method="POST" action="{{ route('apar.simpan', $apar->apar_id) }}">
                         @csrf
                         @method('PUT')
                         @foreach ($uraian as $item)
                             @foreach ($sub_uraian as $sub)
                                 @if ($item->uraian_id == $sub->uraian_id)
                                     <div class="form-floating mb-2">
-                                        <textarea class="form-control bg-light rounded" name="revisi-{{ $item->uraian_id }}"
-                                            id="revisi-{{ $item->uraian_id }}"></textarea>
-                                        <label for="revisi-{{ $item->uraian_id }}">{{ $item->uraian_nama }}</label>
+                                        <textarea class="form-control bg-light rounded" name="revisi[{{ $sub->sub_uraian_id }}]"
+                                            id="revisi-{{ $sub->sub_uraian_id }}">{{ old('revisi.' . $sub->sub_uraian_id, $input->where('sub_uraian_id', $sub->sub_uraian_id)->first()->revisi ?? '') }}</textarea>
+                                        <label for="revisi-{{ $sub->sub_uraian_id }}">{{ $item->uraian_nama }}</label>
                                     </div>
-                                    <input type="string" name="sub_uraian_id" value="{{ $sub->sub_uraian_id}}" hidden>
-                                    <input type="string" name="apar_id" value="{{ $apar->apar_id}}" hidden>
+                                    <input type="hidden" name="sub_uraian_ids[]" value="{{ $sub->sub_uraian_id }}">
                                 @endif
                             @endforeach
                         @endforeach
+
                         <button type="submit" class="btn btn-primary btn-block mt-2">Submit</button>
                     </form>
+
                 </div>
+                {{-- <form class="form-floating" method="POST" action="{{ route('apar.simpan', $apar->apar_id) }}">
+                    @csrf
+                    @method('PUT')
+                    @foreach ($uraian as $item)
+                        @foreach ($sub_uraian as $sub)
+                            @if ($item->uraian_id == $sub->uraian_id)
+                                <div class="form-floating mb-2">
+                                    <textarea class="form-control bg-light rounded" name="revisi[{{ $item->uraian_id }}]"
+                                        id="revisi-{{ $item->uraian_id }}">{{ old('revisi.' . $item->uraian_id, $sub->sub_uraian_nama) }}</textarea>
+                                    <label for="revisi-{{ $item->uraian_id }}">{{ $item->uraian_nama }}</label>
+                                </div>
+                                <input type="hidden" name="sub_uraian_ids[]" value="{{ $sub->sub_uraian_id }}">
+                            @endif
+                        @endforeach
+                    @endforeach
+                    <button type="submit" class="btn btn-primary btn-block mt-2">Submit</button>
+                </form> --}}
 
             </div>
         </div>

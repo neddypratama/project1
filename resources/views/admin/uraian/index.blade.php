@@ -1,4 +1,4 @@
-@extends('admin.layouts.app', ['page' => __('User Management'), 'pageSlug' => 'users'])
+@extends('admin.layouts.app', ['page' => __('Uraian Management'), 'pageSlug' => 'manage_uraian'])
 
 @section('content')
     <div class="row">
@@ -7,10 +7,13 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">Users</h4>
+                            <h4 class="card-title">Uraian</h4>
                         </div>
                         <div class="col-4 text-right">
-                            {{-- <a href="#" class="btn btn-sm btn-primary">Add user</a> --}}
+                            <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
+                                data-bs-target="#adduraian">
+                                Add Uraian
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -18,43 +21,26 @@
                     @include('admin.alerts.success')
                     @include('admin.alerts.alert')
                     <div class="container-fluid">
-                        <form method="GET" action="{{ route('user.index') }}" class="d-flex w-100">
+                        <form method="GET" action="{{ route('uraian.index') }}" class="d-flex w-100">
                             <div class="form-group flex-grow-1 me-2">
                                 <input type="text" name="search" class="form-control form-control-sm mt-1"
-                                    placeholder="Search by name, email, or role" value="{{ request()->get('search') }}">
+                                    placeholder="Cari berdasarkan nama uraian" value="{{ request()->get('search') }}">
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-secondary mt-1"><i class="tim-icons icon-zoom-split"></i></button>
                             </div>
                         </form>
                     </div>
+
                     <div class="">
-                        <table class="table table-responsive-xl" style="width: 100%" id="">
-                            <thead class="text-primary ">
+                        <table class="table table-responsive-xl " id="">
+                            <thead class="text-primary">
                                 <tr>
                                     <th scope="col">
                                         <span style="cursor: pointer;"
-                                            onclick="window.location.href='{{ request()->fullUrlWithQuery(['sort_by' => 'name', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}'">
-                                            Nama
-                                            @if ($sortBy === 'name')
-                                                {{ $order === 'asc' ? '🔼' : '🔽' }}
-                                            @endif
-                                        </span>
-                                    </th>
-                                    <th scope="col">
-                                        <span style="cursor: pointer;"
-                                            onclick="window.location.href='{{ request()->fullUrlWithQuery(['sort_by' => 'email', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}'">
-                                            Email
-                                            @if ($sortBy === 'email')
-                                                {{ $order === 'asc' ? '🔼' : '🔽' }}
-                                            @endif
-                                        </span>
-                                    </th>
-                                    <th scope="col">
-                                        <span style="cursor: pointer;"
-                                            onclick="window.location.href='{{ request()->fullUrlWithQuery(['sort_by' => 'role_id', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}'">
-                                            Role
-                                            @if ($sortBy === 'role_id')
+                                            onclick="window.location.href='{{ request()->fullUrlWithQuery(['sort_by' => 'uraian_nama', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}'">
+                                            Nama Uraian
+                                            @if ($sortBy === 'uraian_nama')
                                                 {{ $order === 'asc' ? '🔼' : '🔽' }}
                                             @endif
                                         </span>
@@ -74,16 +60,7 @@
                             <tbody>
                                 @forelse ($data as $d)
                                     <tr>
-                                        <td>{{ $d->name }}</td>
-                                        <td>
-                                            <a href="mailto:{{ $d->email }}">{{ $d->email }}</a>
-                                        </td>
-                                        <td>
-                                            @foreach ($role as $p)
-                                                @if ($p->role_id === $d->role_id)
-                                                    {{ $p->role_name }}
-                                                @endif
-                                            @endforeach
+                                        <td>{{ $d->uraian_nama }}</td>
                                         </td>
                                         <td>{{ $d->created_at }}</td>
                                         <td class="text-right">
@@ -94,22 +71,24 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                                     <a class="dropdown-item edit-button" data-bs-toggle="modal"
-                                                        data-bs-target="#editUser" data-id="{{ $d->user_id }}"
-                                                        data-name="{{ $d->name }}" data-email="{{ $d->email }}"
-                                                        data-role="{{ $d->role_id }}"
-                                                        data-url="{{ url('user/' . $d->user_id) }}">Edit</a>
-                                                    <a class="dropdown-item delete-button" data-bs-toggle="modal"
-                                                        data-bs-target="#deleteModal" data-id="{{ $d->user_id }}"
-                                                        data-url="{{ url('user/' . $d->user_id) }}">Delete</a>
+                                                        data-bs-target="#edituraian" data-id="{{ $d->uraian_id }}"
+                                                        data-name="{{ $d->uraian_nama }}"
+                                                        data-url="{{ url('uraian/' . $d->uraian_id) }}">Edit</a>
+                                                    <a class="dropdown-item
+                                                        delete-button"
+                                                        data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                                        data-id="{{ $d->uraian_id }}"
+                                                        data-url="{{ url('uraian/' . $d->uraian_id) }}">Delete</a>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="text-center">Tidak ada user yang ditemukan</td>
+                                        <td colspan="4" class="text-center">Tidak ada uraian yang ditemukan</td>
                                     </tr>
                                 @endforelse
+
                             </tbody>
                         </table>
                     </div>
@@ -135,78 +114,90 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal Edit User -->
-    <div class="modal fade" id="editUser" tabindex="-1" aria-labelledby="editUserTitle" aria-hidden="true">
+    <!-- Modal Add role-->
+    <div class="modal fade" id="adduraian" tabindex="-1" aria-labelledby="adduraianTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editUserTitle">Edit User</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Add Uraian</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form role="form" method="POST" action="" id="editUserForm" enctype="multipart/form-data">
+                    <form role="form" method="POST" action="{{ route('uraian.store') }}" enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
 
-                        <!-- Name User -->
-                        <div class="form-group{{ $errors->has('edit_name') ? ' has-danger' : '' }}">
-                            <label for="edit-name" class="col-form-label">Name User: </label>
-                            <input type="text" name="edit_name" id="edit-name"
-                                class="form-control{{ $errors->has('edit_name') ? ' is-invalid' : '' }}"
-                                placeholder="Name" value="{{ old('edit_name') }}" >
-                            @if ($errors->has('edit_name'))
+                        <!-- Name role -->
+                        <div class="form-group{{ $errors->has('uraian_nama') ? ' has-danger' : '' }}">
+                            <label for="uraian_nama" class="col-form-label">Name Uraian: </label>
+                            <input type="text" name="uraian_nama" id="uraian_nama"
+                                class="form-control{{ $errors->has('uraian_nama') ? ' is-invalid' : '' }}"
+                                placeholder="Name Uraian" value="{{ old('uraian_nama') }}">
+                            @if ($errors->has('uraian_nama'))
                                 <span class="invalid-feedback" role="alert">
-                                    {{ $errors->first('edit_name') }}
-                                </span>
-                            @endif
-                        </div>
-
-                        <!-- Role User -->
-                        <div class="form-group{{ $errors->has('edit_role_id') ? ' has-danger' : '' }}">
-                            <label for="edit-role-id" class="col-form-label">Name Role: </label>
-                            <select name="edit_role_id"
-                                class="form-control {{ $errors->has('edit_role_id') ? ' is-invalid' : '' }}"
-                                id="edit-role-id" style="height: 50px">
-                                <option value="">- Role -</option>
-                                @foreach ($role as $p)
-                                    <option value="{{ $p->role_id }}"
-                                        {{ old('edit_role_id') == $p->role_id ? 'selected' : '' }}>
-                                        {{ $p->role_name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @if ($errors->has('edit_role_id'))
-                                <span class="invalid-feedback" role="alert">
-                                    {{ $errors->first('edit_role_id') }}
+                                    {{ $errors->first('uraian_nama') }}
                                 </span>
                             @endif
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="text-white btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="text-white btn btn-primary">Update Role</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add Uraian</button>
                 </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Modal Delete User -->
+    <!-- Modal Edit role -->
+    <div class="modal fade" id="edituraian" tabindex="-1" aria-labelledby="edituraianTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="edituraianTitle">Edit Uraian</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form role="form" method="POST" action="" id="edituraianForm" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+
+                        <!-- Name role -->
+                        <div class="form-group{{ $errors->has('edit_uraian_nama') ? ' has-danger' : '' }}">
+                            <label for="edit-uraian-nama" class="col-form-label">Name Uraian: </label>
+                            <input type="text" name="edit_uraian_nama" id="edit-uraian-nama"
+                                class="form-control{{ $errors->has('edit_uraian_nama') ? ' is-invalid' : '' }}"
+                                placeholder="Name Uraian" value="{{ old('edit_uraian_nama') }}">
+                            @if ($errors->has('edit_uraian_nama'))
+                                <span class="invalid-feedback" role="alert">
+                                    {{ $errors->first('edit_uraian_nama') }}
+                                </span>
+                            @endif
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="text-white btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="text-white btn btn-primary">Update Uraian</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Delete role -->
     <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Delete User</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Delete Uraian</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Are you sure to delete data User?
+                    Are you sure to delete data uraian?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <form id="deleteUserForm" method="POST">
+                    <form id="deleteUraianForm" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-primary">Delete</button>
@@ -226,14 +217,21 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        // Check and show the editlayanan modal if there are errors for edit layanan
         if (
-            {{ $errors->has('edit_user_name') || $errors->has('edit_role_id') ? 'true' : 'false' }}
+            {{ $errors->has('uraian_nama') ? 'true' : 'false' }}
         ) {
-            var edituserModal = new bootstrap.Modal(document.getElementById('editUser'));
+            var adduraianModal = new bootstrap.Modal(document.getElementById('adduraian'));
+            adduraianModal.show();
+        }
+
+        // Check and show the edituraian modal if there are errors for edit role
+        if (
+            {{ $errors->has('edit_uraian_nama') ? 'true' : 'false' }}
+        ) {
+            var edituraianModal = new bootstrap.Modal(document.getElementById('edituraian'));
             var url = localStorage.getItem('Url');
-            edituserModal.show();
-            $('#editUserForm').attr('action', url);
+            edituraianModal.show();
+            $('#edituraianForm').attr('action', url);
 
             console.log(@json($errors->all()));
         }
@@ -245,20 +243,19 @@
 
         editButtons.forEach(function(button) {
             button.addEventListener('click', function() {
-                var userId = this.getAttribute('data-id');
-                var userName = this.getAttribute('data-name');
-                var userRole = this.getAttribute('data-role');
+                var roleId = this.getAttribute('data-id');
+                var roleName = this.getAttribute('data-name');
+                var roleDescription = this.getAttribute('data-description');
                 var actionUrl = this.getAttribute('data-url');
                 localStorage.setItem('Url', actionUrl);
 
                 console.log(actionUrl);
 
-                $('#edit-id').val(userId);
-                $('#edit-name').val(userName);
-                $('#edit-role-id').val(userRole);
+                $('#edit-id').val(roleId);
+                $('#edit-uraian-nama').val(roleName);
 
                 // Atur action form untuk update
-                $('#editUserForm').attr('action', actionUrl);
+                $('#edituraianForm').attr('action', actionUrl);
             });
         });
     });
@@ -268,12 +265,12 @@
         document.querySelectorAll('.delete-button').forEach(function(button) {
             button.addEventListener('click', function() {
                 // Ambil data dari atribut data-*
-                var userId = this.getAttribute('data-id');
-                var userDeleteUrl = this.getAttribute('data-url');
+                var roleId = this.getAttribute('data-id');
+                var roleDeleteUrl = this.getAttribute('data-url');
 
                 // Atur action form untuk delete
-                document.getElementById('deleteUserForm').setAttribute('action',
-                    userDeleteUrl);
+                document.getElementById('deleteUraianForm').setAttribute('action',
+                    roleDeleteUrl);
             });
         });
     });

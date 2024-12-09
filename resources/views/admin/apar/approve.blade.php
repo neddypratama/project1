@@ -91,17 +91,28 @@
                                                 @endif
                                             @endforeach
                                         </td>
-                                        @if ($d->status == 'Revisi')
-                                            <td>
-                                                <div class="rounded bg-danger text-center p-1 fh-bolder"
-                                                    style="color: white">{{ $d->status }}</div>
-                                            </td>
-                                        @else
-                                            <td>
-                                                <div class="rounded bg-success text-center p-1 fh-bolder"
-                                                    style="color: white">{{ $d->status }}</div>
-                                            </td>
-                                        @endif
+                                        <td>
+                                            @switch($d->status)
+                                                @case('Setuju')
+                                                    <div class="rounded bg-success text-center p-1 fw-bolder" style="color: white">
+                                                        {{ $d->status }}</div>
+                                                @break
+
+                                                @case('Revisi')
+                                                    <div class="rounded bg-warning text-center p-1 fw-bolder" style="color: white">
+                                                        {{ $d->status }}</div>
+                                                @break
+
+                                                @case('Belum Dicek')
+                                                    <div class="rounded bg-danger text-center p-1 fw-bolder" style="color: white">
+                                                        {{ $d->status }}</div>
+                                                @break
+
+                                                @default
+                                                    <div class="rounded bg-secondary text-center p-1 fw-bolder"
+                                                        style="color: white">Tidak Diketahui</div>
+                                            @endswitch
+                                        </td>
                                         <td class="text-right">
                                             <div class="dropdown">
                                                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
@@ -109,108 +120,118 @@
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    @if ($d->status == 'Revisi')
-                                                        <a class="dropdown-item" href="{{ url('apar/acc/' . $d->apar_id) }}">Lihat Apar</a>
-                                                        <a class="dropdown-item" href="{{ url('apar/revisi/' . $d->apar_id) }}">Approve Apar</a>
-                                                    @else
-                                                        <a class="dropdown-item" href="{{ url('apar/acc/' . $d->apar_id) }}">Lihat Apar</a>
-                                                    @endif
+                                                    @switch($d->status)
+                                                        @case('Setuju')
+                                                            <a class="dropdown-item"
+                                                                href="{{ url('apar/acc/' . $d->apar_id) }}">Lihat
+                                                                Apar</a>
+                                                        @break
+
+                                                        @case('Belum Dicek')
+                                                            <a class="dropdown-item"
+                                                                href="{{ url('apar/acc/' . $d->apar_id) }}">Lihat
+                                                                Apar</a>
+                                                            <a class="dropdown-item"
+                                                                href="{{ url('apar/revisi/' . $d->apar_id) }}">Revisi
+                                                                Apar</a>
+                                                        @break
+
+                                                        @default
+                                                            <a class="dropdown-item"
+                                                                href="{{ url('apar/acc/' . $d->apar_id) }}">Lihat
+                                                                Apar</a>
+                                                            <a class="dropdown-item"
+                                                                href="{{ url('apar/revisi/' . $d->apar_id) }}">Revisi
+                                                                Apar</a>
+                                                            <a class="dropdown-item approve-button" data-bs-toggle="modal"
+                                                                data-bs-target="#approveModal" data-id="{{ $d->apar_id }}"
+                                                                data-url="{{ url('apar/status/' . $d->apar_id) }}">
+                                                                Approve Apar
+                                                            </a>
+                                                    @endswitch
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="4" class="text-center">Tidak ada apar yang ditemukan</td>
-                                    </tr>
-                                @endforelse
+                                    @empty
+                                        <tr>
+                                            <td colspan="4" class="text-center">Tidak ada apar yang ditemukan
+                                            </td>
+                                        </tr>
+                                    @endforelse
 
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="card-footer ">
-                    <nav class="d-flex justify-content-between align-items-center" aria-label="...">
-                        <div class="form-group">
-                            <select id="paginationLimit" class="form-control" onchange="updatePaginationLimit(this.value)"
-                                style="font-size: 12px">
-                                <option value="10" {{ request('limit') == 10 ? 'selected' : '' }}>10</option>
-                                <option value="25" {{ request('limit') == 25 ? 'selected' : '' }}>25</option>
-                                <option value="50" {{ request('limit') == 50 ? 'selected' : '' }}>50</option>
-                                <option value="all" {{ request('limit') == 'all' ? 'selected' : '' }}>All</option>
-                            </select>
+                                </tbody>
+                            </table>
                         </div>
+                    </div>
 
-                        {{-- Tampilkan pagination hanya jika tidak memilih 'all' --}}
-                        @if ($data instanceof \Illuminate\Pagination\LengthAwarePaginator)
-                            {{ $data->links('vendor.pagination.bootstrap-5') }}
-                        @endif
-                    </nav>
+                    <div class="card-footer ">
+                        <nav class="d-flex justify-content-between align-items-center" aria-label="...">
+                            <div class="form-group">
+                                <select id="paginationLimit" class="form-control" onchange="updatePaginationLimit(this.value)"
+                                    style="font-size: 12px">
+                                    <option value="10" {{ request('limit') == 10 ? 'selected' : '' }}>10</option>
+                                    <option value="25" {{ request('limit') == 25 ? 'selected' : '' }}>25</option>
+                                    <option value="50" {{ request('limit') == 50 ? 'selected' : '' }}>50</option>
+                                    <option value="all" {{ request('limit') == 'all' ? 'selected' : '' }}>All</option>
+                                </select>
+                            </div>
+
+                            {{-- Tampilkan pagination hanya jika tidak memilih 'all' --}}
+                            @if ($data instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                                {{ $data->links('vendor.pagination.bootstrap-5') }}
+                            @endif
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-@endsection
 
-@stack('js')
-<script>
-    function updatePaginationLimit(limit) {
-        const url = new URL(window.location.href);
-        url.searchParams.set('limit', limit); // Tambahkan atau update parameter 'limit'
-        window.location.href = url.toString(); // Redirect ke URL baru
-    }
+        <div class="modal fade" id="approveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="approveModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="approveModalLabel">Approve Apar</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Apakah Anda yakin ingin meng-approve Apar ini?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <form id="approveAparForm" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="btn btn-primary">Approve</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    document.addEventListener('DOMContentLoaded', function() {
-        // Check and show the editlayanan modal if there are errors for edit layanan
-        if (
-            {{ $errors->has('edit_user_name') || $errors->has('edit_role_id') ? 'true' : 'false' }}
-        ) {
-            var edituserModal = new bootstrap.Modal(document.getElementById('editUser'));
-            var url = localStorage.getItem('Url');
-            edituserModal.show();
-            $('#editUserForm').attr('action', url);
 
-            console.log(@json($errors->all()));
+    @endsection
+
+    @stack('js')
+    <script>
+        function updatePaginationLimit(limit) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('limit', limit); // Tambahkan atau update parameter 'limit'
+            window.location.href = url.toString(); // Redirect ke URL baru
         }
-    });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ketika tombol approve diklik
+            document.querySelectorAll('.approve-button').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    // Ambil data dari atribut data-*
+                    var aparId = this.getAttribute('data-id');
+                    var approveUrl = this.getAttribute('data-url');
 
-
-    document.addEventListener('DOMContentLoaded', function() {
-        var editButtons = document.querySelectorAll('.edit-button');
-
-        editButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                var userId = this.getAttribute('data-id');
-                var userName = this.getAttribute('data-name');
-                var userRole = this.getAttribute('data-role');
-                var actionUrl = this.getAttribute('data-url');
-                localStorage.setItem('Url', actionUrl);
-
-                console.log(actionUrl);
-
-                $('#edit-id').val(userId);
-                $('#edit-name').val(userName);
-                $('#edit-role-id').val(userRole);
-
-                // Atur action form untuk update
-                $('#editUserForm').attr('action', actionUrl);
+                    // Atur action form untuk approve
+                    document.getElementById('approveAparForm').setAttribute('action', approveUrl);
+                });
             });
         });
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // Ketika tombol delete diklik
-        document.querySelectorAll('.delete-button').forEach(function(button) {
-            button.addEventListener('click', function() {
-                // Ambil data dari atribut data-*
-                var userId = this.getAttribute('data-id');
-                var userDeleteUrl = this.getAttribute('data-url');
-
-                // Atur action form untuk delete
-                document.getElementById('deleteUserForm').setAttribute('action',
-                    userDeleteUrl);
-            });
-        });
-    });
-</script>
+    </script>

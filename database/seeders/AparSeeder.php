@@ -16,7 +16,7 @@ class AparSeeder extends Seeder
         DB::table('apars')->insert([
             'apar_id' => 1,
             'tanggal' => '2024-12-07',
-            'status' => 'Revisi',
+            'status' => 'Belum Dicek',
             'dokumentasi' => '',
             'tanda_tangan' => '',
             'user_id' => '1',
@@ -26,7 +26,7 @@ class AparSeeder extends Seeder
         DB::table('apars')->insert([
             'apar_id' => 2,
             'tanggal' => '2024-12-17',
-            'status' => 'Revisi',
+            'status' => 'Belum Dicek',
             'dokumentasi' => '',
             'tanda_tangan' => '',
             'user_id' => '1',
@@ -36,7 +36,7 @@ class AparSeeder extends Seeder
         DB::table('apars')->insert([
             'apar_id' => 3,
             'tanggal' => '2025-12-07',
-            'status' => 'Revisi',
+            'status' => 'Belum Dicek',
             'dokumentasi' => '',
             'tanda_tangan' => '',
             'user_id' => '1',

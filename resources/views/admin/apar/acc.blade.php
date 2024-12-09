@@ -1,4 +1,4 @@
-@extends('admin.layouts.app', ['page' => __('Tampil Apar'), 'pageSlug' => 'tampil_apar'])
+@extends('admin.layouts.app', ['page' => __('Approve Apar'), 'pageSlug' => 'menu_approve'])
 
 {{-- @stack('style')
 </style> --}}
@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <div class="card-footer ">
-                    <a href="{{ route('apar.riwayat') }}" class="btn btn-primary">Kembali</a>
+                    <a href="{{ route('apar.approve') }}" class="btn btn-primary">Kembali</a>
                 </div>
             </div>
         </div>
