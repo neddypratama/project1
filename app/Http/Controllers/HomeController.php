@@ -2,60 +2,56 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Carbon;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\View\View
-     */
+    // Tampilkan halaman dashboard
     public function index()
     {
         return view('admin.dashboard');
     }
 
-    /**
-     * Get Dashboard Data for Apar Counts by Month.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getDashboardData()
+    // Ambil data jumlah apar per bulan
+    public function getMonthlyAparData()
     {
-        $currentYear = Carbon::now()->year;
-
-        // Query untuk mendapatkan jumlah APAR per bulan
         $data = DB::table('apars')
-            ->select(DB::raw('MONTH(created_at) as month, COUNT(*) as total'))
-            ->whereYear('created_at', $currentYear)
+            ->select(DB::raw('MONTH(tanggal) as month, COUNT(*) as total'))
             ->groupBy('month')
             ->orderBy('month')
-            ->pluck('total', 'month')
-            ->toArray();
+            ->pluck('total', 'month');
 
-        // Pastikan setiap bulan (1-12) memiliki nilai, meskipun 0
-        $monthlyData = array_fill(1, 12, 0);
+        $labels = [];
+        $values = [];
+
         foreach ($data as $month => $total) {
-            $monthlyData[$month] = $total;
+            $labels[] = $this->getMonthName((int)$month); // Ubah angka ke nama bulan
+            $values[] = $total;
         }
 
-        dd($data);
-
         return response()->json([
-            'labels' => array_keys($monthlyData),
-            'values' => array_values($monthlyData),
+            'labels' => $labels,
+            'values' => $values,
         ]);
+    }
+
+    private function getMonthName($month)
+    {
+        $months = [
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember',
+        ];
+        return $months[$month] ?? '';
     }
 }

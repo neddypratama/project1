@@ -7,14 +7,14 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-sm-6 text-left">
-                            <h5 class="card-category">Jumlah Apar per Bulan dan Tahun</h5>
-                            <h2 class="card-title">Grafik Apar</h2>
+                            <h5 class="card-category">Grafik Jumlah Apar per Bulan</h5>
+                            <h2 class="card-title">Apar Aktivitas</h2>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="chart-area">
-                        <canvas id="chartApar"></canvas>
+                        <canvas id="aparChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@
             fetch('{{ route('home.data') }}')
                 .then(response => response.json())
                 .then(data => {
-                    const ctx = document.getElementById('chartApar').getContext('2d');
+                    const ctx = document.getElementById('aparChart').getContext('2d');
 
                     new Chart(ctx, {
                         type: 'bar',
@@ -37,11 +37,10 @@
                             labels: data.labels,
                             datasets: [{
                                 label: 'Jumlah Apar',
-                                backgroundColor: '#FF0000',
-                                borderColor: '#FF0000',
+                                backgroundColor: '#FF6384',
+                                borderColor: '#FF6384',
                                 data: data.values,
-                                fill: false,
-                                pointRadius: 5,
+                                fill: false
                             }]
                         },
                         options: {
@@ -52,7 +51,7 @@
                                     beginAtZero: true,
                                     title: {
                                         display: true,
-                                        text: 'Bulan dan Tahun'
+                                        text: 'Bulan'
                                     }
                                 },
                                 y: {
@@ -61,11 +60,6 @@
                                         display: true,
                                         text: 'Jumlah Apar'
                                     }
-                                }
-                            },
-                            plugins: {
-                                legend: {
-                                    display: true
                                 }
                             }
                         }

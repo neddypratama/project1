@@ -125,9 +125,9 @@
                             @foreach ($row['hasil'] as $k => $item)
                                 <td>
                                     @if ($item[$key] == 1)
-                                        ✅
+                                        V
                                     @elseif ($item[$key] == 0)
-                                        ❌
+                                        X
                                     @else
                                         {{ $item[$key] ?? '' }}
                                     @endif
