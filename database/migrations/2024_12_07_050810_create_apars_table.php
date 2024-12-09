@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('apars', function (Blueprint $table) {
             $table->id('apar_id');
-            $table->string('dokumentasi');
+            $table->string('dokumentasi')->nullable();
             $table->date('tanggal');
             $table->enum('status', ['Setuju', 'Revisi', 'Belum Dicek']);
-            $table->string('tanda_tangan');
+            $table->string('tanda_tangan')->nullable();
             $table->unsignedBigInteger('user_id')->index();
             $table->timestamps();
 

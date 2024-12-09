@@ -26,6 +26,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware(['auth', 'verified'] );
+Route::get('/home-data', 'App\Http\Controllers\HomeController@index')->name('home.data')->middleware(['auth', 'verified'] );
+
 
 Route::group(['middleware' => ['auth']], function () {
     // Rute untuk Admin (role:1)
