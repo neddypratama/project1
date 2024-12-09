@@ -65,13 +65,12 @@ class ExportController extends Controller
                 // 'hasil' => $slug,
             ];
         }
-        // dd($data , $slug);
         
         // Edit data tertentu
         foreach ($sub_uraian as $sub) {
             foreach ($data as &$row) {
                 if ($row['sub_id'] == $sub->sub_uraian_id) {
-                    $row['hasil'] = explode('/', InputApar::where('sub_uraian_id', $sub->sub_uraian_id)->where('apar_id', $id)->first()->hasil_apar);
+                    // $row['hasil'] = explode('/', InputApar::where('sub_uraian_id', $sub->sub_uraian_id)->where('apar_id', $id)->first()->hasil_apar);
                 }
             }
         }
@@ -84,7 +83,6 @@ class ExportController extends Controller
             'tanggal' => $tanggal,
             'apar' => $apar,
             'uraian' => $uraian,
-            'input' => $input,
             'sub_uraian' => $sub_uraian,
         ];
     }

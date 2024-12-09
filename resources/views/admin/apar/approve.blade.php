@@ -111,7 +111,7 @@
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                                     @if ($d->status == 'Revisi')
                                                         <a class="dropdown-item" href="{{ url('apar/acc/' . $d->apar_id) }}">Lihat Apar</a>
-                                                        <a class="dropdown-item" href="{{ url('apar/' . $d->apar_id) }}">Approve Apar</a>
+                                                        <a class="dropdown-item" href="{{ url('apar/revisi/' . $d->apar_id) }}">Approve Apar</a>
                                                     @else
                                                         <a class="dropdown-item" href="{{ url('apar/acc/' . $d->apar_id) }}">Lihat Apar</a>
                                                     @endif

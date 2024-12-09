@@ -14,10 +14,7 @@ return new class extends Migration
         Schema::create('uraians', function (Blueprint $table) {
             $table->id('uraian_id');
             $table->string('uraian_nama');
-            $table->unsignedBigInteger('apar_id')->index();
             $table->timestamps();
-
-            $table->foreign('apar_id')->references('apar_id')->on('apars');
         });
 
         

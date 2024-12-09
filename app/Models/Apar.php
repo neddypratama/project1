@@ -21,10 +21,6 @@ class Apar extends Model
         'updated_at',
     ];
 
-    public function apar1():HasMany{
-        return $this->hasMany(uraian::class, 'apar_id', 'apar_id');
-    }
-
     public function apar2():HasMany{
         return $this->hasMany(InputApar::class, 'apar_id', 'apar_id');
     }

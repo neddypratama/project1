@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('dokumentasi');
             $table->date('tanggal');
             $table->enum('status', ['Setuju', 'Revisi']);
+            $table->string('tanda_tangan');
             $table->unsignedBigInteger('user_id')->index();
             $table->timestamps();
 

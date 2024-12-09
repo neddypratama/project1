@@ -1,16 +1,16 @@
-@extends('admin.layouts.app', ['page' => __('Riwayat Apar'), 'pageSlug' => 'lihat_apar'])
+@extends('admin.layouts.app', ['page' => __('Revisi Apar'), 'pageSlug' => 'menu_approve'])
 
 {{-- @stack('style')
 </style> --}}
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-8">
             <div class="card ">
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">Apar {{$apar->apar_id}}</h4>
+                            <h4 class="card-title">Hasil Apar {{ $apar->apar_id }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             {{-- <a href="#" class="btn btn-sm btn-primary">Add user</a> --}}
@@ -66,6 +66,38 @@
                 <div class="card-footer ">
                     <a href="{{ route('apar.riwayat') }}" class="btn btn-primary">Kembali</a>
                 </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-8">
+                            <h4 class="card-title">Revisi Apar {{ $apar->apar_id }}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form class="form-floating" method="POST" >
+                        @csrf
+                        @method('PUT')
+                        @foreach ($uraian as $item)
+                            @foreach ($sub_uraian as $sub)
+                                @if ($item->uraian_id == $sub->uraian_id)
+                                    <div class="form-floating mb-2">
+                                        <textarea class="form-control bg-light rounded" name="revisi-{{ $item->uraian_id }}"
+                                            id="revisi-{{ $item->uraian_id }}"></textarea>
+                                        <label for="revisi-{{ $item->uraian_id }}">{{ $item->uraian_nama }}</label>
+                                    </div>
+                                    <input type="string" name="sub_uraian_id" value="{{ $sub->sub_uraian_id}}" hidden>
+                                    <input type="string" name="apar_id" value="{{ $apar->apar_id}}" hidden>
+                                @endif
+                            @endforeach
+                        @endforeach
+                        <button type="submit" class="btn btn-primary btn-block mt-2">Submit</button>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>

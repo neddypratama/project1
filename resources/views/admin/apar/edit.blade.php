@@ -1,4 +1,4 @@
-@extends('admin.layouts.app', ['page' => __('INPUT INSPEKSI'), 'pageSlug' => 'input_apar'])
+@extends('admin.layouts.app', ['page' => __('Riwayat Apar'), 'pageSlug' => 'lihat_apar'])
 
 {{-- @stack('style')
 <style>
@@ -20,7 +20,7 @@
 </style> --}}
 
 @section('content')
-    <h4 class="card-title mb-3 fw-light">Input Inspeksi</h4>
+    <h4 class="card-title mb-3 fw-light">Edit Apar</h4>
     <div class="row">
         <div class="col-lg-3">
             <div class="card sticky-top top-3">
@@ -28,18 +28,29 @@
                     <h5>Basic Info</h5>
                 </div> --}}
                 <ul class="nav flex-column  p-3">
-                    <span class="fw-bolder">List Krteria</span>
+                    <span class="fw-bolder">List Kriteria</span>
                     <li class="nav-item pt-2">
                         <a class="nav-link text-body" data-scroll href="#dokumentasi">
                             <span class="text-sm">{{ 'Dokumentasi' }}</span>
                         </a>
                     </li>
                     @foreach ($data as $uraian)
-                        <li class="nav-item pt-2">
-                            <a class="nav-link text-body" data-scroll href="#{{ $uraian['uraian'] }}">
-                                <span class="text-sm">{{ $uraian['uraian'] }}</span>
-                            </a>
-                        </li>
+                        @if ($uraian['revisi'] == !null)
+                            <li class="nav-item">
+                                <a class="nav-link text-body" data-scroll
+                                    href="#{{ $uraian['uraian'] }}">
+                                    <span class="text-sm" style="color: red;">{{ $uraian['uraian'] }}</span>
+                                </a>
+                                <p style="font-size: 12px; color: red;" class="ms-3">Revisi: {{ $uraian['revisi'] }}</p>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link text-body" data-scroll
+                                    href="#{{ $uraian['uraian'] }}">
+                                    <span class="text-sm">{{ $uraian['uraian'] }}</span>
+                                </a>
+                            </li>
+                        @endif
                     @endforeach
                 </ul>
             </div>
@@ -60,7 +71,7 @@
                         <div class="mt-3">
                             <img id="previewImagee" style="width: 300px" />
                         </div>
-                        @error('dokumentasi') 
+                        @error('dokumentasi')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
@@ -78,7 +89,8 @@
                                     {{-- <option value="1">{{ $sub['sub_uraian'] }}</option> --}}
                                     <div class="form-group">
                                         <label>{{ $sub['sub_uraian'] }}</label>
-                                        <input type="text" value="{{old('texthasil.' . $input['sub_id'])}}" name="texthasil[{{ $input['sub_id'] }}]" class="form-control">
+                                        <input type="text" value="{{ old('texthasil.' . $input['sub_id']) }}"
+                                            name="texthasil[{{ $input['sub_id'] }}]" class="form-control">
                                         {{-- <input type="hidden" name="{{ $input['sub_id'] }}/{{ $input['tipe'] }}" value="{{ $input['tipe'] }}"> --}}
                                     </div>
                                     @error('texthasil.' . $input['sub_id'])
@@ -86,11 +98,13 @@
                                     @enderror
                                 @endforeach
                             @elseif ($input['tipe'] == 'select')
-                                <select class="form-select" value="{{old('selecthasil.' . $input['sub_id'])}}" name="selecthasil[{{ $input['sub_id'] }}]"
-                                    aria-label="Default select example">
+                                <select class="form-select" value="{{ old('selecthasil.' . $input['sub_id']) }}"
+                                    name="selecthasil[{{ $input['sub_id'] }}]" aria-label="Default select example">
                                     <option value=" " selected>--Pilih--</option>
                                     @foreach ($input['sub_uraian'] as $sub)
-                                        <option value="{{ $sub['sub_uraian'] }}" {{old('selecthasil.' . $input['sub_id']) == $sub['sub_uraian'] ? 'selected' : ''}}>{{ $sub['sub_uraian'] }}</option>
+                                        <option value="{{ $sub['sub_uraian'] }}"
+                                            {{ old('selecthasil.' . $input['sub_id']) == $sub['sub_uraian'] ? 'selected' : '' }}>
+                                            {{ $sub['sub_uraian'] }}</option>
                                     @endforeach
                                 </select>
                                 @error('selecthasil.' . $input['sub_id'])

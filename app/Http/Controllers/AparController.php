@@ -51,6 +51,51 @@ class AparController extends Controller
         return view('admin.apar.index', compact('apar', 'result'));
     }
 
+    public function edit(Request $request, $id)
+    {
+        $apar = Apar::find($id);
+        $uraian = uraian::where('apar_id', $apar->first()->apar_id)->get();
+        $sub_uraian = SubUraian::all();
+        $input = InputApar::where('apar_id', $id)->get();
+        $id = $apar->apar_id;
+
+        $data = [];
+        foreach ($uraian as $item) {
+            $slug = [];
+            $s = explode('/', SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_nama);
+            foreach ($s as $key => $value) {
+                $slug[] = [
+                    'slug' => Str::slug($value),
+                    'sub_uraian' => $value
+                ];
+            }
+            $data[] = [
+                'uraian' => $item->uraian_nama,
+                'sub_id' => SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_id,
+                'tipe' => SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_tipe,
+                'sub_uraian' => $slug,
+                'slug' => $slug,
+                'revisi' => '',
+            ];
+        }
+
+        // Menggunakan referensi untuk memperbarui revisi
+        foreach ($sub_uraian as $sub) {
+            foreach ($data as &$row) { // Tambahkan `&` untuk referensi
+                if ($row['sub_id'] == $sub->sub_uraian_id) {
+                    $revisi = $input->where('sub_uraian_id', $sub->sub_uraian_id)->first()->revisi ?? '';
+                    $row['revisi'] = $revisi; // Memperbarui revisi
+                }
+            }
+        }
+        // Jangan lupa unset referensi setelah foreach
+        unset($row);
+
+        // dd($data);
+
+        return view('admin.apar.edit' , compact('uraian', 'sub_uraian', 'data', 'input', 'id'));
+    }
+
     public function cetak(Request $request)
     {
         $apar = Apar::all();
@@ -296,6 +341,37 @@ class AparController extends Controller
         return view('admin.apar.approve', compact('data', 'input', 'user', 'sortBy', 'order'));
     }
 
+    public function revisi(Request $request, $id){
+        $apar = Apar::find($id);
+        $uraian = uraian::where('apar_id', $apar->first()->apar_id)->get();
+        $sub_uraian = SubUraian::all();
+        $input = InputApar::where('apar_id', $id)->get();
+        
+        $tanggal = $apar->tanggal;
+        $bulan = Carbon::parse($tanggal)->translatedFormat('F');
+        
+        $data = [];
+        
+        foreach ($uraian as $item) {
+            $data[] = [
+                'uraian' => $item->uraian_nama,
+                'sub_id' => SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_id,
+                'sub_uraian' => explode('/', SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_nama),
+                // 'hasil' => '',
+            ];
+        }
+        
+        // Edit data tertentu
+        foreach ($sub_uraian as $sub) {
+            foreach ($data as &$row) {
+                if ($row['sub_id'] == $sub->sub_uraian_id) {
+                    $row['hasil'] = explode('/', InputApar::where('sub_uraian_id', $sub->sub_uraian_id)->where('apar_id', $id)->first()->hasil_apar);
+                }
+            }
+        }
+        return view('admin.apar.revisi', compact('apar', 'uraian', 'sub_uraian', 'bulan' , 'input', 'data' ,'tanggal'));
+    }
+
 
     public function acc(Request $request, $id)
     {
@@ -332,11 +408,6 @@ class AparController extends Controller
 
         // Kirim data ke view
         return view('admin.apar.acc', compact('apar', 'uraian', 'sub_uraian', 'bulan' , 'data' ,'tanggal'));
-    }
-
-    public function update()
-    {
-        return view('admin.apar.create');
     }
 
     public function riwayat(Request $request)

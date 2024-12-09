@@ -18,6 +18,7 @@ class AparSeeder extends Seeder
             'tanggal' => '2024-12-07',
             'status' => 'Revisi',
             'dokumentasi' => '',
+            'tanda_tangan' => '',
             'user_id' => '1',
             'created_at' => now(),
             'updated_at' => now()
@@ -27,6 +28,7 @@ class AparSeeder extends Seeder
             'tanggal' => '2024-12-17',
             'status' => 'Revisi',
             'dokumentasi' => '',
+            'tanda_tangan' => '',
             'user_id' => '1',
             'created_at' => now(),
             'updated_at' => now()
@@ -36,6 +38,7 @@ class AparSeeder extends Seeder
             'tanggal' => '2025-12-07',
             'status' => 'Revisi',
             'dokumentasi' => '',
+            'tanda_tangan' => '',
             'user_id' => '1',
             'created_at' => now(),
             'updated_at' => now()
