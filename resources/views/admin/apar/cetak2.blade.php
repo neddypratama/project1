@@ -93,8 +93,8 @@
             <img src="{{ asset('img/logo.png') }}" alt="Logo Perusahaan">
             <div class="info">
                 <div style="font-size: 12px; font-weight: bold;">Laporan Apar Tahun {{ $tahun }}</div>
-                <div style="font-size: 10px;">Nama Instansi / Perusahaan Anda</div>
-                <div style="font-size: 10px;">Alamat Instansi / Perusahaan Anda</div>
+                <div style="font-size: 10px;">Nama Instansi 1 / Perusahaan Anda</div>
+                <div style="font-size: 10px;">Alamat Instansi 1 / Perusahaan Anda</div>
             </div>
         </div>
 
