@@ -47,7 +47,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="submit" href=""
-                        class="btn btn-danger btn-lg btn-block mb-3">{{ 'Get Started' }}</button>
+                        class="btn btn-primary btn-lg btn-block mb-3">{{ 'Get Started' }}</button>
                     <div class="pull-left">
                         {{-- <h6>
                             <a href="{{ route('register') }}" class="link footer-link">{{ 'Create Account' }}</a>

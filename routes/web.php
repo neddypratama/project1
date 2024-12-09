@@ -23,11 +23,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes(['verify' => true]);
+Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware(['auth', 'verified'] );
 
-Route::group(['middleware' => ['auth', 'verified']], function () {
+Route::group(['middleware' => ['auth']], function () {
     // Rute untuk Admin (role:1)
     Route::group(['middleware' => ['role:1']], function () {
         Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
@@ -62,7 +62,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::put('profile/password/{id}', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
     });
 });
-    
+
 
 Route::get('/test-email', function () {
     Mail::raw('Test!', function ($message) {

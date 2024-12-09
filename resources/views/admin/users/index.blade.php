@@ -10,7 +10,10 @@
                             <h4 class="card-title">Users</h4>
                         </div>
                         <div class="col-4 text-right">
-                            {{-- <a href="#" class="btn btn-sm btn-primary">Add user</a> --}}
+                            <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
+                                data-bs-target="#adduser">
+                                Add User
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -24,7 +27,8 @@
                                     placeholder="Search by name, email, or role" value="{{ request()->get('search') }}">
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-secondary mt-1"><i class="tim-icons icon-zoom-split"></i></button>
+                                <button type="submit" class="btn btn-secondary mt-1"><i
+                                        class="tim-icons icon-zoom-split"></i></button>
                             </div>
                         </form>
                     </div>
@@ -136,6 +140,94 @@
         </div>
     </div>
 
+    <!-- Modal Add User -->
+    <div class="modal fade" id="adduser" tabindex="-1" aria-labelledby="adduserTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form role="form" method="POST" action="{{ route('user.store') }}"
+                        enctype="multipart/form-data">
+                        @csrf
+
+                        <!-- Name User -->
+                        <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
+                            <label for="name" class="col-form-label">Name User:</label>
+                            <input type="text" name="name" id="name"
+                                class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
+                                placeholder="Name User" value="{{ old('name') }}">
+                            @if ($errors->has('name'))
+                                <span class="invalid-feedback" role="alert">
+                                    {{ $errors->first('name') }}
+                                </span>
+                            @endif
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                            <label for="email" class="col-form-label">Email User:</label>
+                            <input type="email" name="email" id="email"
+                                class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Email"
+                                value="{{ old('email') }}">
+                            @if ($errors->has('email'))
+                                <span class="invalid-feedback" role="alert">
+                                    {{ $errors->first('email') }}
+                                </span>
+                            @endif
+                        </div>
+
+                        <!-- Password -->
+                        <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
+                            <label for="password" class="col-form-label">Password:</label>
+                            <input type="password" name="password" id="password"
+                                class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                placeholder="Password">
+                            @if ($errors->has('password'))
+                                <span class="invalid-feedback" role="alert">
+                                    {{ $errors->first('password') }}
+                                </span>
+                            @endif
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="form-group">
+                            <label for="password_confirmation" class="col-form-label">Confirm Password:</label>
+                            <input type="password" name="password_confirmation" id="password_confirmation"
+                                class="form-control" placeholder="Confirm Password">
+                        </div>
+
+                        <!-- Role User -->
+                        <div class="form-group{{ $errors->has('role_id') ? ' has-danger' : '' }}">
+                            <label for="role_id" class="col-form-label">Name Role:</label>
+                            <select name="role_id" id="role_id"
+                                class="form-control{{ $errors->has('role_id') ? ' is-invalid' : '' }}"
+                                style="height: 50px">
+                                <option value="">- Select Role -</option>
+                                @foreach ($role as $r)
+                                    <option value="{{ $r->role_id }}" {{ old('role_id') == $r->role_id ? 'selected' : '' }}>
+                                        {{ $r->role_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('role_id'))
+                                <span class="invalid-feedback" role="alert">
+                                    {{ $errors->first('role_id') }}
+                                </span>
+                            @endif
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add User</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Edit User -->
     <div class="modal fade" id="editUser" tabindex="-1" aria-labelledby="editUserTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -154,7 +246,7 @@
                             <label for="edit-name" class="col-form-label">Name User: </label>
                             <input type="text" name="edit_name" id="edit-name"
                                 class="form-control{{ $errors->has('edit_name') ? ' is-invalid' : '' }}"
-                                placeholder="Name" value="{{ old('edit_name') }}" >
+                                placeholder="Name" value="{{ old('edit_name') }}">
                             @if ($errors->has('edit_name'))
                                 <span class="invalid-feedback" role="alert">
                                     {{ $errors->first('edit_name') }}
@@ -227,6 +319,12 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         // Check and show the editlayanan modal if there are errors for edit layanan
+        if (
+            {{ $errors->has('name') || $errors->has('email') || $errors->has('password') || $errors->has('role_id') ? 'true' : 'false' }}
+        ) {
+            var adduserModal = new bootstrap.Modal(document.getElementById('adduser'));
+            adduserModal.show();
+        }
         if (
             {{ $errors->has('edit_user_name') || $errors->has('edit_role_id') ? 'true' : 'false' }}
         ) {

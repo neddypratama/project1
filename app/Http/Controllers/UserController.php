@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -55,14 +56,39 @@ class UserController extends Controller
         return view('admin.users.index', compact('data', 'role', 'sortBy', 'order'));
     }
 
+    public function store(Request $request)
+    {
+        // Validate the incoming request
+        $request->validate([
+            'name' => 'required|string|max:255|unique:users,name', // Perbaikan validasi name
+            'email' => 'required|email|unique:users,email', // Pastikan email juga unique
+            'password' => 'required|string|confirmed|min:6', // Minimum password 6 karakter
+            'role_id' => 'required|exists:roles,role_id',
+        ]);
+
+        // Create a new role (or user, jika ini untuk user)
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password), // Hash password dengan Hash::make()
+            'role_id' => $request->role_id,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        
+        return redirect()->route('user.index')->withStatus('User berhasil ditambahkan.');
+    }
+
     public function update(Request $request, $id) {
         $request->validate([
+            'edit_name'    => 'required|string|max:255|unique:users,name',
             'edit_role_id'    => 'required|exists:roles,role_id',
         ]);
 
         $user = User::findOrFail($id);
 
         $user->update([
+            'name' =>$request->edit_name,
             'role_id'   => $request->edit_role_id,
             'updated_at'     => now(),
         ]);
