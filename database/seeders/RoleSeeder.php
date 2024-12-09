@@ -22,13 +22,20 @@ class RoleSeeder extends Seeder
         ]);
         DB::table('roles')->insert([
             'role_id' => 2,
-            'role_name' => 'Member',
-            'role_description' => 'Berperan sebagai member dan bisa membuat website',
+            'role_name' => 'Management',
+            'role_description' => 'Berperan sebagai manager',
             'created_at' => now(),
             'updated_at' => now()
         ]);
         DB::table('roles')->insert([
             'role_id' => 3,
+            'role_name' => 'Inspeksi',
+            'role_description' => 'Berperan sebagai user yang menginpeksi',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        DB::table('roles')->insert([
+            'role_id' => 4,
             'role_name' => 'User',
             'role_description' => 'Berperan sebagai user yang tidak bisa apa-apa',
             'created_at' => now(),
