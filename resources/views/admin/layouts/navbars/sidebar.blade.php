@@ -29,85 +29,93 @@
                                 <p>{{ 'User Profile' }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'users') class="active " @endif>
-                            <a href="{{ route('user.index') }}">
-                                <i class="tim-icons icon-bullet-list-67"></i>
-                                <p>{{ 'User Management' }}</p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug == 'roles') class="active " @endif>
-                            <a href="{{ route('role.index') }}">
-                                <i class="tim-icons icon-bullet-list-67"></i>
-                                <p>{{ 'Role Management' }}</p>
-                            </a>
-                        </li>
+                        @if (auth()->user()->role_id == 1)
+                            <li @if ($pageSlug == 'users') class="active " @endif>
+                                <a href="{{ route('user.index') }}">
+                                    <i class="tim-icons icon-bullet-list-67"></i>
+                                    <p>{{ 'User Management' }}</p>
+                                </a>
+                            </li>
+                            <li @if ($pageSlug == 'roles') class="active " @endif>
+                                <a href="{{ route('role.index') }}">
+                                    <i class="tim-icons icon-bullet-list-67"></i>
+                                    <p>{{ 'Role Management' }}</p>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
+            </li>
             <li>
                 <a data-toggle="collapse" href="#apar_sidebar"
-                    aria-expanded="{{ in_array($pageSlug, ['lapor_apar', 'input_apar', 'lihat_apar', 'manage_uraian', 'manage_suburaian' , 'menu_approve']) ? 'true' : 'false' }}"
-                    class="{{ in_array($pageSlug, ['lapor_apar', 'input_apar', 'lihat_apar', 'manage_uraian', 'manage_suburaian' , 'menu_approve']) ? '' : 'collapsed' }}">
+                    aria-expanded="{{ in_array($pageSlug, ['lapor_apar', 'input_apar', 'lihat_apar', 'menu_approve']) ? 'true' : 'false' }}"
+                    class="{{ in_array($pageSlug, ['lapor_apar', 'input_apar', 'lihat_apar', 'menu_approve']) ? '' : 'collapsed' }}">
                     <i class="tim-icons icon-badge"></i>
                     <span class="nav-link-text">{{ 'PROSES APAR' }}</span>
                     <b class="caret mt-1"></b>
                 </a>
-                <div class="collapse {{ in_array($pageSlug, ['lapor_apar', 'input_apar', 'lihat_apar', 'manage_uraian', 'manage_suburaian', 'menu_approve']) ? 'show' : '' }}"
+                <div class="collapse {{ in_array($pageSlug, ['lapor_apar', 'input_apar', 'lihat_apar', 'menu_approve']) ? 'show' : '' }}"
                     id="apar_sidebar">
                     <ul class="nav pl-4">
-                        <li @if ($pageSlug == 'lapor_apar') class="active " @endif>
-                            <a href="{{ route('apar.index') }}">
-                                <i class="tim-icons icon-atom"></i>
-                                <p>{{ 'Laporan Apar' }}</p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug == 'input_apar') class="active " @endif>
-                            <a href="{{ route('apar.create') }}">
-                                <i class="tim-icons icon-atom"></i>
-                                <p>{{ 'Input Apar' }}</p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug == 'lihat_apar') class="active " @endif>
-                            <a href="{{ route('apar.riwayat') }}">
-                                <i class="tim-icons icon-bullet-list-67"></i>
-                                <p>{{ 'Riwayat Apar' }}</p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug == 'menu_approve') class="active " @endif>
-                            <a href="{{ route('apar.approve') }}">
-                                <i class="tim-icons icon-bullet-list-67"></i>
-                                <p>{{ 'Approve Apar' }}</p>
-                            </a>
-                        </li>
+                        @if (auth()->user()->role_id == 1 || auth()->user()->role_id == 2)
+                            <li @if ($pageSlug == 'lapor_apar') class="active " @endif>
+                                <a href="{{ route('apar.index') }}">
+                                    <i class="tim-icons icon-atom"></i>
+                                    <p>{{ 'Laporan Apar' }}</p>
+                                </a>
+                            </li>
+                            <li @if ($pageSlug == 'menu_approve') class="active " @endif>
+                                <a href="{{ route('apar.approve') }}">
+                                    <i class="tim-icons icon-bullet-list-67"></i>
+                                    <p>{{ 'Approve Apar' }}</p>
+                                </a>
+                            </li>
+                        @endif
+                        @if (auth()->user()->role_id == 1 || auth()->user()->role_id == 3)
+                            <li @if ($pageSlug == 'input_apar') class="active " @endif>
+                                <a href="{{ route('apar.create') }}">
+                                    <i class="tim-icons icon-atom"></i>
+                                    <p>{{ 'Input Apar' }}</p>
+                                </a>
+                            </li>
+                            <li @if ($pageSlug == 'lihat_apar') class="active " @endif>
+                                <a href="{{ route('apar.riwayat') }}">
+                                    <i class="tim-icons icon-bullet-list-67"></i>
+                                    <p>{{ 'Riwayat Apar' }}</p>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </li>
-            <li>
-                <a data-toggle="collapse" href="#manage_sidebar"
-                    aria-expanded="{{ in_array($pageSlug, ['manage_suburaian' , 'menu_approve']) ? 'true' : 'false' }}"
-                    class="{{ in_array($pageSlug, ['manage_suburaian' , 'menu_approve']) ? '' : 'collapsed' }}">
-                    <i class="tim-icons icon-badge"></i>
-                    <span class="nav-link-text">{{ 'DATA APAR' }}</span>
-                    <b class="caret mt-1"></b>
-                </a>
-                <div class="collapse {{ in_array($pageSlug, ['manage_suburaian', 'menu_approve']) ? 'show' : '' }}"
-                    id="manage_sidebar">
-                    <ul class="nav pl-4">
-                        <li @if ($pageSlug == 'manage_uraian') class="active " @endif>
-                            <a href="{{ route('uraian.index') }}">
-                                <i class="tim-icons icon-bullet-list-67"></i>
-                                <p>{{ 'Manage Uraian' }}</p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug == 'manage_suburaian') class="active " @endif>
-                            <a href="{{ route('suburaian.index') }}">
-                                <i class="tim-icons icon-bullet-list-67"></i>
-                                <p>{{ 'Manage SUb Uraian' }}</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            </li>
+            @if (auth()->user()->role_id == 1)
+                <li>
+                    <a data-toggle="collapse" href="#manage_sidebar"
+                        aria-expanded="{{ in_array($pageSlug, ['manage_suburaian', 'manage_uraian']) ? 'true' : 'false' }}"
+                        class="{{ in_array($pageSlug, ['manage_suburaian', 'manage_uraian']) ? '' : 'collapsed' }}">
+                        <i class="tim-icons icon-badge"></i>
+                        <span class="nav-link-text">{{ 'DATA APAR' }}</span>
+                        <b class="caret mt-1"></b>
+                    </a>
+                    <div class="collapse {{ in_array($pageSlug, ['manage_suburaian', 'manage_uraian']) ? 'show' : '' }}"
+                        id="manage_sidebar">
+                        <ul class="nav pl-4">
+                            <li @if ($pageSlug == 'manage_uraian') class="active " @endif>
+                                <a href="{{ route('uraian.index') }}">
+                                    <i class="tim-icons icon-bullet-list-67"></i>
+                                    <p>{{ 'Manage Uraian' }}</p>
+                                </a>
+                            </li>
+                            <li @if ($pageSlug == 'manage_suburaian') class="active " @endif>
+                                <a href="{{ route('suburaian.index') }}">
+                                    <i class="tim-icons icon-bullet-list-67"></i>
+                                    <p>{{ 'Manage SUb Uraian' }}</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            @endif
 
 
             {{-- <li @if ($pageSlug == 'tables') class="active " @endif>
