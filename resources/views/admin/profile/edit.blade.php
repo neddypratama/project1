@@ -16,7 +16,7 @@
                         @method('put')
 
                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
-                            <label>{{ 'Name' }}</label>
+                            <label>{{ 'Nama User' }}</label>
                             <input type="text" name="name"
                                 class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
                                 placeholder="{{ 'Name' }}" value="{{ old('name', auth()->user()->name) }}">
@@ -24,7 +24,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
-                            <label>{{ 'Email address' }}</label>
+                            <label>{{ 'Email User' }}</label>
                             <input type="email" name="email"
                                 class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
                                 placeholder="{{ 'Email address' }}" value="{{ old('email', auth()->user()->email) }}">
@@ -50,37 +50,30 @@
 
                         @include('admin.alerts.success', ['key' => 'password_status'])
 
-                        <label>{{ 'Current Password' }}</label>
-                        <div class="input-group mb-3{{ $errors->has('old_password') ? ' has-danger' : '' }}">
+                        <div class="form-group">
+                            <label>{{ 'Password Lama' }}</label>
                             <input type="password" name="old_password"
                                 class="form-control{{ $errors->has('old_password') ? ' is-invalid' : '' }}"
-                                placeholder="{{ 'Current Password' }}" value="" required>
-                            <span class="input-group-text" id="basic-addon1">
-                                <i class="far fa-eye" id="toggleOldPassword" style="cursor: pointer; color:black"></i>
-                            </span>
+                                placeholder="{{ 'Password Lama' }}" value="">
+                            @include('admin.alerts.feedback', ['field' => 'old_password'])
                         </div>
-                        @include('admin.alerts.feedback', ['field' => 'old_password'])
 
-                        <label>{{ 'New Password' }}</label>
-                        <div class="input-group mb-3{{ $errors->has('password') ? ' has-danger' : '' }}">
+                        <div class="form-group">
+                            <label>{{ 'Password Baru' }}</label>
                             <input type="password" name="password"
                                 class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                placeholder="{{ 'New Password' }}" value="" required>
-                            <span class="input-group-text" id="basic-addon2">
-                                <i class="far fa-eye" id="togglePassword" style="cursor: pointer; color:black"></i>
-                            </span>
+                                placeholder="{{ 'Password Baru' }}" value="">
+                            @include('admin.alerts.feedback', ['field' => 'password'])
                         </div>
-                        @include('admin.alerts.feedback', ['field' => 'password'])
 
-                        <label>{{ 'Confirm New Password' }}</label>
-                        <div class="input-group mb-3">
-                            <input type="password" name="password_confirmation" class="form-control"
-                                placeholder="{{ 'Confirm New Password' }}" value="" required>
-                            <span class="input-group-text" id="basic-addon3">
-                                <i class="far fa-eye" id="toggleConfirmPassword" style="cursor: pointer; color:black"></i>
-                            </span>
+                        <div class="form-group">
+                            <label>{{ 'Konfirmasi Password' }}</label>
+                            <input type="password" name="password_confirmation"
+                                class="form-control{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}"
+                                placeholder="{{ 'Konfirmasi Password' }}" value="">
+                            @include('admin.alerts.feedback', ['field' => 'password_confirmation'])
                         </div>
-                        
+
                         <button type="submit" class="mt-4 btn btn-fill btn-primary">{{ 'Change password' }}</button>
                 </form>
             </div>
