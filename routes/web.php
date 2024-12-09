@@ -36,10 +36,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('role', 'App\Http\Controllers\RoleController', ['except' => ['show']]);
         Route::resource('uraian', 'App\Http\Controllers\UraianController', ['except' => ['show']]);
         Route::resource('suburaian', 'App\Http\Controllers\SubUraianController', ['except' => ['show']]);
+        
     });
     
     // Rute untuk Admin dan Manager (role:1,2)
-    Route::group(['middleware' => ['role:2']], function () {
+    Route::group(['middleware' => ['role:1,2']], function () {
         Route::get('apar/approve', ['as' => 'apar.approve', 'uses' => 'App\Http\Controllers\AparController@approve']);
         Route::put('apar/status/{apar}', ['as' => 'apar.approvestatus', 'uses' => 'App\Http\Controllers\AparController@approveStatus']);
         Route::get('apar/acc/{id}', ['as' => 'apar.acc', 'uses' => 'App\Http\Controllers\AparController@acc']);

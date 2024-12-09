@@ -51,6 +51,8 @@ class HomeController extends Controller
             $monthlyData[$month] = $total;
         }
 
+        dd($data);
+
         return response()->json([
             'labels' => array_keys($monthlyData),
             'values' => array_values($monthlyData),
