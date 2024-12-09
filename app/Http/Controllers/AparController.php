@@ -437,9 +437,9 @@ class AparController extends Controller
 
     public function approveStatus(Request $request, $id){
         $apar = Apar::find($id);
-
-        foreach ($request['revisi'] as $key => $value) {
-            InputApar::where('sub_uraian_id', $key)->update([
+        $input = InputApar::where('apar_id', $id)->get();
+        foreach ($input as $in) {
+            $in->update([
                 'revisi' => '',
                 'updated_at' => now(),
             ]);
