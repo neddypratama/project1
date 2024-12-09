@@ -82,7 +82,7 @@
                             {{-- <li class="bg-danger  rounded"><a class="btn btn-get-started"
                                     href="https://wa.me/6282232801273?text=Assalamualaikum" target="_blank">Berlangganan </a></li> --}}
                             <li class=""><a class="bg-primary px-2 py-1 rounded w-auto"
-                                    href="{{ route('login') }}">Loginnnn
+                                    href="{{ route('login') }}">Login
                                 </a></li>
                         @endauth
                     </ul>
