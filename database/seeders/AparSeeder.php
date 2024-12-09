@@ -17,27 +17,7 @@ class AparSeeder extends Seeder
             'apar_id' => 1,
             'tanggal' => '2024-12-07',
             'status' => 'Belum Dicek',
-            'dokumentasi' => '',
-            'tanda_tangan' => '',
-            'user_id' => '1',
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-        DB::table('apars')->insert([
-            'apar_id' => 2,
-            'tanggal' => '2024-12-17',
-            'status' => 'Belum Dicek',
-            'dokumentasi' => '',
-            'tanda_tangan' => '',
-            'user_id' => '1',
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-        DB::table('apars')->insert([
-            'apar_id' => 3,
-            'tanggal' => '2025-12-07',
-            'status' => 'Belum Dicek',
-            'dokumentasi' => '',
+            'dokumentasi' => 'apar/logo.png',
             'tanda_tangan' => '',
             'user_id' => '1',
             'created_at' => now(),

@@ -123,56 +123,6 @@ class ExportController extends Controller
             'hasil' => $hasil,
         ];
     }
-    // public function prepareData(string $tahun)
-    // {
-    //     $apar = Apar::whereYear('tanggal', $tahun)->get();
-    //     // dd($apar);
-    //     $uraian = uraian::all();
-    //     $sub_uraian = SubUraian::all();
-    //     $input = InputApar::all();
-        
-    //     $tanggal =[];
-    //     foreach ($apar as $a) {
-    //         $tanggal[] = 
-    //              $a->tanggal;
-    //     }
-    //     $result = [];
-
-    //     // Loop melalui array dan olah data
-    //     foreach ($tanggal as $date) {
-    //         // Konversi tanggal menjadi objek Carbon
-    //         $carbonDate = Carbon::parse($date);
-
-    //         // Ambil nama bulan dalam bahasa Inggris atau Indonesia
-    //         $bulan = $carbonDate->translatedFormat('F');
-
-    //         // Cari indeks bulan yang sama di hasil
-    //         $foundIndex = array_search(strtolower($bulan), array_column($result, 'bulan'));
-
-    //         // Jika bulan sudah ada di hasil, tambahkan jumlahnya
-    //         if ($foundIndex !== false) {
-    //             $result[$foundIndex]['jumlah']++;
-    //         } else {
-    //             // Jika bulan belum ada di hasil, tambahkan data baru
-    //             $result[] = [
-    //                 'bulan' => strtolower($bulan),
-    //                 'jumlah' => 1,
-    //             ];
-    //         }
-    //     }
-    //     $bulan = $result;
-    //     return [
-    //         'bulan' => $bulan,
-    //         'tanggal' => $tanggal,
-    //         'apar' => $apar,
-    //         'uraian' => $uraian,
-    //         'input' => $input,
-    //         'sub_uraian' => $sub_uraian,
-    //     ];
-    // }
-
-    // 📄 Download PDF Method
-    // 📄 Download PDF Method
     public function downloadPDF(Request $request, string $tahun)
     {
         $data = $this->prepareData($tahun);
@@ -181,7 +131,7 @@ class ExportController extends Controller
             return response()->json(['error' => 'Data tidak ditemukan']);
         }
 
-        $pdf = pdf::loadView('admin.apar.cetak1', $data, compact('tahun'));
+        $pdf = pdf::loadView('admin.apar.cetak', $data, compact('tahun'));
 
         return $pdf->download('laporan-apar-' . $tahun . '.pdf');
     }

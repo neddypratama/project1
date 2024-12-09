@@ -38,8 +38,8 @@
                     @yield('content')
                 </div>
 
-                @include('admin.layouts.footer')
             </div>
+            @include('admin.layouts.footer')
         </div>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf

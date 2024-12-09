@@ -162,9 +162,22 @@ class AparController extends Controller
                 'hasil_apar' => $tes,
             ]);
         }
-        // dd($validated);
 
-        return redirect()->route('apar.edit' , $id)->withStatus('Apar berhasil ditambahkan.');
+        $details = [
+            'user' => auth()->user()->name,
+            'tanggal' => now()->toDateTimeString(),
+            'status' => 'Revisi',
+            'apar_id' => $apar->apar_id,
+        ];
+
+        $user = User::all();
+        
+        foreach ($user as $us) {
+            if ($us->role_id == 1 || $us->role_id == 2) {
+                \Mail::to($us->email)->send(new \App\Mail\NotifyEmail12($details));
+            }
+        }
+        return redirect()->route('apar.riwayat')->withStatus('Apar berhasil diperbaharui.');
     }
 
     public function simpan(Request $request,  $id)
@@ -182,10 +195,21 @@ class AparController extends Controller
             'status' => 'Revisi',
         ]);
 
+        // Kirim Notifikasi Email
+        $details = [
+            'user' => auth()->user()->name,
+            'tanggal' => now()->toDateTimeString(),
+            'status' => 'Revisi',
+            'apar_id' => $apar->apar_id,
+        ];
+        $user = User::where('user_id', $apar->user_id)->first();
+
+        \Mail::to($user->email,)->send(new \App\Mail\NotifyEmail($details));
+
         // Redirect dengan pesan sukses
         return redirect()->route('apar.approve')
             ->withStatus(__('Revisi berhasil diperbarui.'));
-}
+    }
 
 
 
@@ -359,7 +383,20 @@ class AparController extends Controller
                 'updated_at' => now(),
             ]);
         }
-        // dd($validated);
+        // Kirim Notifikasi Email
+        $details = [
+            'user' => auth()->user()->name,
+            'tanggal' => now()->toDateTimeString(),
+            'status' => 'Belum Dicek',
+        ];
+
+        $user = User::all();
+        
+        foreach ($user as $us) {
+            if ($us->role_id == 1 || $us->role_id == 2) {
+                \Mail::to($us->email)->send(new \App\Mail\NotifyEmail1($details));
+            }
+        }
 
         return redirect()->route('apar.index')->withStatus('Apar berhasil ditambahkan.');
     }
@@ -401,6 +438,14 @@ class AparController extends Controller
 
     public function approveStatus(Request $request, $id){
         $apar = Apar::find($id);
+        $input = InputApar::where('apar_id', $id)->get();
+        foreach ($input as $in) {
+            $in->update([
+                'revisi' => '',
+                'updated_at' => now(),
+            ]);
+        }
+
         $apar->update([
             'status' => 'Setuju',
             'updated_at' => now(),

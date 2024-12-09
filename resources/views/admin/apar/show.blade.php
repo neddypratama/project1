@@ -10,7 +10,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
-                            <h4 class="card-title">Apar {{$apar->apar_id}}</h4>
+                            <h4 class="card-title">Apar {{ $apar->apar_id }}</h4>
                         </div>
                         <div class="col-4 text-right">
                             {{-- <a href="#" class="btn btn-sm btn-primary">Add user</a> --}}
@@ -58,6 +58,10 @@
                                             </tr>
                                         @endforeach
                                     @endforeach
+                                    <tr>
+                                        <td colspan="2">Dokumentasi</td>
+                                        <td><img src="{{ asset('storage/' . $apar->dokumentasi) }}" alt="Dokumentasi"></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

@@ -8,7 +8,8 @@
     <style>
         @page {
             size: A4;
-            margin: 10mm 10mm 10mm 10mm; /* Sesuaikan margin */
+            margin: 10mm 10mm 10mm 10mm;
+            /* Sesuaikan margin */
         }
 
         /* Umum */
@@ -93,8 +94,10 @@
             <img src="{{ asset('img/logo.png') }}" alt="Logo Perusahaan">
             <div class="info">
                 <div style="font-size: 12px; font-weight: bold;">Laporan Apar Tahun {{ $tahun }}</div>
-                <div style="font-size: 10px;">Nama Instansi 1 / Perusahaan Anda</div>
-                <div style="font-size: 10px;">Alamat Instansi 1 / Perusahaan Anda</div>
+                <div style="font-size: 10px;">Safe Guard</div>
+                <div style="font-size: 10px;"><a href="safeguaridn@gmail.com">safeguaridn@gmail.com</a></div>
+                <div style="font-size: 10px;"><a href="https://wa.me/6282131997615" target="_blank">082131997615</a>
+                </div>
             </div>
         </div>
 

@@ -14,10 +14,7 @@
                     <img src="{{ asset('white') }}/img/card-primary.png" alt="">
                     <h1 class="card-title ">{{ 'Log in' }}</h1>
                 </div>
-                <div class="card-body">
-                    <p class="text-dark mb-2">Sign in with <strong>admin@white.com</strong> and the password
-                        <strong>secret</strong>
-                    </p>
+                <div class="card-body mt-5">
                     <div class="input-group{{ $errors->has('email') ? ' has-danger' : '' }}">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
@@ -47,7 +44,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="submit" href=""
-                        class="btn btn-danger btn-lg btn-block mb-3">{{ 'Get Started' }}</button>
+                        class="btn btn-primary btn-lg btn-block mb-3">{{ 'Get Started' }}</button>
                     <div class="pull-left">
                         {{-- <h6>
                             <a href="{{ route('register') }}" class="link footer-link">{{ 'Create Account' }}</a>
