@@ -17,10 +17,6 @@ class ExportController extends Controller
     public function prepareData(string $tahun)
     {
         $apar = Apar::whereYear('tanggal', $tahun)->get();
-
-        // dd($apar);
-
-
         $uraian = uraian::all();
         $sub_uraian = SubUraian::all();
         
