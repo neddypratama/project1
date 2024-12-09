@@ -1,4 +1,4 @@
-@extends('admin.layouts.app', ['page' => __('Riwayat Apar'), 'pageSlug' => 'lihat_apar'])
+@extends('admin.layouts.app', ['page' => __('Revisi Apar'), 'pageSlug' => 'lihat_apar'])
 
 {{-- @stack('style')
 <style>
@@ -37,16 +37,14 @@
                     @foreach ($data as $uraian)
                         @if ($uraian['revisi'] == !null)
                             <li class="nav-item">
-                                <a class="nav-link text-body" data-scroll
-                                    href="#{{ $uraian['uraian'] }}">
+                                <a class="nav-link text-body" data-scroll href="#{{ $uraian['uraian'] }}">
                                     <span class="text-sm" style="color: red;">{{ $uraian['uraian'] }}</span>
                                 </a>
                                 <p style="font-size: 12px; color: red;" class="ms-3">Revisi: {{ $uraian['revisi'] }}</p>
                             </li>
                         @else
                             <li class="nav-item">
-                                <a class="nav-link text-body" data-scroll
-                                    href="#{{ $uraian['uraian'] }}">
+                                <a class="nav-link text-body" data-scroll href="#{{ $uraian['uraian'] }}">
                                     <span class="text-sm">{{ $uraian['uraian'] }}</span>
                                 </a>
                             </li>
@@ -56,8 +54,9 @@
             </div>
         </div>
         <div class="col-lg-9 mt-lg-0 mt-4">
-            <form action="{{ route('apar.store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('apar.update', $id) }}" method="post" enctype="multipart/form-data">
                 @csrf
+                {{ method_field('PUT') }}
                 <div class="card">
                     <div class="card-header">
                         <h5>Dokumentasi</h5>
@@ -69,7 +68,7 @@
                                 onchange="previewImage()">
                         </div>
                         <div class="mt-3">
-                            <img id="previewImagee" style="width: 300px" />
+                            <img id="previewImagee" src="{{ asset('storage/' . $dokumentasi) }}" style="width: 300px" />
                         </div>
                         @error('dokumentasi')
                             <small class="text-danger">{{ $message }}</small>
@@ -77,11 +76,15 @@
                     </div>
                 </div>
                 @foreach ($data as $index => $input)
-                    <div class="card" id="{{ $input['uraian'] }}">
+                    <div class="card @if ($input['revisi'] == !null) border-danger @endif " id="{{ $input['uraian'] }}">
                         <div class="card-header">
                             <h5>{{ $input['uraian'] }}</h5>
                         </div>
                         <div class="card-body pt-0">
+                            @if ($input['revisi'] == !null)
+                                <i style="color: red" class="fa-solid fa-xmark"></i> <small
+                                    class="text-danger">Revisi : {{ $input['revisi'] }}</small>
+                            @endif
 
                             {{-- @foreach ($input['sub_uraian'] as $sub) --}}
                             @if ($input['tipe'] == 'text')
@@ -89,7 +92,8 @@
                                     {{-- <option value="1">{{ $sub['sub_uraian'] }}</option> --}}
                                     <div class="form-group">
                                         <label>{{ $sub['sub_uraian'] }}</label>
-                                        <input type="text" value="{{ old('texthasil.' . $input['sub_id']) }}"
+                                        <input type="text"
+                                            value="{{ old('texthasil.' . $input['sub_id'], $input['hasil']) }}"
                                             name="texthasil[{{ $input['sub_id'] }}]" class="form-control">
                                         {{-- <input type="hidden" name="{{ $input['sub_id'] }}/{{ $input['tipe'] }}" value="{{ $input['tipe'] }}"> --}}
                                     </div>
@@ -103,7 +107,7 @@
                                     <option value=" " selected>--Pilih--</option>
                                     @foreach ($input['sub_uraian'] as $sub)
                                         <option value="{{ $sub['sub_uraian'] }}"
-                                            {{ old('selecthasil.' . $input['sub_id']) == $sub['sub_uraian'] ? 'selected' : '' }}>
+                                            {{ old('selecthasil.' . $input['sub_id'], $input['hasil']) == $sub['sub_uraian'] ? 'selected' : '' }}>
                                             {{ $sub['sub_uraian'] }}</option>
                                     @endforeach
                                 </select>
