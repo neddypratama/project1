@@ -74,7 +74,7 @@
                         <li><a href="#why">Mengapa Kami?</a></li>
                         <li><a href="#contact">Kontak </a></li>
                         @auth
-                            <li><a href="{{ route('home') }}">Dashboard</a></li>
+                            <li><a class="bg-primary px-2 py-1 rounded" href="{{ route('home') }}">Dashboard</a></li>
                         @else
                             <li class=" "><a class="bg-primary px-2 py-1 rounded"
                                     href="https://web.whatsapp.com/send?phone=62895360171810&text=Assalamualaikum  "
