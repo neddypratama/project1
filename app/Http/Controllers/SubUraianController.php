@@ -45,6 +45,8 @@ class SubUraianController extends Controller
         }
 
         $uraian = uraian::all();
+        $sub = SubUraian::all();
+        
 
         return view('admin.suburaian.index', compact('data', 'uraian', 'sortBy', 'order'));
     }

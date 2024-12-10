@@ -155,8 +155,8 @@
                         <div class="form-group{{ $errors->has('uraian_id') ? ' has-danger' : '' }}">
                             <label for="uraian_id" class="col-form-label">Nama Uraian: </label>
                             <select name="uraian_id"
-                                class="form-control {{ $errors->has('uraian_id') ? ' is-invalid' : '' }}"
-                                id="uraian_id" style="height: 60px">
+                                class="form-control {{ $errors->has('uraian_id') ? ' is-invalid' : '' }}" id="uraian_id"
+                                style="height: 60px">
                                 <option value="">- Uraian -</option>
                                 @foreach ($uraian as $p)
                                     <option value="{{ $p->uraian_id }}"
@@ -400,7 +400,15 @@
                 var actionUrl = this.getAttribute('data-url');
                 localStorage.setItem('Url', actionUrl);
 
-                console.log(actionUrl);
+                if (suburaiannama) {
+                    var namaParts = suburaiannama.split('/'); // Pecah berdasarkan "/"
+
+                    console.log('Bagian-bagian dalam data-nama:');
+                    for (var i = 0; i < namaParts.length; i++) {
+                        console.log('Bagian ' + (i + 1) + ':', namaParts[i]);
+                    }
+                }
+                console.log(suburaiannama);
 
                 $('#edit-id').val(suburaianId);
                 $('#edit-sub-uraian-nama').val(suburaiannama);
