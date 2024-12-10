@@ -93,11 +93,6 @@
                                         </td>
                                         <td>
                                             @switch($d->status)
-                                                @case('Setuju')
-                                                    <div class="rounded bg-success text-center p-1 fw-bolder" style="color: white">
-                                                        {{ $d->status }}</div>
-                                                @break
-
                                                 @case('Revisi')
                                                     <div class="rounded bg-warning text-center p-1 fw-bolder" style="color: white">
                                                         {{ $d->status }}</div>
@@ -109,8 +104,8 @@
                                                 @break
 
                                                 @default
-                                                    <div class="rounded bg-secondary text-center p-1 fw-bolder"
-                                                        style="color: white">Tidak Diketahui</div>
+                                                    <div class="rounded bg-success text-center p-1 fw-bolder" style="color: white">
+                                                        {{ $d->status }}</div>
                                             @endswitch
                                         </td>
                                         <td class="text-right">
@@ -143,11 +138,22 @@
                                                             <a class="dropdown-item"
                                                                 href="{{ url('apar/revisi/' . $d->apar_id) }}">Revisi
                                                                 Apar</a>
-                                                            <a class="dropdown-item approve-button" data-bs-toggle="modal"
-                                                                data-bs-target="#approveModal" data-id="{{ $d->apar_id }}"
-                                                                data-url="{{ url('apar/status/' . $d->apar_id) }}">
-                                                                Approve Apar
-                                                            </a>
+                                                            @if (auth()->user()->role_id == 1)
+                                                                <a class="dropdown-item approve-button" data-bs-toggle="modal"
+                                                                    data-bs-target="#approveModal" data-id="{{ $d->apar_id }}"
+                                                                    data-url="{{ url('apar/status/' . $d->apar_id . '/admin') }}">
+                                                                    Approve Admin
+                                                                </a>
+                                                            @else
+                                                                @if ($d->status == 'Setuju Admin')
+                                                                    <a class="dropdown-item approve-button" data-bs-toggle="modal"
+                                                                        data-bs-target="#approveModal"
+                                                                        data-id="{{ $d->apar_id }}"
+                                                                        data-url="{{ url('apar/status/' . $d->apar_id . '/manager') }}">
+                                                                        Approve Management
+                                                                    </a>
+                                                                @endif
+                                                            @endif
                                                     @endswitch
                                                 </div>
                                             </div>
@@ -220,7 +226,7 @@
             url.searchParams.set('limit', limit); // Tambahkan atau update parameter 'limit'
             window.location.href = url.toString(); // Redirect ke URL baru
         }
-        
+
         document.addEventListener('DOMContentLoaded', function() {
             // Ketika tombol approve diklik
             document.querySelectorAll('.approve-button').forEach(function(button) {
