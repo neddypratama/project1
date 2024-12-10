@@ -23,12 +23,11 @@
                     <div class="container-fluid">
                         <form method="GET" action="{{ route('suburaian.index') }}" class="d-flex w-100">
                             <div class="form-group flex-grow-1 me-2">
-                                <input type="text" nama="search" class="form-control form-control-sm mt-1"
-                                    placeholder="Search by nama, tipe or uraian" value="{{ request()->get('search') }}">
+                                <input type="text" name="search" class="form-control form-control-sm mt-1"
+                                    placeholder="Cari berdasarkan nama uraian" value="{{ request()->get('search') }}">
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-secondary mt-1"><i
-                                        class="tim-icons icon-zoom-split"></i></button>
+                                <button type="submit" class="btn btn-secondary mt-1"><i class="tim-icons icon-zoom-split"></i></button>
                             </div>
                         </form>
                     </div>
@@ -153,7 +152,7 @@
                         enctype="multipart/form-data">
                         @csrf
                         <!-- Nama Uraian -->
-                        <div class="form-group{{ $errors->has('uraian_id') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <label for="uraian_id" class="col-form-label">Nama Uraian: </label>
                             <select name="uraian_id"
                                 class="form-control {{ $errors->has('uraian_id') ? ' is-invalid' : '' }}" id="uraian_id"
@@ -174,7 +173,7 @@
                         </div>
 
                         <!-- Tipe Sub Uraian -->
-                        <div class="form-group{{ $errors->has('sub_uraian_tipe') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <label for="sub_uraian_tipe" class="col-form-label">Tipe Sub Uraian: </label>
                             <select name="sub_uraian_tipe" id="sub_uraian_tipe"
                                 class="form-control{{ $errors->has('sub_uraian_tipe') ? ' is-invalid' : '' }}"
@@ -196,7 +195,7 @@
                         <!-- Dynamic Input Sub Uraian -->
                         <div id="sub_uraian_container">
                             @foreach (old('sub_uraian_nama', ['']) as $index => $value)
-                                <div class="form-group{{ $errors->has("sub_uraian_nama.$index") ? ' has-danger' : '' }}">
+                                <div class="form-group">
                                     <label for="sub_uraian_nama_{{ $index }}" class="col-form-label">Name Sub
                                         Uraian: </label>
                                     <input type="text" name="sub_uraian_nama[]"

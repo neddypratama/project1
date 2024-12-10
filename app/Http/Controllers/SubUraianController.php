@@ -13,6 +13,7 @@ class SubUraianController extends Controller
     {
         $limit = $request->input('limit', 10); // Mengambil nilai limit dari URL
         $search = $request->search;
+        // dd($search);
 
         // Sorting
         $sortBy = $request->get('sort_by', 'sub_uraian_id');  // Kolom default untuk sorting
