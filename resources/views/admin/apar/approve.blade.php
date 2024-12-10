@@ -118,34 +118,29 @@
                                                     @switch($d->status)
                                                         @case('Setuju')
                                                             <a class="dropdown-item"
-                                                                href="{{ url('apar/acc/' . $d->apar_id) }}">Lihat
-                                                                Apar</a>
+                                                                href="{{ url('apar/acc/' . $d->apar_id) }}">Lihat Apar</a>
                                                         @break
 
                                                         @case('Belum Dicek')
                                                             <a class="dropdown-item"
-                                                                href="{{ url('apar/acc/' . $d->apar_id) }}">Lihat
-                                                                Apar</a>
+                                                                href="{{ url('apar/acc/' . $d->apar_id) }}">Lihat Apar</a>
                                                             <a class="dropdown-item"
-                                                                href="{{ url('apar/revisi/' . $d->apar_id) }}">Revisi
-                                                                Apar</a>
+                                                                href="{{ url('apar/revisi/' . $d->apar_id) }}">Revisi Apar</a>
                                                             @if (auth()->user()->role_id == 1)
                                                                 <a class="dropdown-item approve-button" data-bs-toggle="modal"
                                                                     data-bs-target="#approveModal" data-id="{{ $d->apar_id }}"
                                                                     data-url="{{ url('apar/status/' . $d->apar_id . '/admin') }}">
                                                                     Approve Admin
                                                                 </a>
-                                                            @else
+                                                            @endif
                                                         @break
 
                                                         @case('Setuju Admin')
                                                             <a class="dropdown-item"
-                                                                href="{{ url('apar/acc/' . $d->apar_id) }}">Lihat
-                                                                Apar</a>
-                                                            <a class="dropdown-item"
-                                                                href="{{ url('apar/revisi/' . $d->apar_id) }}">Revisi
-                                                                Apar</a>
-                                                            @if ($d->status == 'Setuju Admin')
+                                                                href="{{ url('apar/acc/' . $d->apar_id) }}">Lihat Apar</a>
+                                                            @if (auth()->user()->role_id == 2)
+                                                                <a class="dropdown-item"
+                                                                    href="{{ url('apar/revisi/' . $d->apar_id) }}">Revisi Apar</a>
                                                                 <a class="dropdown-item approve-button" data-bs-toggle="modal"
                                                                     data-bs-target="#approveModal" data-id="{{ $d->apar_id }}"
                                                                     data-url="{{ url('apar/status/' . $d->apar_id . '/manager') }}">
@@ -156,27 +151,21 @@
 
                                                         @case('Revisi')
                                                             <a class="dropdown-item"
-                                                                href="{{ url('apar/acc/' . $d->apar_id) }}">Lihat
-                                                                Apar</a>
+                                                                href="{{ url('apar/acc/' . $d->apar_id) }}">Lihat Apar</a>
                                                             <a class="dropdown-item"
-                                                                href="{{ url('apar/revisi/' . $d->apar_id) }}">Revisi
-                                                                Apar</a>
+                                                                href="{{ url('apar/revisi/' . $d->apar_id) }}">Revisi Apar</a>
                                                             @if (auth()->user()->role_id == 1)
                                                                 <a class="dropdown-item approve-button" data-bs-toggle="modal"
                                                                     data-bs-target="#approveModal" data-id="{{ $d->apar_id }}"
                                                                     data-url="{{ url('apar/status/' . $d->apar_id . '/admin') }}">
                                                                     Approve Admin
                                                                 </a>
-                                                            @else
-                                                                @if ($d->status == 'Setuju Admin')
-                                                                    <a class="dropdown-item approve-button" data-bs-toggle="modal"
-                                                                        data-bs-target="#approveModal"
-                                                                        data-id="{{ $d->apar_id }}"
-                                                                        data-url="{{ url('apar/status/' . $d->apar_id . '/manager') }}">
-                                                                        Approve Management
-                                                                    </a>
-                                                                @endif
                                                             @endif
+                                                        @break
+
+                                                        @default
+                                                            <a class="dropdown-item"
+                                                                href="{{ url('apar/acc/' . $d->apar_id) }}">Lihat Apar</a>
                                                         @break
                                                     @endswitch
                                                 </div>
@@ -198,8 +187,8 @@
                     <div class="card-footer ">
                         <nav class="d-flex justify-content-between align-items-center" aria-label="...">
                             <div class="form-group">
-                                <select id="paginationLimit" class="form-control"
-                                    onchange="updatePaginationLimit(this.value)" style="font-size: 12px">
+                                <select id="paginationLimit" class="form-control" onchange="updatePaginationLimit(this.value)"
+                                    style="font-size: 12px">
                                     <option value="10" {{ request('limit') == 10 ? 'selected' : '' }}>10</option>
                                     <option value="25" {{ request('limit') == 25 ? 'selected' : '' }}>25</option>
                                     <option value="50" {{ request('limit') == 50 ? 'selected' : '' }}>50</option>

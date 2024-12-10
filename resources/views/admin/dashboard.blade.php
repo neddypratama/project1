@@ -1,7 +1,7 @@
 @extends('admin.layouts.app', ['pageSlug' => 'dashboard'])
 
 @section('content')
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="col-12">
             <div class="card card-chart">
                 <div class="card-header ">
@@ -15,9 +15,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body d-flex justify-content-center align-items-center">
                     <div class="chart-area">
-                        <canvas id="aparChart" width="400" height="200"></canvas>
+                        <canvas id="aparChart" width="100%" height="50%"></canvas>
                     </div>
                 </div>
             </div>
@@ -28,7 +28,6 @@
 @stack('js')
 <script src="{{ $chart->cdn() }}"></script>
 <script>
-
     // Fungsi untuk mendapatkan data dari server
     async function fetchAparData() {
         const response = await fetch('/get-apar-data');

@@ -224,8 +224,6 @@ class AparController extends Controller
             $tanggal[] = 
                  $a->tanggal;
         }
-
-
         $result = [];
 
         // Loop melalui array dan olah data
@@ -252,12 +250,8 @@ class AparController extends Controller
             }
         }
 
-        // dd($result , $tanggal);
-
         $bulan = $result;
-
         $data = [];
-
         foreach ($uraian as $item) {
             $data[] = [
                 'uraian' => $item->uraian_nama,
