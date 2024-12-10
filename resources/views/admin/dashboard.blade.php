@@ -9,6 +9,9 @@
                         <div class="col-sm-6 text-left">
                             <h5 class="card-category">Grafik Jumlah Apar per Bulan</h5>
                             <h2 class="card-title">Apar Aktivitas</h2>
+                            <div class="p-6 m-20 bg-white rounded shadow">
+                                {!! $chart->container() !!}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -20,9 +23,12 @@
             </div>
         </div>
     </div>
+    {{ $chart->script() }}
 @endsection
 @stack('js')
+<script src="{{ $chart->cdn() }}"></script>
 <script>
+
     // Fungsi untuk mendapatkan data dari server
     async function fetchAparData() {
         const response = await fetch('/get-apar-data');
