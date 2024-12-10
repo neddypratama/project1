@@ -433,7 +433,7 @@ class AparController extends Controller
         
 
         // Kirim data ke view
-        return view('admin.apar.approve', compact('data', 'input', 'user', 'sortBy', 'order'));
+        return view('admin.apar.create', compact('data', 'input', 'user', 'sortBy', 'order'));
     }
 
     public function approveStatusManager(Request $request, $id){
