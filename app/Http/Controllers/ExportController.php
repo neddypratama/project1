@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Apar;
 use App\Models\InputApar;
 use App\Models\SubUraian;
-use App\Models\Uraian;
+use App\Models\uraian;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
