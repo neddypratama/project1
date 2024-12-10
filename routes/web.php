@@ -36,19 +36,23 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('role', 'App\Http\Controllers\RoleController', ['except' => ['show']]);
         Route::resource('uraian', 'App\Http\Controllers\UraianController', ['except' => ['show']]);
         Route::resource('suburaian', 'App\Http\Controllers\SubUraianController', ['except' => ['show']]);
+        Route::put('apar/status/{apar}/admin', ['as' => 'apar.approvestatusadmin', 'uses' => 'App\Http\Controllers\AparController@approveStatusAdmin']);
         
     });
     
     // Rute untuk Admin dan Manager (role:1,2)
     Route::group(['middleware' => ['role:1,2']], function () {
         Route::get('apar/approve', ['as' => 'apar.approve', 'uses' => 'App\Http\Controllers\AparController@approve']);
-        Route::put('apar/status/{apar}', ['as' => 'apar.approvestatus', 'uses' => 'App\Http\Controllers\AparController@approveStatus']);
         Route::get('apar/acc/{id}', ['as' => 'apar.acc', 'uses' => 'App\Http\Controllers\AparController@acc']);
         Route::get('apar/revisi/{id}', ['as' => 'apar.revisi', 'uses' => 'App\Http\Controllers\AparController@revisi']);
         Route::put('apar/simpan/{apar}', ['as' => 'apar.simpan', 'uses' => 'App\Http\Controllers\AparController@simpan']);
         Route::get('download-pdf/{tahun}', [ExportController::class, 'downloadPDF'])->name('download.pdf');
         Route::get('download-excel/{tahun}', [ExportController::class, 'downloadExcel'])->name('download.excel');
         Route::get('print/{tahun}', [ExportController::class, 'print'])->name('print.view');
+    });
+
+    Route::group(['middleware' => ['role:2']], function () {
+        Route::put('apar/status/{apar}/manager', ['as' => 'apar.approvestatusmanager', 'uses' => 'App\Http\Controllers\AparController@approveStatusManager']);
     });
     
     // Rute untuk Admin dan Staff (role:1,3)

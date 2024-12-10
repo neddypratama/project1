@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card card-chart">
-                <div class="card-header">
+                <div class="card-header ">
                     <div class="row">
                         <div class="col-sm-6 text-left">
                             <h5 class="card-category">Grafik Jumlah Apar per Bulan</h5>
@@ -14,57 +14,60 @@
                 </div>
                 <div class="card-body">
                     <div class="chart-area">
-                        <canvas id="aparChart"></canvas>
+                        <canvas id="aparChart" width="400" height="200"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+@stack('js')
+<script>
+    // Fungsi untuk mendapatkan data dari server
+    async function fetchAparData() {
+        const response = await fetch('/get-apar-data');
+        const data = await response.json();
+        return data;
+    }
 
-@push('js')
-    <script src="{{ asset('white') }}/js/plugins/chartjs.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            fetch('{{ route('home.data') }}')
-                .then(response => response.json())
-                .then(data => {
-                    const ctx = document.getElementById('aparChart').getContext('2d');
+    // Render Chart.js
+    async function renderChart() {
+        const aparData = await fetchAparData();
+        const ctx = document.getElementById('aparChart').getContext('2d');
 
-                    new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: data.labels,
-                            datasets: [{
-                                label: 'Jumlah Apar',
-                                backgroundColor: '#FF6384',
-                                borderColor: '#FF6384',
-                                data: data.values,
-                                fill: false
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                x: {
-                                    beginAtZero: true,
-                                    title: {
-                                        display: true,
-                                        text: 'Bulan'
-                                    }
-                                },
-                                y: {
-                                    beginAtZero: true,
-                                    title: {
-                                        display: true,
-                                        text: 'Jumlah Apar'
-                                    }
-                                }
-                            }
-                        }
-                    });
-                });
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: aparData.labels, // Nama bulan
+                datasets: [{
+                    label: 'Jumlah APAR',
+                    data: aparData.values, // Data jumlah APAR
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Jumlah APAR Per Bulan'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
         });
-    </script>
-@endpush
+    }
+
+    // Jalankan fungsi renderChart saat halaman dimuat
+    renderChart();
+</script>

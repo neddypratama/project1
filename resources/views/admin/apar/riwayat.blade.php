@@ -93,11 +93,6 @@
                                         </td>
                                         <td>
                                             @switch($d->status)
-                                                @case('Setuju')
-                                                    <div class="rounded bg-success text-center p-1 fw-bolder" style="color: white">
-                                                        {{ $d->status }}</div>
-                                                @break
-
                                                 @case('Revisi')
                                                     <div class="rounded bg-warning text-center p-1 fw-bolder" style="color: white">
                                                         {{ $d->status }}</div>
@@ -109,8 +104,8 @@
                                                 @break
 
                                                 @default
-                                                    <div class="rounded bg-secondary text-center p-1 fw-bolder"
-                                                        style="color: white">Tidak Diketahui</div>
+                                                    <div class="rounded bg-success text-center p-1 fw-bolder" style="color: white">
+                                                        {{ $d->status }}</div>
                                             @endswitch
                                         </td>
                                         <td class="text-right">

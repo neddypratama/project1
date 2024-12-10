@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('apar_id');
             $table->string('dokumentasi')->nullable();
             $table->date('tanggal');
-            $table->enum('status', ['Setuju', 'Revisi', 'Belum Dicek']);
+            $table->enum('status', ['Setuju Semua', 'Setuju Admin', 'Revisi', 'Belum Dicek']);
             $table->string('tanda_tangan')->nullable();
             $table->unsignedBigInteger('user_id')->index();
             $table->timestamps();

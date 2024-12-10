@@ -436,7 +436,7 @@ class AparController extends Controller
         return view('admin.apar.approve', compact('data', 'input', 'user', 'sortBy', 'order'));
     }
 
-    public function approveStatus(Request $request, $id){
+    public function approveStatusManager(Request $request, $id){
         $apar = Apar::find($id);
         $input = InputApar::where('apar_id', $id)->get();
         foreach ($input as $in) {
@@ -447,7 +447,25 @@ class AparController extends Controller
         }
 
         $apar->update([
-            'status' => 'Setuju',
+            'status' => 'Setuju Semua',
+            'updated_at' => now(),
+        ]);
+
+        return redirect()->route('apar.approve')->withStatus('Status berhasil diubah.');
+    }
+
+    public function approveStatusAdmin(Request $request, $id){
+        $apar = Apar::find($id);
+        $input = InputApar::where('apar_id', $id)->get();
+        foreach ($input as $in) {
+            $in->update([
+                'revisi' => '',
+                'updated_at' => now(),
+            ]);
+        }
+
+        $apar->update([
+            'status' => 'Setuju Admin',
             'updated_at' => now(),
         ]);
 
