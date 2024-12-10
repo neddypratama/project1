@@ -45,6 +45,8 @@
             </div>
         </div>
         <div class="col-lg-9 mt-lg-0 mt-4">
+            @include('admin.alerts.success')
+            @include('admin.alerts.alert')
             <form action="{{ route('apar.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="card">
@@ -60,7 +62,7 @@
                         <div class="mt-3">
                             <img id="previewImagee" style="width: 300px" />
                         </div>
-                        @error('dokumentasi') 
+                        @error('dokumentasi')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
@@ -78,7 +80,8 @@
                                     {{-- <option value="1">{{ $sub['sub_uraian'] }}</option> --}}
                                     <div class="form-group">
                                         <label>{{ $sub['sub_uraian'] }}</label>
-                                        <input type="text" value="{{old('texthasil.' . $input['sub_id'])}}" name="texthasil[{{ $input['sub_id'] }}]" class="form-control">
+                                        <input type="text" value="{{ old('texthasil.' . $input['sub_id']) }}"
+                                            name="texthasil[{{ $input['sub_id'] }}]" class="form-control">
                                         {{-- <input type="hidden" name="{{ $input['sub_id'] }}/{{ $input['tipe'] }}" value="{{ $input['tipe'] }}"> --}}
                                     </div>
                                     @error('texthasil.' . $input['sub_id'])
@@ -86,11 +89,13 @@
                                     @enderror
                                 @endforeach
                             @elseif ($input['tipe'] == 'select')
-                                <select class="form-select" value="{{old('selecthasil.' . $input['sub_id'])}}" name="selecthasil[{{ $input['sub_id'] }}]"
-                                    aria-label="Default select example">
+                                <select class="form-select" value="{{ old('selecthasil.' . $input['sub_id']) }}"
+                                    name="selecthasil[{{ $input['sub_id'] }}]" aria-label="Default select example">
                                     <option value=" " selected>--Pilih--</option>
                                     @foreach ($input['sub_uraian'] as $sub)
-                                        <option value="{{ $sub['sub_uraian'] }}" {{old('selecthasil.' . $input['sub_id']) == $sub['sub_uraian'] ? 'selected' : ''}}>{{ $sub['sub_uraian'] }}</option>
+                                        <option value="{{ $sub['sub_uraian'] }}"
+                                            {{ old('selecthasil.' . $input['sub_id']) == $sub['sub_uraian'] ? 'selected' : '' }}>
+                                            {{ $sub['sub_uraian'] }}</option>
                                     @endforeach
                                 </select>
                                 @error('selecthasil.' . $input['sub_id'])

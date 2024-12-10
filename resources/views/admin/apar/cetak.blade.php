@@ -139,7 +139,7 @@
                 <tr>
                     <td colspan="2">Dokumentasi</td>
                     @foreach ($apar as $item)
-                        <td><img src="{{ public_path('storage/' . $item->dokumentasi) }}" alt="Dokumentasi"></td>
+                        <td><img class="img-fluid" src="{{ public_path('storage/' . $item->dokumentasi) }}" alt="Dokumentasi"></td>
                     @endforeach
                 </tr>
             </tbody>

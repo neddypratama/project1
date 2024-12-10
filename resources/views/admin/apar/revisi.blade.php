@@ -60,7 +60,7 @@
                                     @endforeach
                                     <tr>
                                         <td colspan="2">Dokumentasi</td>
-                                        <td><img src="{{ asset('storage/' . $apar->dokumentasi) }}" alt="Dokumentasi"></td>
+                                        <td><img class="img-fluid" src="{{ asset('storage/' . $apar->dokumentasi) }}" alt="Dokumentasi"></td>
                                     </tr>
                                 </tbody>
                             </table>
