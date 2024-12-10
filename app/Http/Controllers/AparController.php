@@ -170,7 +170,7 @@ class AparController extends Controller
             'apar_id' => $apar->apar_id,
         ];
 
-        $user = User::all();
+        $user = User::all(); 
         
         foreach ($user as $us) {
             if ($us->role_id == 1 || $us->role_id == 2) {
