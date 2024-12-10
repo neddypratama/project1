@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\AparPerBulan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
     // Tampilkan halaman dashboard
-    public function index()
+    public function index( AparPerBulan $chart)
     {
-        return view('admin.dashboard');
+        return view('admin.dashboard' , ['chart' => $chart->build()]);
     }
 
     // Ambil data jumlah apar per bulan
