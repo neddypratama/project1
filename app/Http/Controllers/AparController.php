@@ -392,7 +392,7 @@ class AparController extends Controller
             }
         }
 
-        return redirect()->route('apar.index')->withStatus('Apar berhasil ditambahkan.');
+        return redirect()->route('apar.approve')->withStatus('Apar berhasil ditambahkan.');
     }
 
     public function approve(Request $request){
