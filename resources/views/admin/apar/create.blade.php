@@ -56,7 +56,7 @@
                     <div class="card-body pt-0">
                         <div class="">
                             <label for="formFile" class="form-label">Upload dokumentasi</label>
-                            <input class="form-control" type="file" id="formFile" name="dokumentasi"
+                            <input class="form-control" type="file" id="formFile" name="dokumentasi" accept="image/*" capture="camera"
                                 onchange="previewImage()">
                         </div>
                         <div class="mt-3">
@@ -142,7 +142,7 @@
             preview.src = eFREvent.target.result;
             // preview.src = "#";
             // preview.style.display = "none"; // Sembunyikan gambar jika tidak ada file
-
+            // reader.readAsDataURL(fileInput.files[0]); 
         }
     }
 

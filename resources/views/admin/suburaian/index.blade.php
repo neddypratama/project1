@@ -23,12 +23,11 @@
                     <div class="container-fluid">
                         <form method="GET" action="{{ route('suburaian.index') }}" class="d-flex w-100">
                             <div class="form-group flex-grow-1 me-2">
-                                <input type="text" nama="search" class="form-control form-control-sm mt-1"
-                                    placeholder="Search by nama, tipe or uraian" value="{{ request()->get('search') }}">
+                                <input type="text" name="search" class="form-control form-control-sm mt-1"
+                                    placeholder="Cari berdasarkan nama uraian" value="{{ request()->get('search') }}">
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-secondary mt-1"><i
-                                        class="tim-icons icon-zoom-split"></i></button>
+                                <button type="submit" class="btn btn-secondary mt-1"><i class="tim-icons icon-zoom-split"></i></button>
                             </div>
                         </form>
                     </div>
@@ -98,6 +97,7 @@
                                                     <a class="dropdown-item edit-button" data-bs-toggle="modal"
                                                         data-bs-target="#editsuburaian" data-id="{{ $d->sub_uraian_id }}"
                                                         data-nama="{{ $d->sub_uraian_nama }}"
+                                                        data-pecah='@json(explode('/', $d->sub_uraian_nama))'
                                                         data-tipe="{{ $d->sub_uraian_tipe }}"
                                                         data-uraian="{{ $d->uraian_id }}"
                                                         data-url="{{ url('suburaian/' . $d->sub_uraian_id) }}">Edit</a>
@@ -152,7 +152,7 @@
                         enctype="multipart/form-data">
                         @csrf
                         <!-- Nama Uraian -->
-                        <div class="form-group{{ $errors->has('uraian_id') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <label for="uraian_id" class="col-form-label">Nama Uraian: </label>
                             <select name="uraian_id"
                                 class="form-control {{ $errors->has('uraian_id') ? ' is-invalid' : '' }}" id="uraian_id"
@@ -173,7 +173,7 @@
                         </div>
 
                         <!-- Tipe Sub Uraian -->
-                        <div class="form-group{{ $errors->has('sub_uraian_tipe') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <label for="sub_uraian_tipe" class="col-form-label">Tipe Sub Uraian: </label>
                             <select name="sub_uraian_tipe" id="sub_uraian_tipe"
                                 class="form-control{{ $errors->has('sub_uraian_tipe') ? ' is-invalid' : '' }}"
@@ -195,7 +195,7 @@
                         <!-- Dynamic Input Sub Uraian -->
                         <div id="sub_uraian_container">
                             @foreach (old('sub_uraian_nama', ['']) as $index => $value)
-                                <div class="form-group{{ $errors->has("sub_uraian_nama.$index") ? ' has-danger' : '' }}">
+                                <div class="form-group">
                                     <label for="sub_uraian_nama_{{ $index }}" class="col-form-label">Name Sub
                                         Uraian: </label>
                                     <input type="text" name="sub_uraian_nama[]"
@@ -243,14 +243,16 @@
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-
                         <!-- Nama Sub Uraian -->
                         <div class="form-group{{ $errors->has('edit_sub_uraian_nama') ? ' has-danger' : '' }}">
                             <label for="edit-sub-uraian-nama" class="col-form-label">Nama Sub Uraian: </label>
-                            <input type="text" name="edit_sub_uraian_nama" id="edit-sub-uraian-nama"
+                            <div id="dynamic-inputs-container">
+                                <!-- Input fields akan di-generate di sini -->
+                            </div>
+                            {{-- <input type="text" name="edit_sub_uraian_nama" id="edit-sub-uraian-nama"
                                 class="form-control{{ $errors->has('edit_sub_uraian_nama') ? ' is-invalid' : '' }}"
-                                placeholder="Nama Sub Uraian" value="{{ old('edit_sub_uraian_nama') }}">
-                            @if ($errors->has('edit_sub_uraian_nama'))
+                                placeholder="Nama Sub Uraian" value="{{ old('edit_sub_uraian_nama') }}"> --}}
+                            @if ($errors->has('edit_sub_uraian_nama.*'))
                                 <span class="invalid-feedback" role="alert">
                                     {{ $errors->first('edit_sub_uraian_nama') }}
                                 </span>
@@ -369,21 +371,65 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         if (
-            {{ $errors->has('sub_uraian_nama.') || $errors->has('sub_uraian_tipe') ? 'true' : 'false' }}
+            {{ $errors->has('sub_uraian_nama.*') || $errors->has('sub_uraian_tipe') ? 'true' : 'false' }}
         ) {
             var addsuburaianModal = new bootstrap.Modal(document.getElementById('addsuburaian'));
             addsuburaianModal.show();
         }
         // Check and show the editlayanan modal if there are errors for edit layanan
         if (
-            {{ $errors->has('edit_sub_uraian_nama') || $errors->has('edit_sub_uraian_tipe') | $errors->has('edit_uraian_id') ? 'true' : 'false' }}
+            {{ $errors->has('edit_sub_uraian_nama.*') || $errors->has('edit_sub_uraian_tipe') | $errors->has('edit_uraian_id') ? 'true' : 'false' }}
         ) {
             var editsuburaianModal = new bootstrap.Modal(document.getElementById('editsuburaian'));
             var url = localStorage.getItem('Url');
+            var pecah = JSON.parse(localStorage.getItem('Pecah'));
+            const container = document.getElementById('dynamic-inputs-container');
+            container.innerHTML = '';
+            // localStorage.setItem('oldValues', @json(old()));
+            const oldValues = @json(old() ?? []);
+            // console.log(oldValues)
+            // Loop melalui array dan buat input field untuk setiap elemen
+            
+            const err = @json($errors->all())
+
+            pecah.forEach((item, index) => {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.name = `edit_sub_uraian_nama[${index}]`;
+                input.id = `edit-sub-uraian-nama-${index}`;
+                input.className = 'form-control mb-2';
+                input.placeholder = `Nama Sub Uraian ${index + 1}`;
+                input.value = oldValues['edit_sub_uraian_nama'][index];
+                container.appendChild(input);
+                // console.log(err);
+                err.forEach(element => {
+                    if (element.includes(`edit_sub_uraian_nama.${index}`)) {
+                        const eror = document.createElement('span');
+                        eror.className = 'invalid-feedback';
+                        eror.setAttribute('role', 'alert');
+                        eror.textContent = element;
+                        input.className = 'form-control mb-2 is-invalid';
+                        container.appendChild(eror);
+                        
+                        // console.log(element)
+                        // container.append(`
+                        // <span class="invalid-feedback" role="alert">
+                        //             ${element}
+                        //         </span>
+                        // `);
+
+                    }
+                });
+                // input.value = oldValues[index] ?? item;
+                // console.log(oldValues);
+                // Tambahkan input ke dalam kontainer
+            });
             editsuburaianModal.show();
             $('#editsuburaianForm').attr('action', url);
 
-            console.log(@json($errors->all()));
+            // console.log(err);
+            // console.log(pecah);
+
         }
     });
 
@@ -393,12 +439,37 @@
 
         editButtons.forEach(function(button) {
             button.addEventListener('click', function() {
+                const dataPecah = this.getAttribute('data-pecah');
                 var suburaianId = this.getAttribute('data-id');
                 var suburaiannama = this.getAttribute('data-nama');
                 var suburaiantipe = this.getAttribute('data-tipe');
                 var uraian = this.getAttribute('data-uraian');
                 var actionUrl = this.getAttribute('data-url');
                 localStorage.setItem('Url', actionUrl);
+
+                const arrayPecah = JSON.parse(dataPecah)
+                localStorage.setItem('Pecah', JSON.stringify(arrayPecah));
+                // console.log(arrayPecah);
+                // console.log(localStorage.getItem('Pecah'));
+                const container = document.getElementById('dynamic-inputs-container');
+                container.innerHTML = '';
+
+                // Loop melalui array dan buat input field untuk setiap elemen
+                arrayPecah.forEach((item, index) => {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.name = `edit_sub_uraian_nama[]`;
+                    input.id = `edit-sub-uraian-nama-${index}`;
+                    input.className = 'form-control mb-2';
+                    input.placeholder = `Nama Sub Uraian ${index + 1}`;
+                    input.value = item; // Set nilai default berdasarkan elemen array
+
+                    // Tambahkan input ke dalam kontainer
+                    container.appendChild(input);
+                });
+
+
+                // console.log(arrayPecah);
 
                 if (suburaiannama) {
                     var namaParts = suburaiannama.split('/'); // Pecah berdasarkan "/"
@@ -408,10 +479,10 @@
                         console.log('Bagian ' + (i + 1) + ':', namaParts[i]);
                     }
                 }
-                console.log(suburaiannama);
+                // console.log(suburaiannama);
 
                 $('#edit-id').val(suburaianId);
-                $('#edit-sub-uraian-nama').val(suburaiannama);
+                // $('#edit-sub-uraian-nama').val(suburaiannama);
                 $('#edit-sub-uraian-tipe').val(suburaiantipe);
                 $('#edit-uraian-id').val(uraian);
 

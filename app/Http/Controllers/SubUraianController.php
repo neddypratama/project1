@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SubUraian;
 use App\Models\uraian;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 
 class SubUraianController extends Controller
@@ -12,6 +13,7 @@ class SubUraianController extends Controller
     {
         $limit = $request->input('limit', 10); // Mengambil nilai limit dari URL
         $search = $request->search;
+        // dd($search);
 
         // Sorting
         $sortBy = $request->get('sort_by', 'sub_uraian_id');  // Kolom default untuk sorting
@@ -80,19 +82,31 @@ class SubUraianController extends Controller
 
 
     public function update(Request $request, $id) {
-        $request->validate([
-            'edit_sub_uraian_nama' => 'required|string|unique:sub_uraians,sub_uraian_nama,' . $id . ',sub_uraian_id',
+        // dd($request->all());
+        $validated = $request->validate([
+            'edit_sub_uraian_nama.*' => 'required|string|unique:sub_uraians,sub_uraian_nama,' . $id . ',sub_uraian_id',
             'edit_sub_uraian_tipe' => 'required',
             'edit_uraian_id' => 'required|exists:uraians,uraian_id',
         ]);
+
+        // dd(Validated['']);
         
+        // dd($validated);
+
         $suburaian = suburaian::findOrFail($id);
 
+        // foreach ($validated['edit_sub_uraian_nama'] as $key => $value) {
+
+        //     $suburaian->update([
+        //         'sub_uraian_nama' => $validated['edit_sub_uraian_nama'],
+        //     ]);
+        // }
+
         $suburaian->update([
-            'sub_uraian_nama' => $request->edit_sub_uraian_nama,
-            'sub_uraian_tipe' => $request->edit_sub_uraian_tipe,
-            'uraian_id'   => $request->edit_uraian_id,
-            'updated_at'     => now(),
+            'sub_uraian_nama' => implode("/",$validated['edit_sub_uraian_nama']),
+            'sub_uraian_tipe' => $validated['edit_sub_uraian_tipe'],
+            'uraian_id'       => $validated['edit_uraian_id'],
+            'updated_at'      => now(),
         ]);
         return redirect()->route('suburaian.index')->withStatus(__('Sub Uraian berhasil diperbaharui.'));        
     }

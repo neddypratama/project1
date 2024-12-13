@@ -81,6 +81,7 @@ class ExportController extends Controller
             $q = InputApar::select('hasil_apar' , 'apar_id')->where('sub_uraian_id', $sub->sub_uraian_id)->get()->toArray();
 
             $d = explode("/", $sub->sub_uraian_nama);
+            // dump($d);
 
             // $hasil[$sub->sub_uraian_id]['sub_uraian'] = [$d];
             foreach ($q as $keyy => $e) {
@@ -104,6 +105,7 @@ class ExportController extends Controller
         foreach ($data as $key => $row) {
             $data[$key]['hasil'] = $hasil[$row['sub_id']];
         }
+        // dd();
         // dd($data , $bulan, $tanggal, $apar, $uraian, $sub_uraian , $hasil);
         // dd(InputApar::where('sub_uraian_id', $sub->sub_uraian_id)->get()->toArray());
         // dd($data);
