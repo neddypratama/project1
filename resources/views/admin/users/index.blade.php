@@ -359,6 +359,7 @@
                 var userId = this.getAttribute('data-id');
                 var userName = this.getAttribute('data-name');
                 var userRole = this.getAttribute('data-role');
+                var userEmail = this.getAttribute('data-email');
                 var actionUrl = this.getAttribute('data-url');
                 localStorage.setItem('Url', actionUrl);
 
@@ -367,7 +368,7 @@
                 $('#edit-id').val(userId);
                 $('#edit-name').val(userName);
                 $('#edit-role-id').val(userRole);
-
+                $('#edit-email').val(userEmail);
                 // Atur action form untuk update
                 $('#editUserForm').attr('action', actionUrl);
             });
