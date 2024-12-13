@@ -122,7 +122,7 @@
                     <div class="col-lg-12 order-2 order-lg-1 d-flex flex-column justify-content-center ">
                     </div>
                 </div> --}}
-                <img src="{{ asset('img/SAFEGUARD.png') }}"  class="img-fluid -mt-1" alt="" />
+                <img src="{{ asset('img/SAFEGUARD.png') }}" class="img-fluid -mt-1" alt="" />
             </div>
 
             <div class="icon-boxes position-relative" data-aos="fade-up" data-aos-delay="200">
@@ -409,6 +409,63 @@
         </section>
         <!-- /Services Section -->
 
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <article>
+                        <div class="post-img">
+                            <img src="{{ asset('img/Jasa Pengurusan SMK3 Kemnaker Bersama Konsultan Profesional.jpg') }}" style="max-height: 280px" alt="" class="img-fluid">
+                        </div>
+                        <h2 class="title">
+                            <a href="{{ url('/blogs') }}">Kesesuaian Kotak P3K dalam Permenaker </a>
+                        </h2>
+                        <div class="d-flex align-items-center">
+                            <img src="assets/img/blog/blog-author.jpg" alt=""
+                                class="img-fluid post-author-img flex-shrink-0">
+                            <div class="post-meta">
+                            </div>
+                        </div>
+                    </article>
+                </div><!-- End post list item -->
+
+                <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <article>
+                        <div class="post-img">
+                            <img src="{{ asset('img/Pelatihan K3 Teknisi Listrik Kemnaker RI.jpg') }}" style="max-height: 280px" alt="" class="img-fluid">
+                        </div>
+
+                        <h2 class="title">
+                            <a href="#">Nisi magni odit consequatur autem nulla dolorem</a>
+                        </h2>
+
+                        <div class="d-flex align-items-center">
+                            <img src="assets/img/blog/blog-author-2.jpg" alt=""
+                                class="img-fluid post-author-img flex-shrink-0">
+                            <div class="post-meta">
+                            </div>
+                        </div>
+                    </article>
+                </div><!-- End post list item -->
+
+                <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <article>
+                        <div class="post-img">
+                            <img src="{{ asset('img/The future of health and safety in construction.jpg') }}" style="max-height: 280px" alt="" class="img-fluid">
+                        </div>
+                        <h2 class="title">
+                            <a href="#">Possimus soluta ut id suscipit ea ut in quo quia et soluta</a>
+                        </h2>
+                        <div class="d-flex align-items-center">
+                            <img src="assets/img/blog/blog-author-3.jpg" alt=""
+                                class="img-fluid post-author-img flex-shrink-0">
+                            <div class="post-meta">
+                            </div>
+                        </div>
+
+                    </article>
+                </div><!-- End post list item -->
+            </div><!-- End recent posts list -->
+        </div>
 
 
         <!-- Contact Section -->
