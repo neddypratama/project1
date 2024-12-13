@@ -83,6 +83,7 @@ class UserController extends Controller
         $request->validate([
             'edit_name'    => 'required|string|max:255|unique:users,name',
             'edit_role_id'    => 'required|exists:roles,role_id',
+            'edit_email' => 'required|email',
         ]);
 
         $user = User::findOrFail($id);
@@ -90,6 +91,7 @@ class UserController extends Controller
         $user->update([
             'name' =>$request->edit_name,
             'role_id'   => $request->edit_role_id,
+            'email' => $request->edit_email,
             'updated_at'     => now(),
         ]);
         return redirect()->route('user.index')->withStatus(__('User berhasil diperbaharui.'));        

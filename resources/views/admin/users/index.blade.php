@@ -254,6 +254,19 @@
                             @endif
                         </div>
 
+                        <!-- Name User -->
+                        <div class="form-group{{ $errors->has('edit_email') ? ' has-danger' : '' }}">
+                            <label for="edit-email" class="col-form-label">Email User: </label>
+                            <input type="text" name="edit_email" id="edit-email"
+                                class="form-control{{ $errors->has('edit_email') ? ' is-invalid' : '' }}"
+                                placeholder="Email" value="{{ old('edit_email') }}">
+                            @if ($errors->has('edit_email'))
+                                <span class="invalid-feedback" role="alert">
+                                    {{ $errors->first('edit_email') }}
+                                </span>
+                            @endif
+                        </div>
+
                         <!-- Role User -->
                         <div class="form-group{{ $errors->has('edit_role_id') ? ' has-danger' : '' }}">
                             <label for="edit-role-id" class="col-form-label">Name Role: </label>
@@ -326,7 +339,7 @@
             adduserModal.show();
         }
         if (
-            {{ $errors->has('edit_user_name') || $errors->has('edit_role_id') ? 'true' : 'false' }}
+            {{ $errors->has('edit_name') || $errors->has('edit_role_id') || $errors->has('edit_email') ? 'true' : 'false' }}
         ) {
             var edituserModal = new bootstrap.Modal(document.getElementById('editUser'));
             var url = localStorage.getItem('Url');
