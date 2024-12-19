@@ -4,7 +4,7 @@
     <div class="row justify-content-center">
         <div class="col-12">
             <div class="card card-chart">
-                <div class="card-header ">
+                <div class="card-header">
                     <div class="row">
                         <div class="col-sm-6 text-left">
                             <h5 class="card-category">Grafik Jumlah Apar per Bulan</h5>
@@ -17,62 +17,15 @@
                 </div>
                 <div class="card-body d-flex justify-content-center align-items-center">
                     <div class="chart-area">
-                        <canvas id="aparChart" width="100%" height="50%"></canvas>
+                        <canvas id="aparChart" width="100%" height="400"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {{ $chart->script() }}
 @endsection
-@stack('js')
-<script src="{{ $chart->cdn() }}"></script>
-<script>
-    // Fungsi untuk mendapatkan data dari server
-    async function fetchAparData() {
-        const response = await fetch('/get-apar-data');
-        const data = await response.json();
-        return data;
-    }
 
-    // Render Chart.js
-    async function renderChart() {
-        const aparData = await fetchAparData();
-        const ctx = document.getElementById('aparChart').getContext('2d');
-
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: aparData.labels, // Nama bulan
-                datasets: [{
-                    label: 'Jumlah APAR',
-                    data: aparData.values, // Data jumlah APAR
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Jumlah APAR Per Bulan'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    }
-
-    // Jalankan fungsi renderChart saat halaman dimuat
-    renderChart();
-</script>
+@push('js')
+    {{ $chart->script() }}
+    <script src="{{ $chart->cdn() }}"></script>
+@endpush
