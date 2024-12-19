@@ -255,19 +255,6 @@
                             @endif
                         </div>
 
-                        <!-- Name User -->
-                        <div class="form-group">
-                            <label for="edit-email" class="col-form-label">Email User: </label>
-                            <input type="text" name="edit_email" id="edit-email"
-                                class="form-control{{ $errors->has('edit_email') ? ' is-invalid' : '' }}"
-                                placeholder="Email" value="{{ old('edit_email') }}">
-                            @if ($errors->has('edit_email'))
-                                <span class="invalid-feedback" role="alert">
-                                    {{ $errors->first('edit_email') }}
-                                </span>
-                            @endif
-                        </div>
-
                         <!-- Role User -->
                         <div class="form-group">
                             <label for="edit-role-id" class="col-form-label">Name Role: </label>
@@ -291,7 +278,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="text-white btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="text-white btn btn-primary">Update User</button>
+                    <button type="submit" class="text-white btn btn-primary">Update Role</button>
                 </div>
                 </form>
             </div>
@@ -324,40 +311,37 @@
 @endsection
 
 @stack('js')
-<script>
+<script >
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tangkap modal elemen
+        const adduserModalEl = document.getElementById('adduser');
+        const edituserModalEl = document.getElementById('editUser');
+
+        // Pastikan modal dibersihkan sebelum di-show
+        if (adduserModalEl) {
+            const adduserModal = bootstrap.Modal.getInstance(adduserModalEl) || new bootstrap.Modal(
+                adduserModalEl);
+            if (@json($errors->has('name') || $errors->has('email') || $errors->has('password') || $errors->has('role_id'))) {
+                adduserModal.hide(); // Dispose modal lama
+                adduserModal.show(); // Tampilkan modal baru
+            }
+        }
+
+        if (edituserModalEl) {
+            const edituserModal = bootstrap.Modal.getInstance(edituserModalEl) || new bootstrap.Modal(
+                edituserModalEl);
+            if (@json($errors->has('edit_name') || $errors->has('edit_role_id'))) {
+                edituserModal.hide(); // Dispose modal lama
+                edituserModal.show(); // Tampilkan modal baru
+            }
+        }
+    });
+
     function updatePaginationLimit(limit) {
         const url = new URL(window.location.href);
         url.searchParams.set('limit', limit); // Tambahkan atau update parameter 'limit'
         window.location.href = url.toString(); // Redirect ke URL baru
     }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        var adduserModal = new bootstrap.Modal(document.getElementById('adduser'));
-        var edituserModal = new bootstrap.Modal(document.getElementById('editUser'));
-
-        // Tampilkan modal jika ada error validasi
-        if (
-            {{ $errors->has('name') || $errors->has('email') || $errors->has('password') || $errors->has('role_id') ? 'true' : 'false' }}
-        ) {
-            adduserModal.show();
-        }
-
-        if (
-            {{ $errors->has('edit_name') || $errors->has('edit_role_id') || $errors->has('edit_email') ? 'true' : 'false' }}
-        ) {
-            var url = localStorage.getItem('Url');
-            $('#editUserForm').attr('action', url);
-            edituserModal.show();
-        }
-
-        // Pastikan tombol close berfungsi
-        document.querySelectorAll('.btn-close').forEach(function(button) {
-            button.addEventListener('click', function() {
-                var modal = bootstrap.Modal.getInstance(this.closest('.modal'));
-                if (modal) modal.hide();
-            });
-        });
-    });
 
     document.addEventListener('DOMContentLoaded', function() {
         var editButtons = document.querySelectorAll('.edit-button');
@@ -367,7 +351,6 @@
                 var userId = this.getAttribute('data-id');
                 var userName = this.getAttribute('data-name');
                 var userRole = this.getAttribute('data-role');
-                var userEmail = this.getAttribute('data-email');
                 var actionUrl = this.getAttribute('data-url');
                 localStorage.setItem('Url', actionUrl);
 
@@ -376,7 +359,7 @@
                 $('#edit-id').val(userId);
                 $('#edit-name').val(userName);
                 $('#edit-role-id').val(userRole);
-                $('#edit-email').val(userEmail);
+
                 // Atur action form untuk update
                 $('#editUserForm').attr('action', actionUrl);
             });
