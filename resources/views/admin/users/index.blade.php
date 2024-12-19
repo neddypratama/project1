@@ -154,7 +154,7 @@
                         @csrf
 
                         <!-- Name User -->
-                        <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <label for="name" class="col-form-label">Name User:</label>
                             <input type="text" name="name" id="name"
                                 class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
@@ -167,7 +167,7 @@
                         </div>
 
                         <!-- Email -->
-                        <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <label for="email" class="col-form-label">Email User:</label>
                             <input type="email" name="email" id="email"
                                 class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Email"
@@ -180,7 +180,7 @@
                         </div>
 
                         <!-- Password -->
-                        <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <label for="password" class="col-form-label">Password:</label>
                             <input type="password" name="password" id="password"
                                 class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
@@ -200,14 +200,15 @@
                         </div>
 
                         <!-- Role User -->
-                        <div class="form-group{{ $errors->has('role_id') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <label for="role_id" class="col-form-label">Name Role:</label>
                             <select name="role_id" id="role_id"
                                 class="form-control{{ $errors->has('role_id') ? ' is-invalid' : '' }}"
                                 style="height: 50px">
                                 <option value="">- Select Role -</option>
                                 @foreach ($role as $r)
-                                    <option value="{{ $r->role_id }}" {{ old('role_id') == $r->role_id ? 'selected' : '' }}>
+                                    <option value="{{ $r->role_id }}"
+                                        {{ old('role_id') == $r->role_id ? 'selected' : '' }}>
                                         {{ $r->role_name }}
                                     </option>
                                 @endforeach
@@ -242,7 +243,7 @@
                         @method('PUT')
 
                         <!-- Name User -->
-                        <div class="form-group{{ $errors->has('edit_name') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <label for="edit-name" class="col-form-label">Name User: </label>
                             <input type="text" name="edit_name" id="edit-name"
                                 class="form-control{{ $errors->has('edit_name') ? ' is-invalid' : '' }}"
@@ -255,7 +256,7 @@
                         </div>
 
                         <!-- Name User -->
-                        <div class="form-group{{ $errors->has('edit_email') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <label for="edit-email" class="col-form-label">Email User: </label>
                             <input type="text" name="edit_email" id="edit-email"
                                 class="form-control{{ $errors->has('edit_email') ? ' is-invalid' : '' }}"
@@ -268,7 +269,7 @@
                         </div>
 
                         <!-- Role User -->
-                        <div class="form-group{{ $errors->has('edit_role_id') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <label for="edit-role-id" class="col-form-label">Name Role: </label>
                             <select name="edit_role_id"
                                 class="form-control {{ $errors->has('edit_role_id') ? ' is-invalid' : '' }}"
@@ -331,25 +332,32 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        // Check and show the editlayanan modal if there are errors for edit layanan
+        var adduserModal = new bootstrap.Modal(document.getElementById('adduser'));
+        var edituserModal = new bootstrap.Modal(document.getElementById('editUser'));
+
+        // Tampilkan modal jika ada error validasi
         if (
             {{ $errors->has('name') || $errors->has('email') || $errors->has('password') || $errors->has('role_id') ? 'true' : 'false' }}
         ) {
-            var adduserModal = new bootstrap.Modal(document.getElementById('adduser'));
             adduserModal.show();
         }
+
         if (
             {{ $errors->has('edit_name') || $errors->has('edit_role_id') || $errors->has('edit_email') ? 'true' : 'false' }}
         ) {
-            var edituserModal = new bootstrap.Modal(document.getElementById('editUser'));
             var url = localStorage.getItem('Url');
-            edituserModal.show();
             $('#editUserForm').attr('action', url);
-
-            console.log(@json($errors->all()));
+            edituserModal.show();
         }
-    });
 
+        // Pastikan tombol close berfungsi
+        document.querySelectorAll('.btn-close').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var modal = bootstrap.Modal.getInstance(this.closest('.modal'));
+                if (modal) modal.hide();
+            });
+        });
+    });
 
     document.addEventListener('DOMContentLoaded', function() {
         var editButtons = document.querySelectorAll('.edit-button');

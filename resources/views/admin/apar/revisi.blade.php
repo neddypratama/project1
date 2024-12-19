@@ -1,12 +1,10 @@
 @extends('admin.layouts.app', ['page' => __('Revisi Apar'), 'pageSlug' => 'menu_approve'])
 
-{{-- @stack('style')
-</style> --}}
-
 @section('content')
     <div class="row">
-        <div class="col-8">
-            <div class="card ">
+        <!-- Kolom Kiri (Hasil Apar) -->
+        <div class="col-12 col-md-8">
+            <div class="card">
                 <div class="card-header">
                     <div class="row">
                         <div class="col-8">
@@ -26,8 +24,7 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th rowspan="2" colspan="2" style="border: 1px solid #000;">Uraian</th>
-                                        <th colspan="2" style="border: 1px solid #000;">
-                                            {{ $bulan }}</th>
+                                        <th colspan="2" style="border: 1px solid #000;">{{ $bulan }}</th>
                                     </tr>
                                     <tr>
                                         <th style="border: 1px solid #000;">{{ $tanggal }}</th>
@@ -60,26 +57,25 @@
                                     @endforeach
                                     <tr>
                                         <td colspan="2">Dokumentasi</td>
-                                        <td><img class="img-fluid" src="{{ asset('storage/' . $apar->dokumentasi) }}" alt="Dokumentasi"></td>
+                                        <td><img class="img-fluid" src="{{ asset('storage/' . $apar->dokumentasi) }}"
+                                                alt="Dokumentasi"></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                <div class="card-footer ">
+                <div class="card-footer">
                     <a href="{{ route('apar.approve') }}" class="btn btn-primary">Kembali</a>
                 </div>
             </div>
         </div>
-        <div class="col-4">
+
+        <!-- Kolom Kanan (Revisi Apar) -->
+        <div class="col-12 col-md-4">
             <div class="card">
                 <div class="card-header">
-                    <div class="row">
-                        <div class="col-8">
-                            <h4 class="card-title">Revisi Apar {{ $apar->apar_id }}</h4>
-                        </div>
-                    </div>
+                    <h4 class="card-title">Revisi Apar {{ $apar->apar_id }}</h4>
                 </div>
                 <div class="card-body">
                     <form class="form-floating" method="POST" action="{{ route('apar.simpan', $apar->apar_id) }}">
@@ -101,4 +97,7 @@
                         <button type="submit" class="btn btn-primary btn-block mt-2">Submit</button>
                     </form>
                 </div>
-            @endsection
+            </div>
+        </div>
+    </div>
+@endsection
