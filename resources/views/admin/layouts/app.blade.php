@@ -100,6 +100,8 @@
 
     <script src="{{ asset('white') }}/js/white-dashboard.min.js?v=1.0.0"></script>
     <script src="{{ asset('white') }}/js/theme.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
 
     <!-- jsPDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
