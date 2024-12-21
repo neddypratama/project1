@@ -75,7 +75,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::get('/test-email', function () {
     Mail::raw('Test!', function ($message) {
-        $message->to('burlleyjaya@gmail.com')
+        $message->to('neddypratama92@gmail.com')
                 ->subject('Test Email');
     });
     return 'Email sent!';

@@ -154,7 +154,7 @@
                         @csrf
 
                         <!-- Name User -->
-                        <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <label for="name" class="col-form-label">Name User:</label>
                             <input type="text" name="name" id="name"
                                 class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
@@ -167,7 +167,7 @@
                         </div>
 
                         <!-- Email -->
-                        <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <label for="email" class="col-form-label">Email User:</label>
                             <input type="email" name="email" id="email"
                                 class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Email"
@@ -180,7 +180,7 @@
                         </div>
 
                         <!-- Password -->
-                        <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <label for="password" class="col-form-label">Password:</label>
                             <input type="password" name="password" id="password"
                                 class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
@@ -200,14 +200,15 @@
                         </div>
 
                         <!-- Role User -->
-                        <div class="form-group{{ $errors->has('role_id') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <label for="role_id" class="col-form-label">Name Role:</label>
                             <select name="role_id" id="role_id"
                                 class="form-control{{ $errors->has('role_id') ? ' is-invalid' : '' }}"
                                 style="height: 50px">
                                 <option value="">- Select Role -</option>
                                 @foreach ($role as $r)
-                                    <option value="{{ $r->role_id }}" {{ old('role_id') == $r->role_id ? 'selected' : '' }}>
+                                    <option value="{{ $r->role_id }}"
+                                        {{ old('role_id') == $r->role_id ? 'selected' : '' }}>
                                         {{ $r->role_name }}
                                     </option>
                                 @endforeach
@@ -242,7 +243,7 @@
                         @method('PUT')
 
                         <!-- Name User -->
-                        <div class="form-group{{ $errors->has('edit_name') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <label for="edit-name" class="col-form-label">Name User: </label>
                             <input type="text" name="edit_name" id="edit-name"
                                 class="form-control{{ $errors->has('edit_name') ? ' is-invalid' : '' }}"
@@ -254,21 +255,8 @@
                             @endif
                         </div>
 
-                        <!-- Name User -->
-                        <div class="form-group{{ $errors->has('edit_email') ? ' has-danger' : '' }}">
-                            <label for="edit-email" class="col-form-label">Email User: </label>
-                            <input type="text" name="edit_email" id="edit-email"
-                                class="form-control{{ $errors->has('edit_email') ? ' is-invalid' : '' }}"
-                                placeholder="Email" value="{{ old('edit_email') }}">
-                            @if ($errors->has('edit_email'))
-                                <span class="invalid-feedback" role="alert">
-                                    {{ $errors->first('edit_email') }}
-                                </span>
-                            @endif
-                        </div>
-
                         <!-- Role User -->
-                        <div class="form-group{{ $errors->has('edit_role_id') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <label for="edit-role-id" class="col-form-label">Name Role: </label>
                             <select name="edit_role_id"
                                 class="form-control {{ $errors->has('edit_role_id') ? ' is-invalid' : '' }}"
@@ -290,7 +278,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="text-white btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="text-white btn btn-primary">Update User</button>
+                    <button type="submit" class="text-white btn btn-primary">Update Role</button>
                 </div>
                 </form>
             </div>
@@ -323,33 +311,37 @@
 @endsection
 
 @stack('js')
-<script>
+<script >
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tangkap modal elemen
+        const adduserModalEl = document.getElementById('adduser');
+        const edituserModalEl = document.getElementById('editUser');
+
+        // Pastikan modal dibersihkan sebelum di-show
+        if (adduserModalEl) {
+            const adduserModal = bootstrap.Modal.getInstance(adduserModalEl) || new bootstrap.Modal(
+                adduserModalEl);
+            if (@json($errors->has('name') || $errors->has('email') || $errors->has('password') || $errors->has('role_id'))) {
+                adduserModal.hide(); // Dispose modal lama
+                adduserModal.show(); // Tampilkan modal baru
+            }
+        }
+
+        if (edituserModalEl) {
+            const edituserModal = bootstrap.Modal.getInstance(edituserModalEl) || new bootstrap.Modal(
+                edituserModalEl);
+            if (@json($errors->has('edit_name') || $errors->has('edit_role_id'))) {
+                edituserModal.hide(); // Dispose modal lama
+                edituserModal.show(); // Tampilkan modal baru
+            }
+        }
+    });
+
     function updatePaginationLimit(limit) {
         const url = new URL(window.location.href);
         url.searchParams.set('limit', limit); // Tambahkan atau update parameter 'limit'
         window.location.href = url.toString(); // Redirect ke URL baru
     }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // Check and show the editlayanan modal if there are errors for edit layanan
-        if (
-            {{ $errors->has('name') || $errors->has('email') || $errors->has('password') || $errors->has('role_id') ? 'true' : 'false' }}
-        ) {
-            var adduserModal = new bootstrap.Modal(document.getElementById('adduser'));
-            adduserModal.show();
-        }
-        if (
-            {{ $errors->has('edit_name') || $errors->has('edit_role_id') || $errors->has('edit_email') ? 'true' : 'false' }}
-        ) {
-            var edituserModal = new bootstrap.Modal(document.getElementById('editUser'));
-            var url = localStorage.getItem('Url');
-            edituserModal.show();
-            $('#editUserForm').attr('action', url);
-
-            console.log(@json($errors->all()));
-        }
-    });
-
 
     document.addEventListener('DOMContentLoaded', function() {
         var editButtons = document.querySelectorAll('.edit-button');
@@ -359,7 +351,6 @@
                 var userId = this.getAttribute('data-id');
                 var userName = this.getAttribute('data-name');
                 var userRole = this.getAttribute('data-role');
-                var userEmail = this.getAttribute('data-email');
                 var actionUrl = this.getAttribute('data-url');
                 localStorage.setItem('Url', actionUrl);
 
@@ -368,7 +359,7 @@
                 $('#edit-id').val(userId);
                 $('#edit-name').val(userName);
                 $('#edit-role-id').val(userRole);
-                $('#edit-email').val(userEmail);
+
                 // Atur action form untuk update
                 $('#editUserForm').attr('action', actionUrl);
             });

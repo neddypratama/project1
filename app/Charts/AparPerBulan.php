@@ -54,12 +54,29 @@ class AparPerBulan
             ->setTitle('Laporan APAR per Bulan')
             ->setSubtitle('Jumlah kejadian APAR berdasarkan bulan dan tahun')
             ->setXAxis($months);
+        $chart->setOptions([
+            'yaxis' => [
+                'min' => 0, // Memastikan sumbu Y dimulai dari 0
+                'tickAmount' => 6, // Tentukan jumlah langkah pada sumbu Y
+                'labels' => [
+                    'formatter' => function ($value) {
+                        return (int)$value; // Pastikan angka bulat
+                    }
+                ]
+            ],
+            'chart' => [
+                'height' => '100%', // Membuat chart penuh
+                'width' => '100%' // Membuat chart penuh
+            ]
+        ]);
 
         // Tambahkan data ke chart untuk setiap tahun
         foreach ($dataSets as $year => $data) {
             $chart->addData($year, $data); // Nama tahun sebagai label
         }
-
+        // dd($chart);
         return $chart;
+
     }
+
 }
