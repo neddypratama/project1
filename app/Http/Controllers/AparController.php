@@ -60,26 +60,53 @@ class AparController extends Controller
         $id = $apar->apar_id;
         $dokumentasi = $apar->dokumentasi;
 
+        
         $data = [];
         foreach ($uraian as $item) {
-            $slug = [];
-            $s = explode('/', SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_nama);
-            foreach ($s as $key => $value) {
-                $slug[] = [
-                    'slug' => Str::slug($value),
-                    'sub_uraian' => $value
+            // Cek apakah ada relasi suburaian dengan uraian_id yang sesuai
+            $subUraian = SubUraian::where('uraian_id', $item->uraian_id)->first();
+        
+            if ($subUraian) {
+                $slug = [];
+                $s = explode('/', $subUraian->sub_uraian_nama);
+                foreach ($s as $value) {
+                    $slug[] = [
+                        'slug' => Str::slug($value),
+                        'sub_uraian' => $value
+                    ];
+                }
+        
+                $data[] = [
+                    'uraian' => $item->uraian_nama,
+                    'sub_id' => $subUraian->sub_uraian_id,
+                    'tipe' => $subUraian->sub_uraian_tipe,
+                    'sub_uraian' => $slug,
+                    'slug' => $slug,
                 ];
             }
-            $data[] = [
-                'uraian' => $item->uraian_nama,
-                'sub_id' => SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_id,
-                'tipe' => SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_tipe,
-                'sub_uraian' => $slug,
-                'slug' => $slug,
-                // 'dokumentasi' => $apar->dokumentasi,
-                'revisi' => '',
-            ];
         }
+        
+        // $data = [];
+        // foreach ($uraian as $item) {
+        //     $slug = [];
+            
+        //     $s = explode('/', SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_nama);
+        //     foreach ($s as $key => $value) {
+        //         $slug[] = [
+        //             'slug' => Str::slug($value),
+        //             'sub_uraian' => $value
+        //         ];
+        //     }
+        //     $data[] = [
+        //         'uraian' => $item->uraian_nama,
+        //         'sub_id' => SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_id,
+        //         'tipe' => SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_tipe,
+        //         'sub_uraian' => $slug,
+        //         'slug' => $slug,
+        //         // 'dokumentasi' => $apar->dokumentasi,
+        //         'revisi' => '',
+        //     ];
+        // }
 
         // Menggunakan referensi untuk memperbarui revisi
         foreach ($sub_uraian as $sub) {
@@ -280,27 +307,54 @@ class AparController extends Controller
         $uraian = uraian::all();
         $sub_uraian = SubUraian::all();
 
+        // dd($uraian , $sub_uraian);
+
         $data = [];
-        foreach ($uraian as $item) {
-            $slug = [];
-            $s = explode('/', SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_nama);
-            foreach ($s as $key => $value) {
-                $slug[] = [
-                    'slug' => Str::slug($value),
-                    'sub_uraian' => $value
-                ];
-                // Str::slug($value);
-            }
-            $data[] = [
-                'uraian' => $item->uraian_nama,
-                'sub_id' => SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_id,
-                'tipe' => SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_tipe,
-                'sub_uraian' => $slug,
-                'slug' => $slug,
-                // 'hasil' => '',
+foreach ($uraian as $item) {
+    // Cek apakah ada relasi suburaian dengan uraian_id yang sesuai
+    $subUraian = SubUraian::where('uraian_id', $item->uraian_id)->first();
+
+    if ($subUraian) {
+        $slug = [];
+        $s = explode('/', $subUraian->sub_uraian_nama);
+        foreach ($s as $value) {
+            $slug[] = [
+                'slug' => Str::slug($value),
+                'sub_uraian' => $value
             ];
-            // Str::slug($value)
         }
+
+        $data[] = [
+            'uraian' => $item->uraian_nama,
+            'sub_id' => $subUraian->sub_uraian_id,
+            'tipe' => $subUraian->sub_uraian_tipe,
+            'sub_uraian' => $slug,
+            'slug' => $slug,
+        ];
+    }
+}
+
+        // $data = [];
+        // foreach ($uraian as $item) {
+        //     $slug = [];
+        //     $s = explode('/', SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_nama);
+        //     foreach ($s as $key => $value) {
+        //         $slug[] = [
+        //             'slug' => Str::slug($value),
+        //             'sub_uraian' => $value
+        //         ];
+        //         // Str::slug($value);
+        //     }
+        //     $data[] = [
+        //         'uraian' => $item->uraian_nama,
+        //         'sub_id' => SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_id,
+        //         'tipe' => SubUraian::where('uraian_id', $item->uraian_id)->first()->sub_uraian_tipe,
+        //         'sub_uraian' => $slug,
+        //         'slug' => $slug,
+        //         // 'hasil' => '',
+        //     ];
+        //     // Str::slug($value)
+        // }
 
 
         // foreach ($sub_uraian as $sub) {
